@@ -16,7 +16,13 @@
             <value>
                 <!-- 静态资源允许访问 -->
                 /app/** = anon
+                /css/** = anon
                 /assets/** = anon
+                /fonts/** = anon
+                /images/** = anon
+                /js/** = anon
+                /student/** = anon
+                /teacher/** = anon
                 <!-- 登录页允许访问 -->
                 /rest/user/login = anon
                 <!-- 其他资源需要认证 -->
