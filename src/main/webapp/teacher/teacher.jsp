@@ -57,7 +57,7 @@
                     <div class="userloggedinfo">
                         <img src="<%=path %>/images/photos/thumb1.png" alt="" />
                         <div class="userinfo">
-                            <h5>${sessionScope.teacherInfo.teacherID} <small>you are welcome</small></h5>
+                            <h5>${userInfo.username} <small>you are welcome</small></h5>
                             <ul>
                                 <li><a href="<%=path %>/login.jsp">退出登录</a></li>
                             </ul>
@@ -77,8 +77,8 @@
                 
                 <li class="dropdown active"><a href=""><span class="iconfa-pencil"></span> 学生管理</a>
                     <ul>
-                    	<li><a href="<%=path %>/teacher/studentAdd.jsp">添加学生</a></li>
-                        <li><a href="<%=path %>/teacher/studentQuery.action">查询所有学生</a></li>
+                    	<li><a href="<%=path %>/rest/teacher/studentAdd.jsp">添加学生</a></li>
+                        <li><a href="<%=path %>/rest/user/selectUser">查询所有学生</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href=""><span class="iconfa-briefcase"></span> 试题管理</a>

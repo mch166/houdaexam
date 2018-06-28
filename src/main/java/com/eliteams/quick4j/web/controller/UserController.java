@@ -63,12 +63,13 @@ public class UserController {
             // 验证成功在Session中保存用户信息
             final User authUserInfo = userService.selectByUsername(user.getUsername());
             int type = authUserInfo.getType();
+            request.getSession().setAttribute("userInfo", authUserInfo);
             if(type==1) {//管理员
             	return "teacher/teacher";
             }else {
             	  return "student/showAnswer";
             }
-            //request.getSession().setAttribute("userInfo", authUserInfo);
+
         } catch (AuthenticationException e) {
             // 身份验证失败
             model.addAttribute("error", "用户名或密码错误 ！");
@@ -113,13 +114,13 @@ public class UserController {
     }
     
     /**
-     * 用户登录
+     * 新增用户
      * 
      * @param user
      * @param result
      * @return
      */
-    @RequestMapping(value = "/insertUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/insertUser")
     public String insertUser(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
         try {
             
@@ -128,11 +129,30 @@ public class UserController {
             
             request.getSession().setAttribute("userInfoList", selectList);
         } catch (AuthenticationException e) {
-            // 身份验证失败
-            model.addAttribute("error", "用户名或密码错误 ！");
-            return "login";
+            e.printStackTrace();
+            return "teacher/teacher";
         }
-        return "redirect:/";
+        return "teacher/studentManager";
+    }
+
+    /**
+     * 用户列表
+     *
+     * @param user
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/selectUser")
+    public String selectUser(HttpServletRequest request) {
+        try {
+            List<User> selectList = userService.selectList();
+
+            request.getSession().setAttribute("userInfoList", selectList);
+        } catch (AuthenticationException e) {
+            e.printStackTrace();
+            return "teacher/teacher";
+        }
+        return "teacher/studentManager";
     }
 
 }

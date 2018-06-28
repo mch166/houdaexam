@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@taglib prefix="s" uri="/struts-tags" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -109,7 +108,7 @@
                 <li class="dropdown active"><a href=""><span class="iconfa-pencil"></span> 学生管理</a>
                     <ul>
                     	<li class="actives"><a  href="<%=path %>/teacher/studentAdd.jsp">添加学生</a></li>
-                        <li><a href="<%=path %>/teacher/studentQuery.action">查询所有学生</a></li>
+                        <li><a href="<%=path %>/rest/user/selectUser">查询所有学生</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href=""><span class="iconfa-briefcase"></span> 试题管理</a>
@@ -154,27 +153,22 @@
                 <div class="widget">
             <h4 class="widgettitle">添加学生</h4>
             <div class="widgetcontent">
-                <form class="stdform" action="studentAdd.action" method="post">               
+                <form class="stdform" action=rest/user/insertUser" method="post">
                       
-                            <label>学生编号：</label>
+                            <label>登录账号：</label>
                             <span class="field">
-                      			<input type="text" name="studentID" class="input-xlarge" placeholder="请输入..." required="required" onkeyup="showStatus(this.value)"/>
+                      			<input type="text" name="username" class="input-xlarge" placeholder="请输入..." required="required" onkeyup="showStatus(this.value)"/>
                             	<span id="txt"></span><!-- 验证 -->
                             </span>
                        
                             <label>学生姓名：</label>
-                            <span class="field"><input type="text" name="studentName" class="input-xlarge" placeholder="请输入..." required="required" /></span>
-                        
-                            <label>所属班级:</label>
-                            <span class="field">
-                          	  <select name="sclass" class="form-control">
-                          	  	<option value="移动云办公" selected="selected">移动云办公</option>
-                          	  	<option value="会计信息化">会计信息化</option>
-                          	  	<option value="新媒体工程">新媒体工程</option>
-                          	  </select>
-                            </span>
-                       
-                        <p class="stdformbutton">
+                            <span class="field"><input type="text" name="name" class="input-xlarge" placeholder="请输入..." required="required" /></span>
+
+                            <label>密码：</label>
+                             <span class="field"><input type="password" name="password" class="input-xlarge" placeholder="请输入..." required="required" /></span>
+
+
+                    <p class="stdformbutton">
 							<input class="btn btn-primary" type="submit" value="录入">
 							<input class="btn btn-primary" type="reset" value="重置">
                         </p>

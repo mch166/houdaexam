@@ -1,7 +1,7 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<%@taglib prefix="s" uri="/struts-tags" %>
 <%
 	String path = request.getContextPath();
 	String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -91,7 +91,7 @@
                 <li class="dropdown active"><a href=""><span class="iconfa-pencil"></span> 学生管理</a>
                     <ul>
                     	<li><a href="<%=path %>/teacher/studentAdd.jsp">添加学生</a></li>
-                        <li class="actives"><a href="<%=path %>/teacher/studentQuery.action">查询所有学生</a></li>
+                        <li><a href="<%=path %>/rest/user/selectUser">查询所有学生</a></li>
                     </ul>
                 </li>
                 <li class="dropdown"><a href=""><span class="iconfa-briefcase"></span> 试题管理</a>
@@ -135,7 +135,7 @@
           <div class="maincontent">
             <div class="maincontentinner">
             
-                <h4 class="widgettitle">学生表</h4>
+                <h4 class="widgettitle">考生列表</h4>
                 <table id="dyntable" class="table table-bordered responsive">
                     <colgroup>
                         <col class="con0" style="align: center; width: 15%" />
@@ -149,21 +149,19 @@
                         <tr>
                           	
                             <th class="head0">学生编号</th>
-                            <th class="head1">所属班级</th>
                             <th class="head0">学生姓名</th>
-                            <th class="head1">成绩</th>
+                            <th class="head0">状态</th>
                         </tr>
                     </thead>
                     <tbody>
-                       
-                        <s:iterator value="#request.students" var="student">
-						 	<tr align="center">
-								<td>${student.studentID}</td>
-								<td>${student.sclass}</td>
-								<td>${student.studentName}</td>
-								<td>${student.result}</td>
-					 		</tr>
-			  			</s:iterator>
+                       <c:forEach items="${userInfoList}" var="user" varStatus="user">
+                           <tr align="center">
+                               <td>${user.username}</td>
+                               <td>${user.name}</td>
+                               <td>${user.state}</td>
+                           </tr>
+                       </c:forEach>
+
                       <tr>
 			  	<td colspan="6" align="center">
 					共${page.totalCount}条纪录，当前第${page.currentPage}/${page.totalPage}页，每页${page.everyPage}条纪录
