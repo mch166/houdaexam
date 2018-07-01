@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>编码管理</title>
+<title>试题管理</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -23,9 +23,9 @@
 							<form class="layui-form" id="query_form">
 								<div id="search" class="layui-form-item">
 									<div class="layui-inline">
-										<label class="layui-form-mid">编码编号：</label>
+										<label class="layui-form-mid">题目名称：</label>
 										<div class="layui-input-inline" style="width: 150px;">
-											<input class="layui-input layui-input-sm" name="id"
+											<input class="layui-input layui-input-sm" name="name"
 												id="test-table-demoReload" autocomplete="off">
 										</div>
 									</div>
@@ -62,8 +62,8 @@
 			base : '../../layuiadmin/' //静态资源所在路径
 		}).extend({
 			index : 'lib/index', //主入口模块
-			codelist : '../../views/code/codelist'
-		}).use([ 'index', 'codelist' ]);
+			tmlist : '../../views/teacher/tmlist'
+		}).use([ 'index', 'tmlist' ]);
 	</script>
 </body>
 </html>

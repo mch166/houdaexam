@@ -29,29 +29,29 @@ layui
 						//搜索id 不传值时，默认：search
 						searchId : "search",
 						
-						tableTitleUrl : layui.setter.base+"json/code/codelisthead.json",//(必需)
-						dataUrl : "/web/system?_service=/code/getAllCodeList",//(必需)
+						tableTitleUrl : layui.setter.base+"json/student/tmlisthead.json",//(必需)
+						dataUrl : layui.setter.base+"json/student/tmlistdata.json",//(必需)
 						//新增编辑页面
-						editHtml : 'codeedit.html',//(必需)
+						editHtml : 'tmedit.html',//(必需)
 						//查看页面
-						viewHtml : 'codeview.html',//(必需)
+						viewHtml : 'tmview.html',//(必需)
 						//删除Url
-						delUrl : '/web/system?_service=/code/deleteCode'
+						delUrl : ''
 					};
 
 					//定义当前页面对象
 					//并且继承autotable.tableClass
-					var codelist = function(options){
+					var tmlist = function(options){
 						this.Hltest = "123";
-						codelist.superClass.constructor.apply(this, arguments);
+						tmlist.superClass.constructor.apply(this, arguments);
 					}
-					baseUtil.extend(codelist, autotable.tableClass);
+					baseUtil.extend(tmlist, autotable.tableClass);
 					
 					
 					/**
 					 * 明细操作
 					 */
-					codelist.prototype.codemxOperation = function(data) {
+					tmlist.prototype.codemxOperation = function(data) {
 						var that = this;
 						layer.open({
 							type : 2,
@@ -66,6 +66,6 @@ layui
 					}
 					
 					
-					var codelistObj = new codelist(options);
-					exports('codelist', {});
+					var tmlistObj = new tmlist(options);
+					exports('tmlist', {});
 				});
