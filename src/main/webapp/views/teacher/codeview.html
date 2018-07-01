@@ -16,24 +16,16 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-card-body layerCard">
 		<div class="layui-form-item">
-			<label class="layui-form-label">明细编号：</label>
-			<div class="layui-input-inline layui-input-company" name="mxbh"></div>
+			<label class="layui-form-label">编码编号：</label>
+			<div class="layui-input-inline layui-input-company" name="bmbh"></div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">明细值：</label>
-			<div class="layui-input-inline layui-input-company" name="mxz"></div>
+			<label class="layui-form-label">编码名称：</label>
+			<div class="layui-input-inline layui-input-company" name="bmmc"></div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">是否可用：</label>
-			<div class="layui-input-inline layui-input-company" name="sfky"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">排序号：</label>
-			<div class="layui-input-inline layui-input-company" name="pxh"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">说明：</label>
-			<div class="layui-input-inline layui-input-company" name="bz"></div>
+			<label class="layui-form-label">明细长度：</label>
+			<div class="layui-input-inline layui-input-company" name="mxcd"></div>
 		</div>
 	</div>
 </body>
@@ -44,13 +36,13 @@
   }).extend({
     index: 'lib/index' //主入口模块
   }).use(['index','baseUtil','tableoperation'],function(){
-	  var baseUtil = layui.baseUtil;
-	  var tableoperation = layui.tableoperation;
+	var baseUtil = layui.baseUtil;
+	var tableoperation = layui.tableoperation;
 	//设置参数
 	var options = {
 //		operType : 'showViews',	//公共方法有：view、edit、add
 		operType : 'view',
-		showDataUrl : "/web/system?_service=/codeItem/getCodeItemDetail"
+		showDataUrl : "/web/system?_service=/code/getCodeDetail"
 	};
 	//定义自己的对象
 	var codeview = function(options){
