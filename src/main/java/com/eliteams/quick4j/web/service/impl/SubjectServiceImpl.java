@@ -12,6 +12,7 @@ import com.eliteams.quick4j.core.generic.GenericServiceImpl;
 import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserExample;
+import com.eliteams.quick4j.web.service.SubjectService;
 import com.eliteams.quick4j.web.service.UserService;
 
 /**
@@ -21,7 +22,7 @@ import com.eliteams.quick4j.web.service.UserService;
  * @since 2014年7月5日 上午11:54:24
  */
 @Service
-public class SubjectServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
+public class SubjectServiceImpl extends GenericServiceImpl<User, Long> implements SubjectService {
 
     @Resource
     private UserMapper userMapper;
@@ -41,10 +42,6 @@ public class SubjectServiceImpl extends GenericServiceImpl<User, Long> implement
         return userMapper.deleteByPrimaryKey(id);
     }
 
-    @Override
-    public User authentication(User user) {
-        return userMapper.authentication(user);
-    }
 
     @Override
     public User selectById(Long id) {
@@ -56,22 +53,16 @@ public class SubjectServiceImpl extends GenericServiceImpl<User, Long> implement
         return userMapper;
     }
 
-    @Override
-    public User selectByUsername(String username) {
-    	Map<String, Object> retMap = new HashMap<String, Object>();
-    	retMap.put("username", username);
-         List<User> list = userMapper.selectByExample(retMap);
-        return list.get(0);
-    }
+ 
 
     @Override
     public Map<String, Object> selectList(Map paramMap) {
-    	Map<String, Object> retMap = new HashMap<String, Object>();
-        List<User> result = userMapper.selectByExample(paramMap);
-    	int rowCnts = userMapper.getRowCnts();
-        retMap.put("total", rowCnts);
-        retMap.put("list", result);
-        return retMap;
+//    	Map<String, Object> retMap = new HashMap<String, Object>();
+//        List<User> result = userMapper.selectByExample(paramMap);
+//    	int rowCnts = userMapper.getRowCnts();
+//        retMap.put("total", rowCnts);
+//        retMap.put("list", result);
+        return null;
     }
 
 }
