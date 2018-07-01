@@ -16,40 +16,32 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
-			<input type="hidden" name="bmbh" id="bmbh">
 			<div class="layui-form-item">
-				<label class="layui-form-label">明细编号</label>
+				<label class="layui-form-label">编码编号</label>
 				<div class="layui-input-inline">
-					<input type="text" id="mxbh" name="mxbh" lay-verify="required"
+					<input type="text" id="bmbh" name="bmbh" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">明细值</label>
+				<label class="layui-form-label">编码名称</label>
 				<div class="layui-input-inline">
-					<input type="text" name="mxz" lay-verify="required"
+					<input type="text" name="bmmc" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">是否可用</label>
+				<label class="layui-form-label">明细长度</label>
 				<div class="layui-input-inline">
-					<input type="radio" name="sfky" value="Y" title="是" checked>
-             		<input type="radio" name="sfky" value="N" title="否">
-				</div>
-			</div>
-			<div class="layui-form-item">
-				<label class="layui-form-label">排序号</label>
-				<div class="layui-input-inline">
-					<input type="text" name="pxh" lay-verify="required|pass"
+					<input type="text" name="mxcd" lay-verify="required|pass"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item layui-form-text">
-				<label class="layui-form-label">说明</label>
+				<label class="layui-form-label">备注</label>
 				<div class="layui-input-block">
 					<textarea name="bz" placeholder="请输入内容" class="layui-textarea"></textarea>
 				</div>
@@ -81,29 +73,24 @@
 		//编辑时，编码编号 不可编辑
 		var param = baseUtil.getLayerParentParam();
 		var operType = "add";
-		if(!baseUtil.isNullOrEmpty(param.mxbh)){
+		if(!baseUtil.isNullOrEmpty(param)){
 			operType = "edit";
-			$("#mxbh").attr("disabled","disabled");
-		}
-		
-		if(operType == "add"){
-			$("#bmbh").val(param.bmbh);
+			$("#bmbh").attr("disabled","disabled");
 		}
 		//设置参数
 		var options = {
 			operType : operType,
-			showDataUrl : "/web/system?_service=/codeItem/getCodeItemDetail",
-			submitUrl : "/web/system?_service=/codeItem/saveOrUpdateCodeItem",
+			showDataUrl : "/web/system?_service=/code/getCodeDetail",
+			submitUrl : "/web/system?_service=/code/saveOrUpdateCode",
 			refreshTableId : "table-page"
 		};
-		
 		//定义自己的对象
 		var codeedit = function(options){
+			this.testParam = "HL123";
 			codeedit.superClass.constructor.apply(this, arguments);
 		}
 		baseUtil.extend(codeedit, tableoperation.showClass);
 		
-
 		
 		/* 自定义验证规则 */
 		form.verify({
