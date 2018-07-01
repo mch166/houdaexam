@@ -1,6 +1,8 @@
 package com.eliteams.quick4j.web.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
@@ -37,6 +39,8 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    
+    public final int rows=20;
 
     /**
      * 用户登录
@@ -121,38 +125,74 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/insertUser")
-    public String insertUser(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+    @ResponseBody
+    public Map<String,Object> insertUser(@Valid User user,HttpServletRequest request) {
         try {
-            
+
+            Map<String , Object> map = new HashMap<String, Object>();
         	userService.insert(user);
-        	List<User> selectList = userService.selectList();
-            
-            request.getSession().setAttribute("userInfoList", selectList);
-        } catch (AuthenticationException e) {
+        	 Map<String, Object> paramMap = new HashMap<String, Object>();
+             //paramMap.put("m", (page - 1) * rows);
+             paramMap.put("m", 0);
+             paramMap.put("n", rows);
+             map  = userService.selectList(paramMap);
+             //request.getSession().setAttribute("userInfoList", selectList);
+            return map;
+        } catch (Exception e) {
             e.printStackTrace();
-            return "teacher/teacher";
+            return null;
         }
-        return "teacher/studentManager";
+    }
+
+
+    /**
+     *更新用户
+     * 
+     * @param user
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/updateUser")
+    @ResponseBody
+    public Map<String,Object> updateUser(@Valid User user, HttpServletRequest request) {
+        try {
+
+            Map<String , Object> map = new HashMap<String, Object>();
+        	userService.update(user);
+        	 Map<String, Object> paramMap = new HashMap<String, Object>();
+             //paramMap.put("m", (page - 1) * rows);
+             paramMap.put("m", 0);
+             paramMap.put("n", rows);
+             map  = userService.selectList(paramMap);
+             //request.getSession().setAttribute("userInfoList", selectList);
+            return map;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     /**
      * 用户列表
      *
-     * @param user
-     * @param result
      * @return
      */
     @RequestMapping(value = "/selectUser")
-    public String selectUser(HttpServletRequest request) {
+    @ResponseBody
+    public Map<String,Object> selectUser(HttpServletRequest request,int page) {
         try {
-            List<User> selectList = userService.selectList();
-
-            request.getSession().setAttribute("userInfoList", selectList);
-        } catch (AuthenticationException e) {
+            Map<String , Object> map = new HashMap<String, Object>();
+            Map<String, Object> paramMap = new HashMap<String, Object>();
+            //paramMap.put("m", (page - 1) * rows);
+            paramMap.put("m", (page - 1) * rows);
+            paramMap.put("n", rows);
+            map  = userService.selectList(paramMap);
+            //request.getSession().setAttribute("userInfoList", selectList);
+            return map;
+        } catch (Exception e) {
             e.printStackTrace();
-            return "teacher/teacher";
+            return null;
         }
-        return "teacher/studentManager";
     }
 
 }

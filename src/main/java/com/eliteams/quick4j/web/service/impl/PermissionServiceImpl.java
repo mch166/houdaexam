@@ -1,6 +1,8 @@
 package com.eliteams.quick4j.web.service.impl;
 
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -32,4 +34,10 @@ public class PermissionServiceImpl extends GenericServiceImpl<Permission, Long> 
     public List<Permission> selectPermissionsByRoleId(Long roleId) {
         return permissionMapper.selectPermissionsByRoleId(roleId);
     }
+
+	@Override
+	public Map<String, Object> selectList(Map paramMap) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

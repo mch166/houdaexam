@@ -21,7 +21,7 @@ import com.eliteams.quick4j.web.service.UserService;
  * @since 2014年7月5日 上午11:54:24
  */
 @Service
-public class UserServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
+public class SubjectServiceImpl extends GenericServiceImpl<User, Long> implements UserService {
 
     @Resource
     private UserMapper userMapper;

@@ -15,7 +15,7 @@ import com.eliteams.quick4j.web.model.UserExample;
  * @author StarZou
  * @since 2014年7月5日 上午11:49:57
  **/
-public interface UserMapper extends GenericDao<User, Long> {
+public interface SubjectMapper extends GenericDao<User, Long> {
     int countByExample(UserExample example);
 
     int deleteByExample(UserExample example);

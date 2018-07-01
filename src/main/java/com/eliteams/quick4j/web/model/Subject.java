@@ -1,61 +1,79 @@
 package com.eliteams.quick4j.web.model;
 
-public class Subject {
-	private int stID;
-	private String stTitle;
-	private String stOptionA;
-	private String stOptionB;
-	private String stOptionC;
-	private String stOptionD;
-	private String stAnswer;
-	private String stParse;
-	public int getStID() {
-		return stID;
+import java.io.Serializable;
+
+public class Subject implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Long id;
+	private String tmtitle;
+	private String optionA;
+	private String optionB;
+	private String optionC;
+	private String optionD;
+	private String answer;
+	private String tmxh;
+	private String parse;
+	
+	
+	
+	public Long getId() {
+		return id;
 	}
-	public void setStID(int stID) {
-		this.stID = stID;
+	public void setId(Long id) {
+		this.id = id;
 	}
-	public String getStTitle() {
-		return stTitle;
+	public String getTmtitle() {
+		return tmtitle;
 	}
-	public void setStTitle(String stTitle) {
-		this.stTitle = stTitle;
+	public void setTmtitle(String tmtitle) {
+		this.tmtitle = tmtitle;
 	}
-	public String getStOptionA() {
-		return stOptionA;
+	public String getOptionA() {
+		return optionA;
 	}
-	public void setStOptionA(String stOptionA) {
-		this.stOptionA = stOptionA;
+	public void setOptionA(String optionA) {
+		this.optionA = optionA;
 	}
-	public String getStOptionB() {
-		return stOptionB;
+	public String getOptionB() {
+		return optionB;
 	}
-	public void setStOptionB(String stOptionB) {
-		this.stOptionB = stOptionB;
+	public void setOptionB(String optionB) {
+		this.optionB = optionB;
 	}
-	public String getStOptionC() {
-		return stOptionC;
+	public String getOptionC() {
+		return optionC;
 	}
-	public void setStOptionC(String stOptionC) {
-		this.stOptionC = stOptionC;
+	public void setOptionC(String optionC) {
+		this.optionC = optionC;
 	}
-	public String getStOptionD() {
-		return stOptionD;
+	public String getOptionD() {
+		return optionD;
 	}
-	public void setStOptionD(String stOptionD) {
-		this.stOptionD = stOptionD;
+	public void setOptionD(String optionD) {
+		this.optionD = optionD;
 	}
-	public String getStAnswer() {
-		return stAnswer;
+	public String getAnswer() {
+		return answer;
 	}
-	public void setStAnswer(String stAnswer) {
-		this.stAnswer = stAnswer;
+	public void setAnswer(String answer) {
+		this.answer = answer;
 	}
-	public String getStParse() {
-		return stParse;
+	public String getTmxh() {
+		return tmxh;
 	}
-	public void setStParse(String stParse) {
-		this.stParse = stParse;
+	public void setTmxh(String tmxh) {
+		this.tmxh = tmxh;
 	}
+	public String getParse() {
+		return parse;
+	}
+	public void setParse(String parse) {
+		this.parse = parse;
+	}
+	
+	
 	
 }

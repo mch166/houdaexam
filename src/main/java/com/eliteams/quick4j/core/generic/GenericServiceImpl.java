@@ -1,6 +1,7 @@
 package com.eliteams.quick4j.core.generic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * GenericService的实现类, 其他的自定义 ServiceImpl, 继承自它,可以获得常用的增删查改操作,
@@ -65,7 +66,7 @@ public abstract class GenericServiceImpl<Model, PK> implements GenericService<Mo
     }
 
     @Override
-    public List<Model> selectList() {
+    public Map<String, Object> selectList(Map map) {
         return null;
     }
 }

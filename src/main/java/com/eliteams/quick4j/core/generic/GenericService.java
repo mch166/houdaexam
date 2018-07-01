@@ -1,6 +1,7 @@
 package com.eliteams.quick4j.core.generic;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 所有自定义Service的顶级接口,封装常用的增删查改操作
@@ -56,6 +57,6 @@ public interface GenericService<Model, PK> {
      *
      * @return 对象集合
      */
-    List<Model> selectList();
+    Map<String, Object> selectList(Map paramMap);
 
 }
