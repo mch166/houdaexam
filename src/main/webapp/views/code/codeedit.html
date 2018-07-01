@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编码编辑</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
+	media="all">
+<link rel="stylesheet" href="../../layuiadmin/style/admin.css"
+	media="all">
+</head>
+<body>
+	<!-- 使用自动遍历赋值 需要：layerCard -->
+	<div class="layui-fluid layerCard">
+		<form class="layui-form" action="" lay-filter="component-form-group">
+			<div class="layui-form-item">
+				<label class="layui-form-label">编码编号</label>
+				<div class="layui-input-inline">
+					<input type="text" id="bmbh" name="bmbh" lay-verify="required"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">编码名称</label>
+				<div class="layui-input-inline">
+					<input type="text" name="bmmc" lay-verify="required"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item">
+				<label class="layui-form-label">明细长度</label>
+				<div class="layui-input-inline">
+					<input type="text" name="mxcd" lay-verify="required|pass"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+
+			<div class="layui-form-item layui-form-text">
+				<label class="layui-form-label">备注</label>
+				<div class="layui-input-block">
+					<textarea name="bz" placeholder="请输入内容" class="layui-textarea"></textarea>
+				</div>
+			</div>
+			<div class="layui-form-item" style='display: none'>
+				<div class="layui-input-block">
+					<div class="layui-footer">
+						<!-- 这里提交按钮的ID是用在layer弹窗中点击确定按钮代替该按钮用 -->
+						<button class="layui-btn" lay-submit lay-filter="saveOrUpdate">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+	layui.config({
+		base : '../../layuiadmin/' //静态资源所在路径
+	}).extend({
+		index : 'lib/index' //主入口模块
+	}).use(['index','baseUtil','form','tableoperation'],function(){
+		var baseUtil = layui.baseUtil;
+		var tableoperation = layui.tableoperation;
+		var form = layui.form;
+		var $ = layui.$;
+		//编辑时，编码编号 不可编辑
+		var param = baseUtil.getLayerParentParam();
+		var operType = "add";
+		if(!baseUtil.isNullOrEmpty(param)){
+			operType = "edit";
+			$("#bmbh").attr("disabled","disabled");
+		}
+		//设置参数
+		var options = {
+			operType : operType,
+			showDataUrl : "/web/system?_service=/code/getCodeDetail",
+			submitUrl : "/web/system?_service=/code/saveOrUpdateCode",
+			refreshTableId : "table-page"
+		};
+		//定义自己的对象
+		var codeedit = function(options){
+			this.testParam = "HL123";
+			codeedit.superClass.constructor.apply(this, arguments);
+		}
+		baseUtil.extend(codeedit, tableoperation.showClass);
+		
+		
+		/* 自定义验证规则 */
+		form.verify({
+			pass : [ /(.+){1,12}$/, '长度1到12位' ],
+			content : function(value) {
+				layedit.sync(editIndex);
+			}
+		});
+		
+		//创建自己定义的对象
+		var codeeditObj = new codeedit(options);
+	});
+</script>
+</body>
+</html>

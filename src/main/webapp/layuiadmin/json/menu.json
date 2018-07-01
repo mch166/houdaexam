@@ -1,0 +1,45 @@
+{
+	"success": "true",
+	"msg": "",
+	"data": [
+		{
+			"name": "",
+			"title": "试题管理",
+			"icon": "layui-icon-set",
+			"children": [
+				{
+					"name": "entity",
+					"title": "试卷管理",
+					"icon": "",
+					"url": "entity/entitylist.html"
+				},
+				{
+					"name": "",
+					"title": "试题管理",
+					"icon": "",
+					"url": "code/codelist.html"
+				}
+			]
+		},
+		{
+			"name": "",
+			"title": "用户管理",
+			"icon": "layui-icon-user",
+			"children": [
+				{
+					"name": "",
+					"title": "用户管理",
+					"icon": "",
+					"url": "code/codelist.html"
+					
+				},
+				{
+					"name": "",
+					"title": "成绩管理",
+					"icon": "fa-navicon",
+					"url": "set/user/info.html"
+				}
+			]
+		}
+	]
+}

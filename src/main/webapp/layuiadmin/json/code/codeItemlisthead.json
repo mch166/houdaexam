@@ -1,0 +1,34 @@
+{
+"code":"app_code",
+"data":[ {
+	"field" : "mxbh",
+	"title" : "明细编号",
+	"sort" : "true"
+}, {
+	"field" : "mxz",
+	"title" : "明细"
+}, {
+	"field" : "sfky",
+	"title" : "是否可用"
+}, {
+	"field" : "pxh",
+	"title" : "排序号"
+}],
+"operationBtn":[{
+	"code":"detail",
+	"name":"查看",
+	"clazz":"layui-btn-primary"
+},{
+	"code":"edit",
+	"name":"编辑"
+}],
+"toolbar":[{
+	"code":"add",
+	"name":"新增",
+	"icon":""
+},{
+	"code":"del",
+	"name":"删除",
+	"icon":"&#xe640"
+}]
+}

@@ -1,0 +1,31 @@
+{
+"code":"app_code",
+"data":[ {
+	"field" : "yhzh",
+	"title" : "用户账号",
+	"sort" : "true"
+}, {
+	"field" : "yhxm",
+	"title" : "用户姓名"
+}, {
+	"field" : "yhlxmc",
+	"title" : "用户类型"
+}],
+"operationBtn":[{
+	"code":"detail",
+	"name":"查看",
+	"clazz":"layui-btn-primary"
+},{
+	"code":"edit",
+	"name":"编辑"
+}],
+"toolbar":[{
+	"code":"add",
+	"name":"新增",
+	"icon":""
+},{
+	"code":"del",
+	"name":"删除",
+	"icon":"&#xe640"
+}]
+}

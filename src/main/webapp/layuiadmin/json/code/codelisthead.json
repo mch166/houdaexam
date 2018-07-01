@@ -1,0 +1,45 @@
+{
+"code":"app_code",
+"data":[ {
+	"field" : "bmbh",
+	"title" : "编码编号",
+	"width":"20%",
+	"sort" : "true"
+}, {
+	"field" : "bmmc",
+	"width":"20%",
+	"title" : "编码名称"
+}, {
+	"field" : "mxcd",
+	"width":"10%",
+	"title" : "明细长度"
+}, {
+	"field" : "bz",
+	"title" : "备注"
+}],
+"operationBtn":[{
+	"code":"detail",
+	"name":"查看",
+	"clazz":"layui-btn-primary"
+},{
+	"code":"edit",
+	"name":"编辑"
+},{
+	"code":"del",
+	"name":"删除",
+	"clazz":"layui-btn-danger"
+},{
+	"code":"codemx",
+	"name":"明细",
+	"clazz":"layui-btn-primary"
+}],
+"toolbar":[{
+	"code":"add",
+	"name":"新增",
+	"icon":""
+},{
+	"code":"del",
+	"name":"删除",
+	"icon":"&#xe640"
+}]
+}
