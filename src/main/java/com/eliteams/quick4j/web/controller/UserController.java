@@ -49,35 +49,37 @@ public class UserController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(@Valid User user, BindingResult result, Model model, HttpServletRequest request) {
+    @RequestMapping(value = "/login")
+    @ResponseBody
+    public Map login(@Valid User user, BindingResult result,HttpServletRequest request) {
+        Map<String , Object> map = new HashMap<String, Object>();
         try {       	          
             if (result.hasErrors()) {
-                model.addAttribute("error", "参数错误！");
-                return "login";
+                map.put("code", "1");
+                map.put("msg", "参数错误");
+                return map;
             }
             Subject subject = SecurityUtils.getSubject();
             
             // 已登陆
-            if (subject.isAuthenticated()) {
+            map.put("code", "0");
+            map.put("msg", "登入成功");
+            map.put("access_token", "c262e61cd13ad99fc650e6908c7e5e65b63d2f32185ecfed6b801ee3fbdd5c0a");
+            if (subject.isAuthenticated()) {  
             }else {
             	 // 身份验证
                 subject.login(new UsernamePasswordToken(user.getUsername(), ApplicationUtils.sha256Hex(user.getPassword())));                        
             }
             // 验证成功在Session中保存用户信息
-            final User authUserInfo = userService.selectByUsername(user.getUsername());
-            int type = authUserInfo.getType();
-            request.getSession().setAttribute("userInfo", authUserInfo);
-            if(type==1) {//管理员
-            	return "teacher/teacher";
-            }else {
-            	  return "student/showAnswer";
-            }
-
+             User userInfo = userService.selectByUsername(user.getUsername());
+             request.getSession().setAttribute("userInfo", userInfo);
+             map.put("userInfo", userInfo);
+             return  map;
         } catch (AuthenticationException e) {
             // 身份验证失败
-            model.addAttribute("error", "用户名或密码错误 ！");
-            return "login";
+        	  map.put("code", "1");
+              map.put("msg", "用户名或密码错误 ！");
+            return map;
         }
         //return "student/showAnswer";
     }

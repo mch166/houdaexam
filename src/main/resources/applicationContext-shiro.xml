@@ -9,20 +9,14 @@
 
     <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
         <property name="securityManager" ref="securityManager"/>
-        <property name="loginUrl" value="/rest/page/login"/>
+        <property name="loginUrl" value="/login.html"/>
         <property name="successUrl" value="/rest/index"/>
         <property name="unauthorizedUrl" value="/rest/page/401"/>
         <property name="filterChainDefinitions">
             <value>
                 <!-- 静态资源允许访问 -->
-                /app/** = anon
-                /css/** = anon
                 /assets/** = anon
-                /fonts/** = anon
-                /images/** = anon
-                /js/** = anon
-                /student/** = anon
-                /views/** = anon
+                /layuiadmin/** = anon
                 <!-- 登录页允许访问 -->
                 /rest/user/login = anon
                 <!-- 其他资源需要认证 -->
@@ -52,8 +46,8 @@
             </list>
         </property>
         <!-- cacheManager,集合spring缓存工厂 -->
-        <!-- <property name="cacheManager" ref="shiroEhcacheManager" /> -->
-        <!-- <property name="sessionManager" ref="sessionManager" /> -->
+         <property name="cacheManager" ref="shiroEhcacheManager" /> 
+         <property name="sessionManager" ref="sessionManager" /> 
     </bean>
 
     <!-- Shiro生命周期处理器 -->

@@ -77,15 +77,15 @@
     
       //请求登入接口
       admin.req({
-    	//HLTODO 点击提交后，向后台发送的请求路径
-        url: layui.setter.base + 'json/user/login.json' //实际使用请改成服务端真实接口
+        url: '/houdaexam/rest/user/login' //实际使用请改成服务端真实接口
         ,data: obj.field
+        ,type:'post'
         ,done: function(res){
         
           //请求成功后，写入 access_token
           layui.data(setter.tableName, {
             key: setter.request.tokenName
-            ,value: res.data.access_token
+            ,value: res.access_token
           });
           
           //登入成功的提示与跳转
@@ -94,7 +94,13 @@
             ,icon: 1
             ,time: 1000
           }, function(){
-            location.href = './views/index.html'; //后台主页
+        	  if(res.userInfo.type==1){
+                  location.href = './views/index.html'; //后台主页
+        	  }else{
+                  location.href = './views/student/codelist.html'; //后台主页
+
+        	  }
+            
           });
         }
       });
