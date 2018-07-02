@@ -94,34 +94,20 @@ public class UserController {
      * @return
      */
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout(HttpSession session) {
+    @ResponseBody
+    public Map logout(HttpSession session) {
         session.removeAttribute("userInfo");
         // 登出操作
         Subject subject = SecurityUtils.getSubject();
         subject.logout();
-        return "login";
+        Map<String , Object> map = new HashMap<String, Object>();
+        map.put("code", 0);
+        map.put("msg", "退出成功");
+        map.put("data", null);
+        return map;
     }
 
-    /**
-     * 基于角色 标识的权限控制案例
-     */
-    @RequestMapping(value = "/admin")
-    @ResponseBody
-    @RequiresRoles(value = RoleSign.ADMIN)
-    public String admin() {
-        return "拥有admin角色,能访问";
-    }
-
-    /**
-     * 基于权限标识的权限控制案例
-     */
-    @RequestMapping(value = "/create")
-    @ResponseBody
-    @RequiresPermissions(value = PermissionSign.USER_CREATE)
-    public String create() {
-        return "拥有user:create权限,能访问";
-    }
-    
+   
     /**
      * 新增用户
      * 
@@ -176,28 +162,6 @@ public class UserController {
             return null;
         }
     }
-
-    /**
-     * 用户列表
-     *
-     * @return
-     */
-    @RequestMapping(value = "/selectUser")
-    @ResponseBody
-    public Map<String,Object> selectUser(HttpServletRequest request,int page) {
-        try {
-            Map<String , Object> map = new HashMap<String, Object>();
-            Map<String, Object> paramMap = new HashMap<String, Object>();
-            paramMap.put("m", (page - 1) * rows);
-            paramMap.put("n", rows);
-            map  = userService.selectList(paramMap);
-            return map;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    //============================================
     
     /**
      * 用户列表
@@ -220,24 +184,17 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserList")
     @ResponseBody
-    public Page<User> getUserByid(HttpServletRequest request,Page<User> page) {
-
-        	
-        	 Map<String , Object> map = new HashMap<String, Object>();
-        	 
+    public Page<User> getUserByid(HttpServletRequest request,Page<User> page) {      	
+        	 Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
-             paramMap.put("n", page.getLimit());
-             
-             map  = userService.selectList(paramMap);
-        	
+             paramMap.put("n", page.getLimit());        
+             map  = userService.selectList(paramMap);        	
              List<User> userList = (List<User>)map.get("list");
-        	int count = (int)map.get("total");
-             
+        	int count = (int)map.get("total");             
         	page.setData(userList);
         	page.setCount(count);
-        	page.setCode(0);
-           
+        	page.setCode(0);       
             return page;
      
     }

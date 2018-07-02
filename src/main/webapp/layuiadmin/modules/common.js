@@ -4,7 +4,7 @@
 	 i.events.logout=function(){
 		 i.req({
 			 //HLTODO 退出的接口
-			 url:layui.setter.base+"json/user/logout.json",
+			 url:"/houdaexam/rest/user/logout",
 			 type:"get",
 			 data:{},
 			 done:function(e){
