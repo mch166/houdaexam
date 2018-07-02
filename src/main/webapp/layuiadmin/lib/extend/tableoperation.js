@@ -23,7 +23,7 @@ layui.define([ 'jquery','form','baseUtil'], function(exports) {
 		//form表单参数
 		this.formLayFilter = baseUtil.isNullOrEmpty(options.formLayFilter) ? 'component-form-group' : options.formLayFilter;
 		
-		this.submitUrl = baseUtil.isNullOrEmpty(options.submitUrl) ? '' : options.submitUrl+"&type="+ this.operType;
+		this.submitUrl = baseUtil.isNullOrEmpty(options.submitUrl) ? '' : options.submitUrl;
 		this.refreshTableId = baseUtil.isNullOrEmpty(options.refreshTableId) ? 'table-page' : options.refreshTableId;
 		
 		this.init()
