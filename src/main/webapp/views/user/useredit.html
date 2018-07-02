@@ -16,70 +16,30 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
-			<input type="hidden" name="id">
-			<input type="hidden" name="sjid">
 			<div class="layui-form-item">
-				<label class="layui-form-label">题目名称</label>
+				<label class="layui-form-label">用户帐号</label>
 				<div class="layui-input-inline">
-					<input type="text" id="tmtitle" name="tmtitle" lay-verify="required"
+					<input type="text" id="bmbh" name="username" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">选项A</label>
+				<label class="layui-form-label">用户姓名</label>
 				<div class="layui-input-inline">
-					<input type="text" id="optionA" name="optionA" lay-verify="required"
+					<input type="text" name="name" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
 
 			<div class="layui-form-item">
-				<label class="layui-form-label">选项B</label>
+				<label class="layui-form-label">用户类型</label>
 				<div class="layui-input-inline">
-					<input type="text" id="optionB" name="optionB" lay-verify="required"
-						autocomplete="off" class="layui-input">
-				</div>
-			</div>
-			
-			<div class="layui-form-item">
-				<label class="layui-form-label">选项C</label>
-				<div class="layui-input-inline">
-					<input type="text" id="optionA" name="optionA" lay-verify="required"
-						autocomplete="off" class="layui-input">
-				</div>
-			</div>
-			
-			<div class="layui-form-item">
-				<label class="layui-form-label">选项D</label>
-				<div class="layui-input-inline">
-					<input type="text" id="optionD" name="optionD" lay-verify="required"
-						autocomplete="off" class="layui-input">
-				</div>
-			</div>
-			
-			<div class="layui-form-item">
-				<label class="layui-form-label">正确答案</label>
-				<div class="layui-input-inline">
-					<input type="text" id="answer" name="answer" lay-verify="required"
-						autocomplete="off" class="layui-input">
-				</div>
-			</div>
-			
-			<div class="layui-form-item">
-				<label class="layui-form-label">题目序号</label>
-				<div class="layui-input-inline">
-					<input type="text" id="tmxh" name="tmxh" lay-verify="required"
-						autocomplete="off" class="layui-input">
+					<input type="radio" name="type" value="0" title="考生" checked>
+					<input type="radio" name="type" value="1" title="教师">
 				</div>
 			</div>
 
-			<div class="layui-form-item layui-form-text">
-				<label class="layui-form-label">解析</label>
-				<div class="layui-input-block">
-					<textarea name="parse" placeholder="请输入内容" class="layui-textarea"></textarea>
-				</div>
-			</div>
 			<div class="layui-form-item" style='display: none'>
 				<div class="layui-input-block">
 					<div class="layui-footer">
@@ -113,14 +73,17 @@
 		//设置参数
 		var options = {
 			operType : operType,
-			showDataUrl : "",
-			submitUrl : "",
+			showDataUrl : "/houdaexam/rest/user/getUserByid",
+			//HLTODO 用户编辑、新增接口
+			submitUrl : "/houdaexam/rest/user/updateUser",
 		};
 		//定义自己的对象
 		var codeedit = function(options){
 			codeedit.superClass.constructor.apply(this, arguments);
 		}
 		baseUtil.extend(codeedit, tableoperation.showClass);
+		
+		
 		
 		//创建自己定义的对象
 		var codeeditObj = new codeedit(options);

@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>题目详情</title>
+<title>用户详情</title>
 <meta name="renderer" content="webkit">
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <meta name="viewport"
@@ -16,36 +16,16 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-card-body layerCard">
 		<div class="layui-form-item">
-			<label class="layui-form-label">试卷编号：</label>
-			<div class="layui-input-inline layui-input-company" name="sjid"></div>
+			<label class="layui-form-label">帐号：</label>
+			<div class="layui-input-inline layui-input-company" name="username"></div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">题目名称：</label>
-			<div class="layui-input-inline layui-input-company" name="tmtitle"></div>
+			<label class="layui-form-label">姓名：</label>
+			<div class="layui-input-inline layui-input-company" name="name"></div>
 		</div>
 		<div class="layui-form-item">
-			<label class="layui-form-label">选项A：</label>
-			<div class="layui-input-inline layui-input-company" name="optionA"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">选项B：</label>
-			<div class="layui-input-inline layui-input-company" name="optionB"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">选项C：</label>
-			<div class="layui-input-inline layui-input-company" name="optionC"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">选项D：</label>
-			<div class="layui-input-inline layui-input-company" name="optionD"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">正确答案：</label>
-			<div class="layui-input-inline layui-input-company" name="answer"></div>
-		</div>
-		<div class="layui-form-item">
-			<label class="layui-form-label">题目解析：</label>
-			<div class="layui-input-inline layui-input-company" name="parse"></div>
+			<label class="layui-form-label">创建时间：</label>
+			<div class="layui-input-inline layui-input-company" name="createTime"></div>
 		</div>
 	</div>
 </body>
@@ -61,14 +41,15 @@
 	//设置参数
 	var options = {
 		operType : 'view',
-		showDataUrl : ""
+		showDataUrl : "/houdaexam/rest/user/getUserByid"
 	};
 	//定义自己的对象
 	var codeview = function(options){
 		codeview.superClass.constructor.apply(this, arguments);
 	}
 	baseUtil.extend(codeview, tableoperation.showClass);
-	
+
+
 	//创建自己定义的对象
 	var codeviewObj = new codeview(options);
   });

@@ -11,7 +11,7 @@
 					"name": "entity",
 					"title": "试卷管理",
 					"icon": "",
-					"url": "entity/entitylist.html"
+					"url": "teacher/sjlist.html"
 				},
 				{
 					"name": "",

@@ -12,14 +12,14 @@ layui
 					
 					//设置table参数
 					var options = {
-						tableTitleUrl : layui.setter.base+"json/student/tmlisthead.json",//(必需)
+						tableTitleUrl : layui.setter.base+"json/teacher/tmlisthead.json",//(必需)
 						//HLTODO 请求题目list数据
-						dataUrl : layui.setter.base+"json/teacher/tmlistdata.json",//(必需)
+						dataUrl : '',//(必需)
 						//新增编辑页面
 						editHtml : 'tmedit.html',//(必需)
 						//查看页面
 						viewHtml : 'tmview.html',//(必需)
-						//删除Url
+						//HLTODO 删除Url
 						delUrl : ''
 					};
 
