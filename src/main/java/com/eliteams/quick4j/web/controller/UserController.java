@@ -143,20 +143,21 @@ public class UserController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/updateUser")
+    @RequestMapping(value = "/updateOrInsertUser")
     @ResponseBody
-    public Map<String,Object> updateUser(@Valid User user, HttpServletRequest request) {
+    public AjaxJson updateOrInsertUser(@Valid User user, HttpServletRequest request) {
         try {
-
-            Map<String , Object> map = new HashMap<String, Object>();
-        	userService.update(user);
-        	 Map<String, Object> paramMap = new HashMap<String, Object>();
-             //paramMap.put("m", (page - 1) * rows);
-             paramMap.put("m", 0);
-             paramMap.put("n", rows);
-             map  = userService.selectList(paramMap);
-             //request.getSession().setAttribute("userInfoList", selectList);
-            return map;
+        	AjaxJson j = new AjaxJson();
+            String operType = request.getParameter("operType");
+            if("add".equals(operType)) {
+            	userService.insert(user);
+            }else {
+            	userService.update(user);
+            }
+        	j.setSuccess(true);
+        	j.setObj(user);
+        	j.setMsg("执行成功");
+            return j;
         } catch (Exception e) {
             e.printStackTrace();
             return null;

@@ -31,6 +31,15 @@
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">状态</label>
+				<div class="layui-input-inline">
+					<input type="radio" name="state" value="0" title="正常" checked>
+					<input type="radio" name="state" value="1" title="锁定">
+				</div>
+			</div>
+			
 
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户类型</label>
@@ -75,7 +84,7 @@
 			operType : operType,
 			showDataUrl : "/houdaexam/rest/user/getUserByid",
 			//HLTODO 用户编辑、新增接口
-			submitUrl : "/houdaexam/rest/user/updateUser",
+			submitUrl : "/houdaexam/rest/user/updateOrInsertUser",
 		};
 		//定义自己的对象
 		var codeedit = function(options){
