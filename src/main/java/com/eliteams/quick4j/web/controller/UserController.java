@@ -43,8 +43,8 @@ public class UserController {
     @Resource
     private UserService userService;
     
-    public final int rows=20;
-
+    private int rows = 10;
+    
     /**
      * 用户登录
      * 
@@ -188,11 +188,9 @@ public class UserController {
         try {
             Map<String , Object> map = new HashMap<String, Object>();
             Map<String, Object> paramMap = new HashMap<String, Object>();
-            //paramMap.put("m", (page - 1) * rows);
             paramMap.put("m", (page - 1) * rows);
             paramMap.put("n", rows);
             map  = userService.selectList(paramMap);
-            //request.getSession().setAttribute("userInfoList", selectList);
             return map;
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,7 +204,7 @@ public class UserController {
      *
      * @return
      */
-    @RequestMapping(value = "/getUserList")
+    @RequestMapping(value = "/getUserByid")
     @ResponseBody
     public AjaxJson getUserList(HttpServletRequest request,User userParam) {
     	AjaxJson j = new AjaxJson();
@@ -218,24 +216,26 @@ public class UserController {
     
     /**
      * 用户列表
-     *
      * @return
      */
-    @RequestMapping(value = "/getUserByid")
+    @RequestMapping(value = "/getUserList")
     @ResponseBody
     public Page<User> getUserByid(HttpServletRequest request,Page<User> page) {
 
-        	List<User> userList = new ArrayList<>();
-        	User u1 = new User();
-        	u1.setId(123l);
-        	u1.setName("HLtest");
         	
-        	userList.add(u1);
+        	 Map<String , Object> map = new HashMap<String, Object>();
+        	 
+             Map<String, Object> paramMap = new HashMap<String, Object>();
+             paramMap.put("m", (page.getPage() - 1) * page.getLimit());
+             paramMap.put("n", page.getLimit());
+             
+             map  = userService.selectList(paramMap);
         	
-        	
-        	
+             List<User> userList = (List<User>)map.get("list");
+        	int count = (int)map.get("total");
+             
         	page.setData(userList);
-        	page.setCount(13);
+        	page.setCount(count);
         	page.setCode(0);
            
             return page;
