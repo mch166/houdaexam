@@ -131,6 +131,12 @@
             <if test="createTime != null">
                 create_time,
             </if>
+              <if test="name != null">
+                name,
+            </if>
+             <if test="type != null">
+                type ,
+            </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides=",">
             <if test="id != null">
@@ -148,6 +154,12 @@
             <if test="createTime != null">
                 #{createTime,jdbcType=TIMESTAMP},
             </if>
+              <if test="name != null">
+               #{name,jdbcType=VARCHAR},
+            </if>
+             <if test="type != null">
+               #{type,jdbcType=VARCHAR},
+            </if>
         </trim>
     </insert>
     <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.UserExample" resultType="java.lang.Integer">
@@ -164,6 +176,12 @@
             </if>
             <if test="record.username != null">
                 username = #{record.username,jdbcType=VARCHAR},
+            </if>
+              <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+             <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
             </if>
             <if test="record.password != null">
                 password = #{record.password,jdbcType=CHAR},
@@ -184,6 +202,8 @@
         set id = #{record.id,jdbcType=BIGINT},
         username = #{record.username,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=CHAR},
+         name = #{name,jdbcType=VARCHAR},
+         type = #{type,jdbcType=VARCHAR},
         state = #{record.state,jdbcType=VARCHAR},
         create_time = #{record.createTime,jdbcType=TIMESTAMP}
         <if test="_parameter != null">
@@ -195,6 +215,12 @@
         <set>
             <if test="username != null">
                 username = #{username,jdbcType=VARCHAR},
+            </if>
+             <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+             <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=CHAR},
@@ -212,6 +238,8 @@
         update user_tbl
         set username = #{username,jdbcType=VARCHAR},
         password = #{password,jdbcType=CHAR},
+                name = #{name,jdbcType=VARCHAR},
+                type = #{type,jdbcType=VARCHAR},
         state = #{state,jdbcType=VARCHAR},
         create_time =
         #{createTime,jdbcType=TIMESTAMP}

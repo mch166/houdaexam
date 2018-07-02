@@ -143,17 +143,37 @@ public class UserController {
      * @param result
      * @return
      */
-    @RequestMapping(value = "/updateOrInsertUser")
+    @RequestMapping(value = "/updateUser")
     @ResponseBody
-    public AjaxJson updateOrInsertUser(@Valid User user, HttpServletRequest request) {
+    public AjaxJson updateUser( User user, HttpServletRequest request) {
         try {
         	AjaxJson j = new AjaxJson();
-            String operType = request.getParameter("operType");
-            if("add".equals(operType)) {
-            	userService.insert(user);
-            }else {
             	userService.update(user);
-            }
+        	j.setSuccess(true);
+        	j.setObj(user);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+
+    /**
+     *插入用户
+     * 
+     * @param user
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/InsertUser")
+    @ResponseBody
+    public AjaxJson InsertUser( User user, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	user.setPassword(ApplicationUtils.sha256Hex("123456"));
+            userService.insert(user);
         	j.setSuccess(true);
         	j.setObj(user);
         	j.setMsg("执行成功");
