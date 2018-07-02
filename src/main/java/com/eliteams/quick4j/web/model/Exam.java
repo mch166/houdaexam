@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Exam implements Serializable{
 	/**
-	 * 
+	 * 试卷
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
