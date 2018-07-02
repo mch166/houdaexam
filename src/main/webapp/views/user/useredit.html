@@ -76,15 +76,17 @@
 		//编辑时，编码编号 不可编辑
 		var param = baseUtil.getLayerParentParam();
 		var operType = "add";
+		var submitUrl = "/houdaexam/rest/user/insertUser";
 		if(!baseUtil.isNullOrEmpty(param)){
 			operType = "edit";
+			submitUrl = "/houdaexam/rest/user/updateUser";
 		}
 		//设置参数
 		var options = {
 			operType : operType,
 			showDataUrl : "/houdaexam/rest/user/getUserByid",
 			//HLTODO 用户编辑、新增接口
-			submitUrl : "/houdaexam/rest/user/updateOrInsertUser",
+			submitUrl : submitUrl
 		};
 		//定义自己的对象
 		var codeedit = function(options){

@@ -29,6 +29,12 @@ layui
 					}
 					baseUtil.extend(userlist, autotable.tableClass);
 					
+					/**
+					 * 密码重置
+					 */
+					userlist.prototype.passResetOperation = function(data){
+						//data就是当前按钮点击这行的所有数据。{id:***,name:***}
+					}
 					
 					var userlistObj = new userlist(options);
 					exports('userlist', {});

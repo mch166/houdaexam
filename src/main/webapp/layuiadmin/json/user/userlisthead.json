@@ -18,6 +18,9 @@
 },{
 	"code":"edit",
 	"name":"编辑"
+},{
+	"code":"passReset",
+	"name":"密码重置"
 }],
 "toolbar":[{
 	"code":"add",
