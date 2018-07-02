@@ -1,5 +1,6 @@
 package com.eliteams.quick4j.web.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.ApplicationUtils;
+import com.eliteams.quick4j.core.util.Page;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.security.PermissionSign;
 import com.eliteams.quick4j.web.security.RoleSign;
@@ -195,6 +198,48 @@ public class UserController {
             e.printStackTrace();
             return null;
         }
+    }
+    //============================================
+    
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserList")
+    @ResponseBody
+    public AjaxJson getUserList(HttpServletRequest request,User userParam) {
+    	AjaxJson j = new AjaxJson();
+    	User user = userService.selectById(userParam.getId());
+    	j.setSuccess(true);
+    	j.setObj(user);
+    	return j;
+    }
+    
+    /**
+     * 用户列表
+     *
+     * @return
+     */
+    @RequestMapping(value = "/getUserByid")
+    @ResponseBody
+    public Page<User> getUserByid(HttpServletRequest request,Page<User> page) {
+
+        	List<User> userList = new ArrayList<>();
+        	User u1 = new User();
+        	u1.setId(123l);
+        	u1.setName("HLtest");
+        	
+        	userList.add(u1);
+        	
+        	
+        	
+        	page.setData(userList);
+        	page.setCount(13);
+        	page.setCode(0);
+           
+            return page;
+     
     }
 
 }

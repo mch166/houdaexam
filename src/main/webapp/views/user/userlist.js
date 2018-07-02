@@ -12,16 +12,13 @@ layui
 					
 					//设置table参数
 					var options = {
-						//数据id字段
-						idCode : "yhid",//(必需)
-						
 						tableTitleUrl : layui.setter.base+"json/user/userlisthead.json",//(必需)
-						dataUrl : "/web/system?_service=/code/getAllCodeList",//(必需)
+						dataUrl : "/houdaexam/rest/user/getUserList",//(必需)
 						//新增编辑页面
-						editHtml : '',//(必需)
+						editHtml : 'useredit.html',//(必需)
 						//查看页面
-						viewHtml : '',//(必需)
-						//删除Url
+						viewHtml : 'userview.html',//(必需)
+						//HLTODO 删除Url
 						delUrl : ''
 					};
 
@@ -33,24 +30,6 @@ layui
 					baseUtil.extend(userlist, autotable.tableClass);
 					
 					
-					/**
-					 * 明细操作
-					 */
-					userlist.prototype.codemxOperation = function(data) {
-						var that = this;
-						layer.open({
-							type : 2,
-							title : "编码详情",
-							content : "codeItemlist.html",
-							maxmin : !0,
-							area : admin.screen() <= 2 ? ['80%', '80%'] : ['600px', '400px'],
-							success : function(layero, index) {
-								baseUtil.setLayerParam(layero,data);
-							}
-						});
-					}
-	
-
 					var userlistObj = new userlist(options);
 					exports('userlist', {});
 				});

@@ -1,15 +1,15 @@
 {
 "code":"app_code",
 "data":[ {
-	"field" : "yhzh",
+	"field" : "username",
 	"title" : "用户账号",
 	"sort" : "true"
 }, {
-	"field" : "yhxm",
+	"field" : "name",
 	"title" : "用户姓名"
 }, {
-	"field" : "yhlxmc",
-	"title" : "用户类型"
+	"field" : "state",
+	"title" : "用户状态"
 }],
 "operationBtn":[{
 	"code":"detail",

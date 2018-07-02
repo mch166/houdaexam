@@ -12,25 +12,9 @@ layui
 					
 					//设置table参数
 					var options = {
-						//数据id字段
-						idCode : "bmbh",	//不传值时，默认：id//(必需)
-						//是否多选-默认：true
-						isCheckbox : true,
-						//表格ID 不传值时，默认：table-page
-						tableId : "table-page",
-						// 是否存在操作列。（默认：true）
-						//操作列id 不传值时，默认：operationBtn
-						hasOpera : true,
-						operationBtn : "operationBtn",
-						// 是否存在工具条。（默认：true）
-						//工具条ID 不传值时，默认：toolbar
-						hasToolbar : true,
-						toolbarId : "toolbar",
-						//搜索id 不传值时，默认：search
-						searchId : "search",
-						
 						tableTitleUrl : layui.setter.base+"json/student/tmlisthead.json",//(必需)
-						dataUrl : layui.setter.base+"json/student/tmlistdata.json",//(必需)
+						//HLTODO 请求题目list数据
+						dataUrl : layui.setter.base+"json/teacher/tmlistdata.json",//(必需)
 						//新增编辑页面
 						editHtml : 'tmedit.html',//(必需)
 						//查看页面
