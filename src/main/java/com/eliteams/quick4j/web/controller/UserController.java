@@ -108,32 +108,7 @@ public class UserController {
     }
 
    
-    /**
-     * 新增用户
-     * 
-     * @param user
-     * @param result
-     * @return
-     */
-    @RequestMapping(value = "/insertUser")
-    @ResponseBody
-    public Map<String,Object> insertUser(@Valid User user,HttpServletRequest request) {
-        try {
-
-            Map<String , Object> map = new HashMap<String, Object>();
-        	userService.insert(user);
-        	 Map<String, Object> paramMap = new HashMap<String, Object>();
-             //paramMap.put("m", (page - 1) * rows);
-             paramMap.put("m", 0);
-             paramMap.put("n", rows);
-             map  = userService.selectList(paramMap);
-             //request.getSession().setAttribute("userInfoList", selectList);
-            return map;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+   
 
 
     /**
@@ -185,13 +160,13 @@ public class UserController {
     }
     
     /**
-     * 用户列表
+     * 根据主键查用户 
      *
      * @return
      */
     @RequestMapping(value = "/getUserByid")
     @ResponseBody
-    public AjaxJson getUserList(HttpServletRequest request,User userParam) {
+    public AjaxJson getUserByid(HttpServletRequest request,User userParam) {
     	AjaxJson j = new AjaxJson();
     	User user = userService.selectById(userParam.getId());
     	j.setSuccess(true);
@@ -205,9 +180,41 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserList")
     @ResponseBody
-    public Page<User> getUserByid(HttpServletRequest request,Page<User> page) {      	
+    public Page<User> getUserList(HttpServletRequest request,Page<User> page) {      	
         	 Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
+             paramMap.put("m", (page.getPage() - 1) * page.getLimit());
+             paramMap.put("n", page.getLimit());        
+             map  = userService.selectList(paramMap);        	
+             List<User> userList = (List<User>)map.get("list");
+        	int count = (int)map.get("total");             
+        	page.setData(userList);
+        	page.setCount(count);
+        	page.setCode(0);       
+            return page; 
+    }
+    
+    /**
+     * 根据条件查用户列表
+     * @return
+     */
+    @RequestMapping(value = "/getUserByOther")
+    @ResponseBody
+    public Page<User> getUserByOther(HttpServletRequest request,Page<User> page,String name,String username,String state,String type) {      	
+        	 Map<String , Object> map = new HashMap<String, Object>();      	 
+             Map<String, Object> paramMap = new HashMap<String, Object>();
+             if(name!=null&&!"".equals(name.trim())) {
+            	 paramMap.put("name", name);
+             }
+             if(username!=null&&!"".equals(username.trim())) {
+            	 paramMap.put("username", username);
+             }
+             if(state!=null&&!"".equals(state.trim())) {
+            	 paramMap.put("state", state);
+             }
+             if(type!=null&&!"".equals(type.trim())) {
+            	 paramMap.put("type", type);
+             }
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
              paramMap.put("n", page.getLimit());        
              map  = userService.selectList(paramMap);        	

@@ -108,17 +108,14 @@
         </if>
     </delete>
     <insert id="insert" parameterType="com.eliteams.quick4j.web.model.User">
-        insert into user_tbl (id, username, password,
+        insert into user_tbl (username, password,
         state, create_time)
-        values (#{id,jdbcType=BIGINT}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
+        values ( #{username,jdbcType=VARCHAR}, #{password,jdbcType=CHAR},
         #{state,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP})
     </insert>
     <insert id="insertSelective" parameterType="com.eliteams.quick4j.web.model.User">
         insert into user_tbl
         <trim prefix="(" suffix=")" suffixOverrides=",">
-            <if test="id != null">
-                id,
-            </if>
             <if test="username != null">
                 username,
             </if>
@@ -162,7 +159,7 @@
             </if>
         </trim>
     </insert>
-    <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.UserExample" resultType="java.lang.Integer">
+    <select id="countByExample" parameterType="com.eliteams.quick4j.web.model.UserExample" resultType="java.lang.Long">
         select count(*) from user_tbl
         <if test="_parameter != null">
             <include refid="Example_Where_Clause" />

@@ -8,6 +8,7 @@ public class Subject implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private Long id;
+	private Long sjid;
 	private String tmtitle;
 	private String optionA;
 	private String optionB;
@@ -19,6 +20,13 @@ public class Subject implements Serializable{
 	
 	
 	
+	
+	public Long getSjid() {
+		return sjid;
+	}
+	public void setSjid(Long sjid) {
+		this.sjid = sjid;
+	}
 	public Long getId() {
 		return id;
 	}

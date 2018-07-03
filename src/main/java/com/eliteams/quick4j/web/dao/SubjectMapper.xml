@@ -3,37 +3,43 @@
 <mapper namespace="com.eliteams.quick4j.web.dao.SubjectMapper">
     <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Subject">
         <id column="id" property="id" jdbcType="BIGINT" />
-        <result column="username" property="username" jdbcType="VARCHAR" />
-        <result column="password" property="password" jdbcType="CHAR" />
-        <result column="state" property="state" jdbcType="VARCHAR" />
-        <result column="create_time" property="createTime" jdbcType="VARCHAR" />
-        <result column="type" property="type" jdbcType="INTEGER" />
-         <result column="name" property="name" jdbcType="VARCHAR" />
-        
+          <result column="sjid" property="sjid" jdbcType="BIGINT" />
+       <result column="tmtitle" property="tmtitle" jdbcType="VARCHAR" />
+        <result column="optionA" property="optionA" jdbcType="VARCHAR" />
+        <result column="optionB" property="optionB" jdbcType="VARCHAR" />
+        <result column="optionC" property="optionC" jdbcType="VARCHAR" />
+        <result column="optionD" property="optionD" jdbcType="VARCHAR" />
+        <result column="answer" property="answer" jdbcType="INTEGER" />
+         <result column="tmxh" property="tmxh" jdbcType="VARCHAR" />
+          <result column="parse" property="parse" jdbcType="VARCHAR" /> 
     </resultMap>
-   
+
     <sql id="Base_Column_List">
-        id, username, password, state, create_time,type,name
+        id, sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse
     </sql>
     
-    <select id="selectByExample" resultMap="BaseResultMap" parameterType="Map">
+    <select id="selectBySjid" resultMap="BaseResultMap" parameterType="map">
         select
-        <if test="distinct">
-            distinct
-        </if>
         <include refid="Base_Column_List" />
-        from user_tbl
-        where 1=1
-        <if test="username !=null and username != ''">
-			and username=#{username}
-		</if>	
-		 <if test="name !=null and name != ''">
-			and name=#{name}
-		</if>
-		order by id desc
+        from tm_tbl
+        where sjid= #{sjid}
+		order by tmxh 
 		<if test="m!=null and n!=null">
 			Limit ${m},${n}
 		</if>
+    </select>
+    
+       <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Subject">
+        insert into tm_tbl (sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse)
+        values (#{sjid}, #{tmtitle},#{optionA}, #{optionB},#{optionC}, #{optionD},#{answer}, #{tmxh},#{parse})
+    </insert>
+    
+    
+     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from tm_tbl
+        where id = #{id,jdbcType=BIGINT}
     </select>
   
     <select id="getRowCnts" resultType="int">

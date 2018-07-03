@@ -9,6 +9,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
+import com.eliteams.quick4j.web.dao.ExamMapper;
 import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.model.User;
@@ -22,12 +23,37 @@ import com.eliteams.quick4j.web.service.UserService;
 @Service
 public class ExamServiceImpl extends GenericServiceImpl<Exam, Long> implements ExamService {
 
+	@Resource
+	private ExamMapper examMapper;
+	
 	@Override
 	public GenericDao<Exam, Long> getDao() {
 		// TODO Auto-generated method stub
-		return null;
+		return examMapper;
 	}
 
+	@Override
+	public Map selectList(Map paramMap) {
+		Map<String, Object> retMap = new HashMap<String, Object>();
+        List<User> result = examMapper.selectByExample(paramMap);
+    	int rowCnts = examMapper.getRowCnts();
+        retMap.put("total", rowCnts);
+        retMap.put("list", result);
+        return retMap;
+	}
+
+	@Override
+	public Exam selectById(Long id) {
+		// TODO Auto-generated method stub
+		return examMapper.selectByPrimaryKey(id);
+	}
+	
+	
+	@Override
+	public int insert(Exam exam) {
+		// TODO Auto-generated method stub
+		return examMapper.insert(exam);
+	}
    
 
 }
