@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编码管理</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
+	media="all">
+<link rel="stylesheet" href="../../layuiadmin/style/admin.css"
+	media="all">
+</head>
+<body>
+	<div class="layui-fluid">
+		<div class="layui-row layui-col-space1">
+			<div class="layui-col-md12">
+				<div class="layui-card">
+					<div class="layui-card-body">
+						<div class="layui-form-query">
+							<!-- 搜索 -->
+							<form class="layui-form" id="query_form">
+								<div id="search" class="layui-form-item">
+									<div class="layui-inline">
+										<label class="layui-form-mid">姓名：</label>
+										<div class="layui-input-inline" style="width: 150px;">
+											<input class="layui-input layui-input-sm" name="name"
+												id="test-table-demoReload" autocomplete="off">
+										</div>
+									</div>
+									<div class="layui-inline">
+										<div class="layui-input-inline">
+											<button class="layui-btn" type="button" data-type="reload"
+												function="query">
+												查询
+											</button>
+										</div>
+									</div>
+								</div>
+							</form>
+						</div>
+						<hr />
+						<div id="toolbar" class="layui-btn-group test-table-operate-btn"
+							style="margin-bottom: 10px;">
+							<!-- 如果存在特殊按钮，也可以在这里手动添加 -->
+						</div>
+						<!-- <div class="layui-col-md12"> -->
+						<table class="layui-hide" id="table-page" lay-filter="table-page"></table>
+						<!-- </div> -->
+					</div>
+				</div>
+			</div>
+		</div>
+</div>
+	<!-- 操作列 -->
+	<script type="text/html" id="operationBtn"></script>
+
+	<script src="../../layuiadmin/layui/layui.js"></script>
+	<script>
+		layui.config({
+			base : '../../layuiadmin/' //静态资源所在路径
+		}).extend({
+			index : 'lib/index' //主入口模块
+		}).use([ 'index','baseUtil', 'autotable', 'jquery', 'table'],function(){
+			//引入其他模块
+			var $ = layui.$;
+			var autotable = layui.autotable;
+			var table = layui.table;
+			var baseUtil = layui.baseUtil;
+			var admin = layui.admin;
+			
+			//设置table参数
+			var options = {
+				tableTitleUrl : layui.setter.base+"json/user/gradelisthead.json",//(必需)
+				dataUrl : "/houdaexam/rest/user/getUserList",//(必需)
+			};
+
+			//定义当前页面对象
+			//并且继承autotable.tableClass
+			var gradelist = function(options){
+				gradelist.superClass.constructor.apply(this, arguments);
+			}
+			baseUtil.extend(gradelist, autotable.tableClass);
+			
+			/**
+			 * 查询
+			 */
+			gradelist.prototype.searchOperation = function(data){
+				
+			}
+			
+			var gradelistObj = new gradelist(options);
+		});
+	</script>
+</body>
+</html>
+

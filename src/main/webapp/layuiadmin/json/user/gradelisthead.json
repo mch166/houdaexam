@@ -1,0 +1,14 @@
+{
+"code":"app_code",
+"data":[ {
+	"field" : "username",
+	"title" : "姓名",
+	"sort" : "true"
+}, {
+	"field" : "name",
+	"title" : "考卷"
+}, {
+	"field" : "score",
+	"title" : "成绩"
+}]
+}

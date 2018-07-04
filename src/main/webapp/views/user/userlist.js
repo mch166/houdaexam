@@ -33,7 +33,22 @@ layui
 					 * 密码重置
 					 */
 					userlist.prototype.passResetOperation = function(data){
-						//data就是当前按钮点击这行的所有数据。{id:***,name:***}
+						$.ajax({
+							type : "post",
+							url : '',
+							data : data,// 参数
+							dataType : "json",
+							success : function(data, status) {
+								if(data.success){
+									layer.msg("密码重置成功");
+								}else{
+									layer.msg("密码重置失败");
+								}
+							},
+							error : function() {
+								layer.msg("密码重置失败");
+							}
+						});
 					}
 					
 					var userlistObj = new userlist(options);

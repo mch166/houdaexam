@@ -37,7 +37,7 @@
 					"name": "",
 					"title": "成绩管理",
 					"icon": "fa-navicon",
-					"url": "set/user/info.html"
+					"url": "user/gradelist.html"
 				}
 			]
 		}
