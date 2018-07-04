@@ -282,7 +282,7 @@ body .layui-edit-face  .layui-layer-content{padding:0; background-color:#fff; co
 .fly-signin-list span i{color: #FF5722;}
 .fly-signin-list .fly-none{padding-top: 20px; min-height: 0;}
 .fly-signin-days{position: absolute; right: 15px; padding-left: 10px; color: #999;}
-.fly-signin-main{position: relative; padding: 10px 10px; text-align: center;}
+.fly-signin-main{position: relative; padding: 10px 10px; text-align: left;}
 .fly-signin-main span{padding-left: 10px;}
 
 /* °ñµ¥ */

@@ -1,247 +1,380 @@
- 
- 
+
+
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>基于 layui 的极简社区页面模版</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
+<meta charset="utf-8">
+<title>基于 layui 的极简社区页面模版</title>
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, maximum-scale=1">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
 	media="all">
-	<link rel="stylesheet" href="../../layuiadmin/style/global.css"
+<link rel="stylesheet" href="../../layuiadmin/style/global.css"
 	media="all">
-  <style>
-    .layui-btn-sm {
-      width:30px;
-      height:24px;
-    }
-  </style>
+<style>
+.layui-btn-sm {
+	width: 30px;
+	height: 24px;
+}
+.layui-input-block {
+    margin-left: 30px;
+    min-height: 36px;
+}
+.tm-title{
+	margin-top: 20px;
+    font-size: 16px;
+}
+</style>
 </head>
 <body>
 
-<div class="fly-header layui-bg-black">
-  <div class="layui-container">
-    <a class="fly-logo" href="/">
-      <img src="../res/images/logo.png" alt="layui">
-    </a>
-    
-    <ul class="layui-nav fly-nav-user">
-      <!-- 未登入的状态 -->
-      <li class="layui-nav-item">
-        <a class="iconfont icon-touxiang layui-hide-xs" href="user/login.html"></a>
-      </li>
-    </ul>
-  </div>
-</div>
+	<div class="fly-header layui-bg-black">
+		<div class="layui-container">
+			<a class="fly-logo" href="/"> <img src="../res/images/logo.png"
+				alt="layui">
+			</a>
 
-<div class="fly-panel fly-column">
-  <div class="layui-progress">
-    <div class="layui-progress-bar" lay-percent="50%"></div>
-  </div> 
-  <div class="layui-container">
-    <div class="fly-column-right layui-hide-xs">
-      <span class="fly-search"><i class="layui-icon"></i></span> 
-      结束时间：************
-    </div> 
-  </div>
-</div>
+			<ul class="layui-nav fly-nav-user">
+				<!-- 未登入的状态 -->
+				<li class="layui-nav-item"><a
+					class="iconfont icon-touxiang layui-hide-xs" href="javascript:0#"></a>
+				</li>
+			</ul>
+		</div>
+	</div>
 
-<div class="layui-container">
-  <div class="layui-row layui-col-space10">
+	<div class="fly-panel fly-column">
+		<!-- 
+		<div class="layui-progress">
+			<div class="layui-progress-bar" lay-percent="50%"></div>
+		</div>
+		 -->
+		<div class="layui-container">
+			<div class="fly-column-right layui-hide-xs">
+				<button class="layui-btn layui-btn-danger" style="margin-right:10px;"><i class="layui-icon">O</i>交&nbsp;&nbsp;卷</button>
+				结束时间：************
+			</div>
+		</div>
+	</div>
 
-    <div class="layui-col-md4">
-        <div class="fly-panel fly-rank fly-rank-reply"  id="LAY_replyRank">
-            <h3 class="fly-panel-title">不定项</h3>
-            <div class="fly-panel-main fly-signin-main">
-                <button class="layui-btn layui-btn-sm layui-btn-blue" id="LAY_signin">1</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">2</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">3</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">4</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">5</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">6</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">7</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">8</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">17</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">18</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">19</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">20</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">21</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">22</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">23</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">24</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-blue" id="LAY_signin">1</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">2</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">3</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">4</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">5</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">6</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">7</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">8</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">17</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">18</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">19</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">20</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">21</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">22</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">23</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">24</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-                <br>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">9</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">10</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">11</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">12</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">13</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">14</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">15</button>
-                <button class="layui-btn layui-btn-sm layui-btn-danger" id="LAY_signin">16</button>
-                <br>
-            </div>
-        </div>
-    </div>
+	<div class="layui-container">
+		<div class="layui-row layui-col-space10">
 
-    <div class="layui-col-md8" style="height:500px;">
-      <div class="fly-panel" style="height:500px;">
-        <div class="fly-panel-title fly-filter">
-          <a>题目</a>
-        </div>
-        <dl class="fly-list">
-          <dd>
-              <a class="layui-badge">1</a>
-              这是一道单选题样列
-          </dd>
-          <dd>
-              <input type="radio" name="sex" value="男" title="男" checked="">阿萨德发嘎嘎按个按个阿斯蒂芬阿飞十大
-          </dd>
-          <dd>
-              <input type="radio" name="sex" value="女" title="女">阿斯蒂芬阿萨德飞洒电风扇阿飞十大分
-          </dd>
-          <dd>
-              <input type="radio" name="sex" value="禁" title="禁用" disabled="">阿萨德飞洒飞洒斯蒂芬撒旦法十大防守对方阿飞sd十大
-          </dd>
-        </dl>
-      </div>
-    </div>
+			<div class="layui-col-md4" style="height: 450px;">
+				<div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank" style="height: 430px;">
+					<div class="layui-tab" style="margin: 0px 0px;">
+						<ul class="layui-tab-title">
+							<li class="layui-this">单选题</li>
+							<li>多选题</li>
+							<li>不定项</li>
+						</ul>
+						<div class="layui-tab-content">
+							<div class="layui-tab-item layui-show">
+								<div class="fly-panel-main fly-signin-main">
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">1</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">2</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">3</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">4</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">5</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">6</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">7</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">8</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">17</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">18</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">19</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">20</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">21</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">22</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">23</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">24</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<br>
+								</div>
+							</div>
+							<div class="layui-tab-item">
+								<div class="fly-panel-main fly-signin-main">
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">1</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">2</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">3</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">4</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">5</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">6</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">7</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">8</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">17</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">18</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">19</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">20</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">21</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">22</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">23</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">24</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">16</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<br>
+								</div>
+							</div>
+							<div class="layui-tab-item">
+								<div class="fly-panel-main fly-signin-main">
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">1</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">2</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">3</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">4</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">5</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">6</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">7</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">8</button>
+									<br> <br>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">9</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">10</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">11</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">12</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">13</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">14</button>
+									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
+										name="tm">15</button>
+									<br>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 
-  </div>
-</div>
+			<div class="layui-col-md8" style="height: 390px;">
+				<div class="fly-panel" style="height: 370px;">
+					<div class="fly-panel-title fly-filter">
+						<a>题目</a>
+					</div>
+					<form class="layui-form" action="">
+						<div class="layui-input-block tm-title">
+							<span id="tmtitle">此处只是演示联动排版，并未做联动交互</span>
+						</div>
+						<div class="layui-input-block">
+							<input type="radio" name="sex" value="男" title="男">
+						</div>
+						<div class="layui-input-block">
+							<input type="radio" name="sex" value="男" title="男">
+						</div>
+						<div class="layui-input-block">
+							<input type="radio" name="sex" value="男" title="男">
+						</div>
+						<div class="layui-input-block">
+							<input type="radio" name="sex" value="男" title="男">
+						</div>
+						<div class="layui-input-block">
+							解析：<br>
+							正确答案：A<br>
+							正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案
+						</div>
+					</form>
+				</div>
+			</div>
+			<br><br>
+			<div class="layui-col-md8" style="height: 60px;">
+				<div class="fly-panel" style="height: 50px;" align="right">
+					<button class="layui-btn layui-btn-warm" style="margin: 6px;"><i class="layui-icon"></i>标记</button>
+					<button class="layui-btn" style="margin: 6px;"><i class="layui-icon"></i>上一题</button>
+    				<button class="layui-btn" style="margin: 6px;">下一题<i class="layui-icon"></i></button>
+				</div>
+			</div>
 
- 
-<script src="../../layuiadmin/layui/layui.js"></script>
-<script>
-layui.cache.page = '';
-layui.cache.user = {
-  username: '游客'
-  ,uid: -1
-  ,avatar: '../res/images/avatar/00.jpg'
-  ,experience: 83
-  ,sex: '男'
-};
-//layui.config({
-//  version: "3.0.0"
- // ,base: '../res/mods/' //这里实际使用时，建议改成绝对路径
-//}).extend({
-//  fly: 'index'
-//}).use('fly');
-</script>
+		</div>
+	</div>
 
-<script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));</script>
+
+	<script src="../../layuiadmin/layui/layui.js"></script>
+	<script>
+		layui.cache.page = '';
+		layui.cache.user = {
+			username : '游客',
+			uid : -1,
+			avatar : '../res/images/avatar/00.jpg',
+			experience : 83,
+			sex : '男'
+		};
+
+		layui.use(['element','form'], function() {
+			var $ = layui.jquery
+				,element = layui.element//Tab的切换功能，切换事件监听等，需要依赖element模块
+				,form = layui.form; 
+			//Hash地址的定位
+			var layid = location.hash.replace(/^#test=/, '');
+			element.tabChange('test', layid);
+
+			element.on('tab(test)', function(elem) {
+				location.hash = 'test=' + $(this).attr('lay-id');
+			});
+		});
+	</script>
+
+	<script type="text/javascript">
+		var cnzz_protocol = (("https:" == document.location.protocol) ? " https://"
+				: " http://");
+		document
+				.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='"
+						+ cnzz_protocol
+						+ "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));
+	</script>
 
 </body>
 </html>

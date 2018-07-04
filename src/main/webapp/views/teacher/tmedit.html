@@ -77,7 +77,7 @@
 			<div class="layui-form-item layui-form-text">
 				<label class="layui-form-label">解析</label>
 				<div class="layui-input-block">
-					<textarea name="parse" placeholder="请输入内容" class="layui-textarea"></textarea>
+					<textarea name="parse" onpropertychange="if(value.length>150){value=value.substr(0,100);layer.msg('最多只能输入150个字符');}" placeholder="请输入内容" class="layui-textarea"></textarea>
 				</div>
 			</div>
 			<div class="layui-form-item" style='display: none'>
