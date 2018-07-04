@@ -16,12 +16,10 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
-			<input type="hidden" name="id">
-			<input type="hidden" name="sjid">
 			<div class="layui-form-item">
 				<label class="layui-form-label">试卷编号</label>
 				<div class="layui-input-inline">
-					<input type="text" id="sjid" name="sjid" class="layui-disable" lay-verify="required"
+					<input type="text" id="id" name="id" layui-disable lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
@@ -66,7 +64,7 @@
 		//设置参数
 		var options = {
 			operType : operType,
-			showDataUrl : "",
+			showDataUrl : "/houdaexam/rest/exam/getExamByid",
 			submitUrl : "",
 		};
 		//定义自己的对象

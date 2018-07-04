@@ -1,7 +1,7 @@
 {
 "code":"app_code",
 "data":[ {
-	"field" : "sjid",
+	"field" : "id",
 	"title" : "试卷编号",
 	"sort" : "true"
 },{
