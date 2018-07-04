@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.eliteams.quick4j.web.dao.AnswerMapper">
+    <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Answer">
+        <id column="id" property="id" jdbcType="BIGINT" />
+       <result column="userid" property="userid" jdbcType="BIGINT" />
+        <result column="sjid" property="sjid" jdbcType="BIGINT" />
+        <result column="answer" property="answer" jdbcType="VARCHAR" />
+        <result column="answerTime" property="answerTime" jdbcType="VARCHAR" />
+        <result column="score" property="score" jdbcType="VARCHAR" />
+         <result column="submitTime" property="submitTime" jdbcType="VARCHAR" />
+  </resultMap>
+
+    <sql id="Base_Column_List">
+        id, sjid, userid, answer, answerTime,score,submitTime
+    </sql>
+    
+    <select id="selectByOther" resultMap="BaseResultMap" parameterType="map">
+        select
+        <include refid="Base_Column_List" />
+        from dt_tbl
+         where 1=1
+        <if test="sjid !=null and sjid != ''">
+			and sjid=#{sjid}
+		</if>	
+		 <if test="userid !=null and userid != ''">
+			and userid=#{userid}
+		</if>
+		<if test="m!=null and n!=null">
+			Limit ${m},${n}
+		</if>
+    </select>
+    
+       <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Answer">
+        insert into dt_tbl (sjid, userid, answer, answerTime,score,submitTime)
+        values (#{sjid}, #{userid},#{answer}, #{answerTime},#{score}, #{submitTime})
+    </insert>
+    
+    
+     <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List" />
+        from dt_tbl
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    
+    
+    <update id="updateScore" parameterType="com.eliteams.quick4j.web.model.Answer">   
+        update dt_tbl set score=#{score} 
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from dt_tbl
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    
+  
+    <select id="getRowCnts" resultType="int">
+		SELECT
+		FOUND_ROWS();
+	</select>
+</mapper>

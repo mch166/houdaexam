@@ -40,6 +40,19 @@
         where id = #{id,jdbcType=BIGINT}
     </delete>
     
+    
+    <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.Subject">   
+        update sj_tbl
+        <set>
+            <if test="tmtitle != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+        
+    
     <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Exam">
         insert into sj_tbl (name)
         values (#{name,jdbcType=VARCHAR})

@@ -14,4 +14,19 @@ import com.eliteams.quick4j.web.model.User;
 public interface SubjectService extends GenericService<Subject, Long> {
 
 	Map<String, Object> selectBySjid(Map map);
+	
+    /**
+     * 根据试卷和题目序号查询
+     * @param sjid
+     * @param tmxh
+     * @return
+     */
+    Subject selectByTmxh(Long sjid,String tmxh);
+    
+    /**
+     * 根据试卷id删除试题
+     * @param sjid
+     * @return
+     */
+    int deleteBySjid(String sjid);
 }

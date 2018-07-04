@@ -12,10 +12,11 @@
         <result column="answer" property="answer" jdbcType="INTEGER" />
          <result column="tmxh" property="tmxh" jdbcType="VARCHAR" />
           <result column="parse" property="parse" jdbcType="VARCHAR" /> 
-    </resultMap>
+          <result column="type" property="type" jdbcType="VARCHAR" /> 
+  </resultMap>
 
     <sql id="Base_Column_List">
-        id, sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse
+        id, sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse,type
     </sql>
     
     <select id="selectBySjid" resultMap="BaseResultMap" parameterType="map">
@@ -30,8 +31,8 @@
     </select>
     
        <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Subject">
-        insert into tm_tbl (sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse)
-        values (#{sjid}, #{tmtitle},#{optionA}, #{optionB},#{optionC}, #{optionD},#{answer}, #{tmxh},#{parse})
+        insert into tm_tbl (sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse,type)
+        values (#{sjid}, #{tmtitle},#{optionA}, #{optionB},#{optionC}, #{optionD},#{answer}, #{tmxh},#{parse},#{type})
     </insert>
     
     
@@ -41,6 +42,58 @@
         from tm_tbl
         where id = #{id,jdbcType=BIGINT}
     </select>
+    
+    <select id="selectByTmxh" resultMap="BaseResultMap" >
+        select
+        <include refid="Base_Column_List" />
+        from tm_tbl
+        where sjid= #{sjid} and tmxh=#{tmxh}
+    </select>
+    
+    <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.Subject">   
+        update tm_tbl
+        <set>
+            <if test="tmtitle != null">
+                tmtitle = #{tmtitle,jdbcType=VARCHAR},
+            </if>
+             <if test="optionA != null">
+                optionA = #{optionA,jdbcType=VARCHAR},
+            </if>
+             <if test="optionB != null">
+                optionB = #{optionB,jdbcType=VARCHAR},
+            </if>
+            <if test="optionC != null">
+                optionC = #{optionC,jdbcType=VARCHAR},
+            </if>
+            <if test="optionD != null">
+                optionD = #{optionD,jdbcType=VARCHAR},
+            </if>
+            <if test="answer != null">
+                answer = #{answer,jdbcType=VARCHAR},
+            </if>
+            <if test="tmxh != null">
+                tmxh = #{tmxh,jdbcType=VARCHAR},
+            </if>
+            <if test="parse != null">
+                parse = #{parse,jdbcType=VARCHAR},
+            </if>
+            <if test="type != null">
+                type = #{type,jdbcType=VARCHAR},
+            </if>
+            
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    
+     <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+        delete from tm_tbl
+        where id = #{id,jdbcType=BIGINT}
+    </delete>
+    
+    <delete id="deleteBySjid" parameterType="String">
+        delete from tm_tbl
+        where sjid = #{sjid,jdbcType=BIGINT}
+    </delete>
   
     <select id="getRowCnts" resultType="int">
 		SELECT

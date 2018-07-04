@@ -11,8 +11,9 @@ public class Answer implements Serializable{
 	private String userid;
 	private String sjid;
 	private String answer;
-	private String answerTime;
+	private String answerTime;//答题所用时间
 	private String score;
+	private String submitTime;//交卷时间
 	public Long getId() {
 		return id;
 	}
@@ -48,6 +49,12 @@ public class Answer implements Serializable{
 	}
 	public void setScore(String score) {
 		this.score = score;
+	}
+	public String getSubmitTime() {
+		return submitTime;
+	}
+	public void setSubmitTime(String submitTime) {
+		this.submitTime = submitTime;
 	}
 	
 	

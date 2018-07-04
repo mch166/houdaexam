@@ -82,20 +82,35 @@ public class SubjectController {
      *
      * @return
      */
-    @RequestMapping(value = "/getExamByid")
+    @RequestMapping(value = "/getSubjectByid")
     @ResponseBody
-    public AjaxJson getUserByid(HttpServletRequest request,Subject subjectParam) {
+    public AjaxJson getSubjectByid(HttpServletRequest request,Subject subjectParam) {
     	AjaxJson j = new AjaxJson();
     	Subject subject = subjectService.selectById(subjectParam.getId());
     	j.setSuccess(true);
     	j.setObj(subject);
     	return j;
     }
+    
+    /**
+     * 根据试卷和题目序号查试题 
+     *
+     * @return
+     */
+    @RequestMapping(value = "/selectByTmxh")
+    @ResponseBody
+    public AjaxJson selectByTmxh(HttpServletRequest request,Long sjid,String tmxh) {
+    	AjaxJson j = new AjaxJson();
+    	Subject subject = subjectService.selectByTmxh(sjid, tmxh);
+    	j.setSuccess(true);
+    	j.setObj(subject);
+    	return j;
+    }
 	
-    //插入试题
+    //插入题目
     @RequestMapping(value = "/InsertSubject")
     @ResponseBody
-    public AjaxJson InsertExam( Subject subject, HttpServletRequest request) {
+    public AjaxJson InsertSubject( Subject subject, HttpServletRequest request) {
         try {
         	AjaxJson j = new AjaxJson();
         	subjectService.insert(subject);
@@ -108,6 +123,39 @@ public class SubjectController {
         }
     }
     
-
+    
+  //更新题目
+    @RequestMapping(value = "/updateSubject")
+    @ResponseBody
+    public AjaxJson updateSubject( Subject subject, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	subjectService.update(subject);
+        	j.setSuccess(true);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+  //删除题目
+    @RequestMapping(value = "/deleteSubject")
+    @ResponseBody
+    public AjaxJson deleteSubject( Subject subject, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	subjectService.delete(subject.getId());
+        	j.setSuccess(true);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
 	
 }

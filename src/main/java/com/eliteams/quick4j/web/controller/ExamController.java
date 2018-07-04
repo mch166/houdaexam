@@ -14,6 +14,7 @@ import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.Page;
 import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.service.ExamService;
+import com.eliteams.quick4j.web.service.SubjectService;
 
 @Controller
 @RequestMapping(value = "/exam")
@@ -21,6 +22,9 @@ public class ExamController {
 
 	@Resource
 	private ExamService examService;
+	
+	@Resource
+	private SubjectService subjectService;
 
 	@RequestMapping(value = "/getExamList")
     @ResponseBody
@@ -61,6 +65,41 @@ public class ExamController {
         try {
         	AjaxJson j = new AjaxJson();
         	examService.insert(exam);
+        	j.setSuccess(true);
+        	j.setObj(exam);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    @RequestMapping(value = "/deleteExam")
+    @ResponseBody
+    public AjaxJson deleteExam( Exam exam, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	examService.delete(exam.getId());
+        	subjectService.deleteBySjid(exam.getId().toString());
+        	//删除对应的题目
+        	j.setSuccess(true);
+        	j.setObj(exam);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    
+    @RequestMapping(value = "/updateExam")
+    @ResponseBody
+    public AjaxJson updateExam( Exam exam, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	examService.update(exam);
         	j.setSuccess(true);
         	j.setObj(exam);
         	j.setMsg("执行成功");

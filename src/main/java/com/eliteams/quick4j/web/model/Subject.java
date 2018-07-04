@@ -17,6 +17,7 @@ public class Subject implements Serializable{
 	private String answer;
 	private String tmxh;
 	private String parse;
+	private String type;
 	
 	
 	
@@ -81,6 +82,14 @@ public class Subject implements Serializable{
 	public void setParse(String parse) {
 		this.parse = parse;
 	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	
+	
 	
 	
 	

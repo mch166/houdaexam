@@ -55,5 +55,30 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	    public Subject selectById(Long id) {
 	        return subjectMapper.selectByPrimaryKey(id);
 	    } 
+	  
+	  @Override
+	    public Subject selectByTmxh(Long sjid,String tmxh) {
+	        return subjectMapper.selectByTmxh(sjid,tmxh);
+	    } 
+	  
+	  @Override
+	    public int update(Subject model) {
+	        return subjectMapper.updateByPrimaryKeySelective(model);
+	    }
+
+	    @Override
+	    public int delete(Long id) {
+	        return subjectMapper.deleteByPrimaryKey(id);
+	    }
+	    
+	    /**
+	     * 根据试卷id删除试题
+	     * @param sjid
+	     * @return
+	     */
+	    @Override
+	   public int deleteBySjid(String sjid) {
+	    	return subjectMapper.deleteBySjid(sjid);
+	    }
 
 }

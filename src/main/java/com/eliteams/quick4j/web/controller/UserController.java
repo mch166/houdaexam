@@ -136,6 +136,31 @@ public class UserController {
     
 
     /**
+     *删除用户
+     * 
+     * @param user
+     * @param result
+     * @return
+     */
+    @RequestMapping(value = "/deleteUser")
+    @ResponseBody
+    public AjaxJson deleteUser( User user, HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+            	userService.delete(user.getId());
+        	j.setSuccess(true);
+        	j.setObj(user);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
+
+    /**
      *插入用户
      * 
      * @param user
