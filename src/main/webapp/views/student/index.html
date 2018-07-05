@@ -16,13 +16,16 @@
 	width: 30px;
 	height: 24px;
 }
+
 .layui-input-block {
-    margin-left: 30px;
-    min-height: 36px;
+	margin-left: 30px;
+	min-height: 36px;
+	margin-top: 4px;
 }
-.tm-title{
+
+.tm-title {
 	margin-top: 20px;
-    font-size: 16px;
+	font-size: 16px;
 }
 </style>
 </head>
@@ -30,8 +33,7 @@
 
 	<div class="fly-header layui-bg-black">
 		<div class="layui-container">
-			<a class="fly-logo" href="/"> <img src="../res/images/logo.png"
-				alt="layui">
+			<a class="fly-logo" href="/"> <img src="../res/images/logo.png" alt="layui">
 			</a>
 
 			<ul class="layui-nav fly-nav-user">
@@ -51,8 +53,11 @@
 		 -->
 		<div class="layui-container">
 			<div class="fly-column-right layui-hide-xs">
-				<button class="layui-btn layui-btn-danger" style="margin-right:10px;"><i class="layui-icon">O</i>交&nbsp;&nbsp;卷</button>
-				结束时间：************
+				<button class="layui-btn layui-btn-danger"
+					style="margin-right: 10px;">
+					<i class="layui-icon">O</i>交&nbsp;&nbsp;卷
+				</button>
+				结束时间：<span id="examTime"></span>
 			</div>
 		</div>
 	</div>
@@ -60,8 +65,9 @@
 	<div class="layui-container">
 		<div class="layui-row layui-col-space10">
 
-			<div class="layui-col-md4" style="height: 450px;">
-				<div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank" style="height: 430px;">
+			<div class="layui-col-md4" style="height: 470px;">
+				<div class="fly-panel fly-rank fly-rank-reply" id="LAY_replyRank"
+					style="height: 450px;">
 					<div class="layui-tab" style="margin: 0px 0px;">
 						<ul class="layui-tab-title">
 							<li class="layui-this">单选题</li>
@@ -70,7 +76,7 @@
 						</ul>
 						<div class="layui-tab-content">
 							<div class="layui-tab-item layui-show">
-								<div class="fly-panel-main fly-signin-main">
+								<div id="dxdiv" class="fly-panel-main fly-signin-main">
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
 										name="tm">1</button>
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
@@ -181,7 +187,7 @@
 								</div>
 							</div>
 							<div class="layui-tab-item">
-								<div class="fly-panel-main fly-signin-main">
+								<div id="duoxdiv" class="fly-panel-main fly-signin-main">
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
 										name="tm">1</button>
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
@@ -260,7 +266,7 @@
 								</div>
 							</div>
 							<div class="layui-tab-item">
-								<div class="fly-panel-main fly-signin-main">
+								<div id="bdxdiv" class="fly-panel-main fly-signin-main">
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
 										name="tm">1</button>
 									<button class="layui-btn layui-btn-sm layui-btn-blue" id="tm_1"
@@ -300,41 +306,74 @@
 				</div>
 			</div>
 
-			<div class="layui-col-md8" style="height: 390px;">
-				<div class="fly-panel" style="height: 370px;">
+			<div class="layui-col-md8" style="height: 410px;">
+				<div class="fly-panel" style="height: 390px;">
 					<div class="fly-panel-title fly-filter">
 						<a>题目</a>
 					</div>
 					<form class="layui-form" action="">
 						<div class="layui-input-block tm-title">
-							<span id="tmtitle">此处只是演示联动排版，并未做联动交互</span>
+							<span id="tmxhSpan" class="layui-badge-rim">1.</span>
+							<span id="tmTypeSpan" class="layui-badge-rim">单选题</span>
+							<span id="tmtitle">关于刑法用语的解释,下列哪一选项是正确的？</span>
 						</div>
 						<div class="layui-input-block">
-							<input type="radio" name="sex" value="男" title="男">
+							<div>
+								<span>A. </span>
+								<span id="optionATitle" name="optionTitle">按照同类解释规则,对于刑法分则条文在列举具体要素后使用的“等”、“其他”用语,应按照所列举的内容、性质进行同类解释</span>
+							</div>
 						</div>
 						<div class="layui-input-block">
-							<input type="radio" name="sex" value="男" title="男">
+							<div>
+								<span>B. </span>
+								<span id="optionBTitle" name="optionTitle">按照同类解释规则,对于刑法分则条文在列举具体要素后使用的“等”、“其他”用语,应按照所用的“等”、“其他”用语,应按照所列举的内容、性质进行同类解释</span>
+							</div>
 						</div>
 						<div class="layui-input-block">
-							<input type="radio" name="sex" value="男" title="男">
+							<div>
+								<span>C. </span>
+								<span id="optionCTitle" name="optionTitle">按照同类解释规则,要素后使用的“等”、“其他”用语,应按照所列举的内容、性质进行同类解释</span>
+							</div>
 						</div>
 						<div class="layui-input-block">
-							<input type="radio" name="sex" value="男" title="男">
+							<div>
+								<span>D. </span>
+								<span id="optionDTitle" name="optionTitle">按照同类解释规则,对于刑法分则条文在列举具体要素后使用的“等”、“其他”用语,应按照所列举的内容、性质进行同类解释</span>
+							</div>
 						</div>
-						<div class="layui-input-block">
-							解析：<br>
-							正确答案：A<br>
+						<div id="parse" style="display:none" class="layui-input-block">
+							解析：<br> 正确答案：A<br>
 							正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案正确答案
+						</div>
+						
+						<div id="dxCheckDiv" style="display:none" class="layui-input-block">
+							<input type="radio" name="xzoption" value="A" title="A">
+							<input type="radio" name="xzoption" value="B" title="B">
+							<input type="radio" name="xzoption" value="C" title="C">
+							<input type="radio" name="xzoption" value="D" title="D">
+						</div>
+						<div id="duoxCheckDiv" class="layui-input-block">
+							<input type="checkbox" name="xzoption" value="A" title="A">
+							<input type="checkbox" name="xzoption" value="B" title="B">
+							<input type="checkbox" name="xzoption" value="C" title="C">
+							<input type="checkbox" name="xzoption" value="D" title="D">
 						</div>
 					</form>
 				</div>
 			</div>
-			<br><br>
+			<br>
+			<br>
 			<div class="layui-col-md8" style="height: 60px;">
 				<div class="fly-panel" style="height: 50px;" align="right">
-					<button class="layui-btn layui-btn-warm" style="margin: 6px;"><i class="layui-icon"></i>标记</button>
-					<button class="layui-btn" style="margin: 6px;"><i class="layui-icon"></i>上一题</button>
-    				<button class="layui-btn" style="margin: 6px;">下一题<i class="layui-icon"></i></button>
+					<button id="warmTm" class="layui-btn layui-btn-warm" style="margin: 6px;">
+						<i class="layui-icon"></i>标记
+					</button>
+					<button id="upTm" class="layui-btn" style="margin: 6px;">
+						<i class="layui-icon"></i>上一题
+					</button>
+					<button id="downTm" class="layui-btn" style="margin: 6px;">
+						下一题<i class="layui-icon"></i>
+					</button>
 				</div>
 			</div>
 
@@ -344,37 +383,20 @@
 
 	<script src="../../layuiadmin/layui/layui.js"></script>
 	<script>
-		layui.cache.page = '';
-		layui.cache.user = {
-			username : '游客',
-			uid : -1,
-			avatar : '../res/images/avatar/00.jpg',
-			experience : 83,
-			sex : '男'
-		};
-
-		layui.use(['element','form'], function() {
-			var $ = layui.jquery
-				,element = layui.element//Tab的切换功能，切换事件监听等，需要依赖element模块
-				,form = layui.form; 
-			//Hash地址的定位
-			var layid = location.hash.replace(/^#test=/, '');
-			element.tabChange('test', layid);
-
-			element.on('tab(test)', function(elem) {
-				location.hash = 'test=' + $(this).attr('lay-id');
-			});
+		layui.config({
+			base : '../layuiadmin/'
+		}).extend({
+			index : '../../views/student/index'
+		}).use(['index'],function(){
+			layui.cache.page = '';
+			layui.cache.user = {
+				username : '游客',
+				uid : -1,
+				avatar : '../res/images/avatar/00.jpg',
+				experience : 83,
+				sex : '男'
+			};
 		});
 	</script>
-
-	<script type="text/javascript">
-		var cnzz_protocol = (("https:" == document.location.protocol) ? " https://"
-				: " http://");
-		document
-				.write(unescape("%3Cspan id='cnzz_stat_icon_30088308'%3E%3C/span%3E%3Cscript src='"
-						+ cnzz_protocol
-						+ "w.cnzz.com/c.php%3Fid%3D30088308' type='text/javascript'%3E%3C/script%3E"));
-	</script>
-
 </body>
 </html>
