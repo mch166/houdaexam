@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.eliteams.quick4j.core.generic.GenericService;
 import com.eliteams.quick4j.web.model.Answer;
+import com.eliteams.quick4j.web.model.AnswerDisp;
 import com.eliteams.quick4j.web.model.Exam;
 
 /**
@@ -13,6 +14,9 @@ import com.eliteams.quick4j.web.model.Exam;
 public interface AnswerService extends GenericService<Answer, Long> {
 	
 	 public int updateScore(Answer model) ;
+	 
+	 
+	 String submitAnswer(AnswerDisp answerDisp);
 		
 
 }

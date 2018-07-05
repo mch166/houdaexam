@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.Page;
 import com.eliteams.quick4j.web.model.Answer;
+import com.eliteams.quick4j.web.model.AnswerDisp;
 import com.eliteams.quick4j.web.service.AnswerService;
 
 @Controller
@@ -80,25 +81,7 @@ public class AnswerController {
     	return j;
     }
     
-    
-	
-    //插入
-    @RequestMapping(value = "/InsertAnswer")
-    @ResponseBody
-    public AjaxJson InsertAnswer( Answer answer, HttpServletRequest request) {
-        try {
-        	AjaxJson j = new AjaxJson();
-        	answerService.insert(answer);
-        	j.setSuccess(true);
-        	j.setMsg("执行成功");
-            return j;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
-    
- 
+   
     
   //删除题目
     @RequestMapping(value = "/deleteAnswer")
@@ -115,6 +98,25 @@ public class AnswerController {
             return null;
         }
     }
+    
+    
+    //删除题目
+    @RequestMapping(value = "/submitAnswer")
+    @ResponseBody
+    public AjaxJson submitAnswer( AnswerDisp answerDisp ,HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	answerService.submitAnswer(answerDisp);
+        	j.setSuccess(true);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    
     
     
 	

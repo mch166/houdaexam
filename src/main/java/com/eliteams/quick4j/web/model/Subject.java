@@ -19,6 +19,36 @@ public class Subject implements Serializable{
 	private String parse;
 	private String type;
 	
+	/**
+	 * 单选
+	 */
+	public static final String TYPE_DANXUAN="1";
+	
+	/**
+	 * 多选
+	 */
+	public static final String TYPE_DUOXUAN="2";
+	
+	/**
+	 * 不定项
+	 */
+	public static final String TYPE_BUDINGXIANG="3";
+	
+	/**
+	 * 单选 分值
+	 */
+	public static final int VALUE_DANXUAN=1;
+	
+	/**
+	 * 多选 分值
+	 */
+	public static final int VALUE_DUOXUAN=2;
+	
+	/**
+	 * 不定项 分值
+	 */
+	public static final int VALUE_BUDINGXIANG=2;
+	
 	
 	
 	

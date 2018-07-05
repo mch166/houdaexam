@@ -1,8 +1,13 @@
 package com.eliteams.quick4j.web.model;
 
 import java.io.Serializable;
-
-public class Answer implements Serializable{
+import java.util.Map;
+/**
+ * 答题展示实体
+ * @author mengchong
+ *
+ */
+public class AnswerDisp implements Serializable{
 	/**
 	 * 
 	 */
@@ -10,7 +15,7 @@ public class Answer implements Serializable{
 	private Long id;
 	private String userid;
 	private String sjid;
-	private String answer;
+	private Map answerMap;
 	private String answerTime;//答题所用时间
 	private String score;
 	private String submitTime;//交卷时间
@@ -32,11 +37,12 @@ public class Answer implements Serializable{
 	public void setSjid(String sjid) {
 		this.sjid = sjid;
 	}
-	public String getAnswer() {
-		return answer;
+	
+	public Map getAnswerMap() {
+		return answerMap;
 	}
-	public void setAnswer(String answer) {
-		this.answer = answer;
+	public void setAnswerMap(Map answerMap) {
+		this.answerMap = answerMap;
 	}
 	public String getAnswerTime() {
 		return answerTime;
@@ -61,7 +67,7 @@ public class Answer implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-        return "Answer [id=" + id + ", userid=" + userid + ", sjid=" + sjid + ", answerTime=" + answerTime + ", score=" + score + ", submitTime=" + submitTime + ", answer=" + answer + "]";
+        return "Answer [id=" + id + ", userid=" + userid + ", sjid=" + sjid + ", answerTime=" + answerTime + ", score=" + score + ", submitTime=" + submitTime + ", answer=" + answerMap + "]";
 	}
 	
 }
