@@ -19,6 +19,8 @@ public class Subject implements Serializable{
 	private String parse;
 	private String type;
 	
+	private String sjmc;
+	
 	/**
 	 * 单选
 	 */
@@ -117,6 +119,12 @@ public class Subject implements Serializable{
 	}
 	public void setType(String type) {
 		this.type = type;
+	}
+	public String getSjmc() {
+		return sjmc;
+	}
+	public void setSjmc(String sjmc) {
+		this.sjmc = sjmc;
 	}
 	
 	

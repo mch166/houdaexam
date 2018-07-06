@@ -41,10 +41,10 @@
     </delete>
     
     
-    <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.Subject">   
+    <update id="updateByPrimaryKeySelective" parameterType="com.eliteams.quick4j.web.model.Exam">   
         update sj_tbl
         <set>
-            <if test="tmtitle != null">
+            <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
             

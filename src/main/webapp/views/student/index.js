@@ -31,7 +31,24 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 * 获取所有题目
 	 */
 	studentExam.prototype.getAllTm = function(){
-		
+		var that = this;
+		$.ajax({
+			url:'',//HLTODO 获取所有题目
+			data:that.sjid,
+			type:'post',
+			dataType : "json",
+			success:function(returnData){
+				if(returnData.success){
+					
+					
+				}else{
+					
+				}
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				layer.alert(jqXHR.responseText);
+			}
+		});
 	}
 	
 	/**
@@ -45,17 +62,27 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 * 选择答案
 	 */
 	studentExam.prototype.checkAnswer = function(){
-		
+		 
 	}
 	
 	var index = function(){
 		debugger;
 		var serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
-		var endTime = new Date(serverTime.getFullYear(), serverTime.getMonth()-1, serverTime.getDate(), serverTime.getHours()+3); //结束日期
+		var year =serverTime.getFullYear();
+		var yue = serverTime.getMonth();
+		var ri = serverTime.getDate();
+		var shi = serverTime.getHours();
+		var fen = serverTime.getMinutes();
+		var miao = serverTime.getSeconds();
+		
+		var endTime = new Date(year,yue,ri,parseInt(shi)+3,fen,miao); //结束日期
 		
 		util.countdown(endTime, serverTime, function(date, serverTime, timer){
 			var str = date[1] + '时' +  date[2] + '分' + date[3] + '秒';
 			lay('#examTime').html(str);
+			if(date[1] == 0 && date[2] == 0 && date[3] == 0){
+				//TODO submit
+			}
 		});
 	}
 	

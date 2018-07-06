@@ -4,6 +4,10 @@
 	"field" : "sjid",
 	"title" : "试卷编号",
 	"sort" : "true"
+}, {
+	"field" : "sjmc",
+	"title" : "试卷名称",
+	"sort" : "true"
 },{
 	"field" : "tmtitle",
 	"title" : "题目名称",

@@ -18,7 +18,7 @@ layui
 						//新增编辑页面
 						editHtml : 'sjedit.html',//(必需)
 						//HLTODO 删除Url
-						delUrl : ''
+						delUrl : '/houdaexam/rest/exam/deleteExam'
 					};
 
 					//定义当前页面对象

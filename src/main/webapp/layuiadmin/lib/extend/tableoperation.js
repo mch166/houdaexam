@@ -119,7 +119,7 @@ layui.define([ 'jquery','form','baseUtil'], function(exports) {
 					}
 				},
 				error:function(jqXHR,textStatus,errorThrown){
-					layer.alert(jqXHR.responseText);
+					layer.msg("操作失败");
 				}
 			});
 			return false;

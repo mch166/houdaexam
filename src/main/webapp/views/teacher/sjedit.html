@@ -53,7 +53,6 @@
 	}).use(['index','baseUtil','form','tableoperation'],function(){
 		var baseUtil = layui.baseUtil;
 		var tableoperation = layui.tableoperation;
-		var form = layui.form;
 		var $ = layui.$;
 		//编辑时，编码编号 不可编辑
 		var param = baseUtil.getLayerParentParam();
@@ -65,7 +64,7 @@
 		var options = {
 			operType : operType,
 			showDataUrl : "/houdaexam/rest/exam/getExamByid",
-			submitUrl : "",
+			submitUrl : "/houdaexam/rest/exam/updateExam",
 		};
 		//定义自己的对象
 		var codeedit = function(options){

@@ -19,10 +19,15 @@
         id, sjid, tmtitle, optionA, optionB,optionC,optionD,answer,tmxh,parse,type
     </sql>
     
-    <select id="selectBySjid" resultMap="BaseResultMap" parameterType="map">
+    <sql id="Base_Column_List_sj">
+        tm.id, tm.sjid, tm.tmtitle, tm.optionA, tm.optionB,tm.optionC,tm.optionD,tm.answer,tm.tmxh,tm.parse,tm.type,sj.name as sjmc 
+    </sql>
+    
+    <select id="selectBySjid" resultType="com.eliteams.quick4j.web.model.Subject" parameterType="map">
         select
-        <include refid="Base_Column_List" />
-        from tm_tbl
+        <include refid="Base_Column_List_sj" />
+        from tm_tbl tm
+        left join sj_tbl sj on sj.id=tm.sjid
         where sjid= #{sjid}
 		order by tmxh 
 		<if test="m!=null and n!=null">

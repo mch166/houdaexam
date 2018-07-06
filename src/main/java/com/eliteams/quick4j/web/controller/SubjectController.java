@@ -143,10 +143,14 @@ public class SubjectController {
   //删除题目
     @RequestMapping(value = "/deleteSubject")
     @ResponseBody
-    public AjaxJson deleteSubject( Subject subject, HttpServletRequest request) {
+    public AjaxJson deleteSubject( String json, HttpServletRequest request) {
         try {
         	AjaxJson j = new AjaxJson();
-        	subjectService.delete(subject.getId());
+        	json = request.getParameter("json");
+        	String[] ids = json.split(",");
+        	for(int i = 0; i<ids.length; i++){
+        		subjectService.delete(Long.parseLong(ids[i]));
+        	}
         	j.setSuccess(true);
         	j.setMsg("执行成功");
             return j;

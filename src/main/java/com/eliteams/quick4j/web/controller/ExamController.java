@@ -77,14 +77,17 @@ public class ExamController {
     
     @RequestMapping(value = "/deleteExam")
     @ResponseBody
-    public AjaxJson deleteExam( Exam exam, HttpServletRequest request) {
+    public AjaxJson deleteExam( String json, HttpServletRequest request) {
         try {
         	AjaxJson j = new AjaxJson();
-        	examService.delete(exam.getId());
-        	subjectService.deleteBySjid(exam.getId().toString());
+        	json = request.getParameter("json");
+        	String[] ids = json.split(",");
+        	for(int i = 0; i<ids.length; i++){
+        		examService.delete(Long.parseLong(ids[i]));
+        		subjectService.deleteBySjid(ids[i].toString());
+        	}
         	//删除对应的题目
         	j.setSuccess(true);
-        	j.setObj(exam);
         	j.setMsg("执行成功");
             return j;
         } catch (Exception e) {
