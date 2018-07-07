@@ -144,12 +144,15 @@ public class UserController {
      */
     @RequestMapping(value = "/deleteUser")
     @ResponseBody
-    public AjaxJson deleteUser( User user, HttpServletRequest request) {
+    public AjaxJson deleteUser(String json, HttpServletRequest request) {
         try {
         	AjaxJson j = new AjaxJson();
-            	userService.delete(user.getId());
+        	json = request.getParameter("json");
+        	String[] ids = json.split(",");
+        	for(int i = 0; i<ids.length; i++){
+        		userService.delete(Long.parseLong(ids[i]));
+        	}
         	j.setSuccess(true);
-        	j.setObj(user);
         	j.setMsg("执行成功");
             return j;
         } catch (Exception e) {
@@ -196,6 +199,22 @@ public class UserController {
     	User user = userService.selectById(userParam.getId());
     	j.setSuccess(true);
     	j.setObj(user);
+    	return j;
+    }
+    
+    /**
+     * 根据主键查用户 
+     *
+     * @return
+     */
+    @RequestMapping(value = "/ResetPassword")
+    @ResponseBody
+    public AjaxJson ResetPassword(HttpServletRequest request,User userParam) {
+    	AjaxJson j = new AjaxJson();
+    	userParam.setPassword(ApplicationUtils.sha256Hex("123456"));
+    	userService.update(userParam);
+    	j.setSuccess(true);
+    	j.setObj(userParam);
     	return j;
     }
     

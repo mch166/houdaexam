@@ -16,10 +16,11 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
+			<input type="hidden" id="id" name="id">
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户帐号</label>
 				<div class="layui-input-inline">
-					<input type="text" id="bmbh" name="username" lay-verify="required"
+					<input type="text" id="username" name="username" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
@@ -35,17 +36,16 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">状态</label>
 				<div class="layui-input-inline">
-					<input type="radio" name="state" value="0" title="正常" checked>
+					<input type="radio" name="state" value="0" title="正常">
 					<input type="radio" name="state" value="1" title="锁定">
 				</div>
 			</div>
 			
-
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户类型</label>
 				<div class="layui-input-inline">
-					<input type="radio" name="type" value="0" title="考生" checked>
-					<input type="radio" name="type" value="1" title="教师">
+					<input type="radio" name="type" value=0 title="考生">
+					<input type="radio" name="type" value=1 title="教师">
 				</div>
 			</div>
 
@@ -76,7 +76,7 @@
 		//编辑时，编码编号 不可编辑
 		var param = baseUtil.getLayerParentParam();
 		var operType = "add";
-		var submitUrl = "/houdaexam/rest/user/insertUser";
+		var submitUrl = "/houdaexam/rest/user/InsertUser";
 		if(!baseUtil.isNullOrEmpty(param)){
 			operType = "edit";
 			submitUrl = "/houdaexam/rest/user/updateUser";

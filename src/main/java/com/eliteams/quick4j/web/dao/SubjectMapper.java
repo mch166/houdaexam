@@ -15,7 +15,7 @@ import com.eliteams.quick4j.web.model.UserExample;
  **/
 public interface SubjectMapper extends GenericDao<Subject, Long> {
 	
-   int insertSelective(Subject subject);
+   int insert(Subject subject);
 	
 	List selectBySjid(Map map);
 	

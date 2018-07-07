@@ -42,6 +42,25 @@ public class ExamController {
     	page.setCode(0);       
         return page;
 }
+	
+	/**
+	 * 获取所有试卷list
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/getAllExam")
+    @ResponseBody
+	public AjaxJson getAllExam(HttpServletRequest request) {
+		AjaxJson j = new AjaxJson();
+		Map<String , Object> map = new HashMap<String, Object>();
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+        map  = examService.selectList(paramMap);        	
+        List<Exam> examList = (List<Exam>)map.get("list");
+        
+        j.setSuccess(true);
+    	j.setObj(examList);
+    	return j;
+}
 
 	 
     /**

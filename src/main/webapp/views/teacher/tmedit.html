@@ -17,7 +17,27 @@
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
 			<input type="hidden" name="id">
-			<input type="hidden" name="sjid">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">所属试卷</label>
+				<div class="layui-input-inline">
+					<select id="sjid" name="sjid">
+        				<option value="">请选择</option>
+      				</select>
+				</div>
+			</div>
+    		<div class="layui-form-item">
+				<label class="layui-form-label">题目类型</label>
+				<div class="layui-input-inline">
+					<select name="type">
+        				<option value="">请选择</option>
+        				<option value="1">单选题</option>
+        				<option value="2">多选题</option>
+        				<option value="3">不定项</option>
+      				</select>
+				</div>
+			</div>
+    		
 			<div class="layui-form-item">
 				<label class="layui-form-label">题目名称</label>
 				<div class="layui-input-inline">
@@ -45,7 +65,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">选项C</label>
 				<div class="layui-input-inline">
-					<input type="text" id="optionA" name="optionA" lay-verify="required"
+					<input type="text" id="optionC" name="optionC" lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>
@@ -107,20 +127,46 @@
 		//编辑时，编码编号 不可编辑
 		var param = baseUtil.getLayerParentParam();
 		var operType = "add";
+		var submitUrl = "/houdaexam/rest/subject/InsertSubject";
 		if(!baseUtil.isNullOrEmpty(param)){
 			operType = "edit";
+			submitUrl = "/houdaexam/rest/subject/updateSubject";
 		}
 		//设置参数
 		var options = {
 			operType : operType,
 			showDataUrl : "/houdaexam/rest/subject/getSubjectByid",
-			submitUrl : "/houdaexam/rest/subject/updateSubject",
+			submitUrl : submitUrl,
 		};
 		//定义自己的对象
 		var codeedit = function(options){
+			this.initView();
 			codeedit.superClass.constructor.apply(this, arguments);
 		}
 		baseUtil.extend(codeedit, tableoperation.showClass);
+		
+		codeedit.prototype.initView = function(){
+			$.ajax({
+				async:false,
+				url:"/houdaexam/rest/exam/getAllExam",
+				type:'post',
+				dataType : "json",
+				success:function(returnData){
+					if(returnData.success){
+						var data = returnData.obj;
+						$.each(data, function(i, val) {
+							if(!baseUtil.isNullOrEmpty(val)){
+								$("#sjid").append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+							}
+						});
+					}else{
+						parent.layer.msg(returnData.msg);
+					}
+				},
+				error:function(jqXHR,textStatus,errorThrown){
+				}
+			});
+		}
 		
 		//创建自己定义的对象
 		var codeeditObj = new codeedit(options);

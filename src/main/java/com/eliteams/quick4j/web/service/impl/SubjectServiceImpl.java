@@ -31,7 +31,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 
     @Override
     public int insert(Subject subject) {
-        return subjectMapper.insertSelective(subject);
+        return subjectMapper.insert(subject);
     }
 
 

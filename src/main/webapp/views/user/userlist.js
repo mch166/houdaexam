@@ -19,7 +19,7 @@ layui
 						//查看页面
 						viewHtml : 'userview.html',//(必需)
 						//HLTODO 删除Url
-						delUrl : ''
+						delUrl : '/houdaexam/rest/user/deleteUser'
 					};
 
 					//定义当前页面对象
@@ -35,7 +35,7 @@ layui
 					userlist.prototype.passResetOperation = function(data){
 						$.ajax({
 							type : "post",
-							url : '',
+							url : '/houdaexam/rest/user/ResetPassword',
 							data : data,// 参数
 							dataType : "json",
 							success : function(data, status) {
