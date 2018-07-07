@@ -50,6 +50,17 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
         retMap.put("list", result);
         return retMap;
 	}
+	
+	@Override
+	public Map<String, Object> selectAll(Map map) {
+		Map<String, Object> retMap = new HashMap<String, Object>();
+        List<User> result = subjectMapper.selectAll(map);
+    	int rowCnts = subjectMapper.getRowCnts();
+        retMap.put("total", rowCnts);
+        retMap.put("list", result);
+        return retMap;
+	}
+	
 
 	  @Override
 	    public Subject selectById(Long id) {

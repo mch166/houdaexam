@@ -19,6 +19,8 @@ public interface SubjectMapper extends GenericDao<Subject, Long> {
 	
 	List selectBySjid(Map map);
 	
+	List selectAll(Map map);
+	
     /**
      * 获得记录数
      * @return

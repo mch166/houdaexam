@@ -27,7 +27,7 @@ public interface ExamMapper extends GenericDao<Exam, Long> {
 		/**
 		 * 插入
 		 */
-		int insert(Exam exam);
+		Long insertExam(Exam exam);
 		
 		  /**
 	     * 获得记录数

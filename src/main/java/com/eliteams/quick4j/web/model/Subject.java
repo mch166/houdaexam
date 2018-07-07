@@ -20,6 +20,8 @@ public class Subject implements Serializable{
 	private String type;
 	
 	private String sjmc;
+	private String sjcode;
+
 	
 	/**
 	 * 单选
@@ -125,6 +127,12 @@ public class Subject implements Serializable{
 	}
 	public void setSjmc(String sjmc) {
 		this.sjmc = sjmc;
+	}
+	public String getSjcode() {
+		return sjcode;
+	}
+	public void setSjcode(String sjcode) {
+		this.sjcode = sjcode;
 	}
 	
 	

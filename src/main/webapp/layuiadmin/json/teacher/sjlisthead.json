@@ -1,7 +1,11 @@
 {
 "code":"app_code",
-"data":[ {
+"data":[{
 	"field" : "id",
+	"title" : "试卷ID",
+	"sort" : "true"
+}, {
+	"field" : "code",
 	"title" : "试卷编号",
 	"sort" : "true"
 },{

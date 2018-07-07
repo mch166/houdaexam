@@ -29,4 +29,6 @@ public interface SubjectService extends GenericService<Subject, Long> {
      * @return
      */
     int deleteBySjid(String sjid);
+    
+    Map<String, Object> selectAll(Map map);
 }

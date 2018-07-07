@@ -28,6 +28,8 @@ public class User implements Serializable {
     private String createTime;
     
     private int type;
+    
+    private String sjid;
 
     public User() {
 
@@ -94,6 +96,16 @@ public class User implements Serializable {
 
 	public void setType(int type) {
 		this.type = type;
+	}
+	
+	
+
+	public String getSjid() {
+		return sjid;
+	}
+
+	public void setSjid(String sjid) {
+		this.sjid = sjid;
 	}
 
 	@Override

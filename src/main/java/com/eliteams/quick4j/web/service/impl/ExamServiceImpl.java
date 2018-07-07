@@ -51,9 +51,9 @@ public class ExamServiceImpl extends GenericServiceImpl<Exam, Long> implements E
 	
 	
 	@Override
-	public int insert(Exam exam) {
+	public Long insertExam(Exam exam) {
 		// TODO Auto-generated method stub
-		return examMapper.insert(exam);
+		return examMapper.insertExam(exam);
 	}
    
 	

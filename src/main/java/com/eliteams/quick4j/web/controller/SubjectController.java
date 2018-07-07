@@ -68,6 +68,9 @@ public class SubjectController {
     		List<Exam> resultList=(List<Exam>) resultMap.get("list");
     		//随机数
     		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
+     		if(randomNumber==-1) {
+     			randomNumber=0;
+     		}
     		Long randomsjid=resultList.get(randomNumber).getId();
     		paramMap.put("sjid", randomsjid);
             paramMap.put("m", (page.getPage() - 1) * page.getLimit());
@@ -84,7 +87,24 @@ public class SubjectController {
 }
 
 	
-	
+	@RequestMapping(value = "/selectAll")
+    @ResponseBody
+	public Page selectAll(HttpServletRequest request,Page<Subject> page) {
+		
+		 Map<String , Object> map = new HashMap<String, Object>();      	 
+         Map<String, Object> paramMap = new HashMap<String, Object>();
+         List<Subject> examList=null;
+         int count =0;
+         paramMap.put("m", (page.getPage() - 1) * page.getLimit());
+         paramMap.put("n", page.getLimit());        
+         map  = subjectService.selectAll(paramMap);     	
+          examList = (List<Subject>)map.get("list");
+    	 count = (int)map.get("total");   	 
+    	page.setData(examList);
+    	page.setCount(count);
+    	page.setCode(0);       
+        return page;
+}
 	 
     /**
      * 根据主键查试题 
@@ -217,45 +237,49 @@ public class SubjectController {
           
         System.out.println("通过 jquery.form.js 提供的ajax方式上传文件！");  
         AjaxJson ajaxJson=new AjaxJson();
-//        InputStream in =null;  
-//        List<List<Object>> listob = null;  
-//        MultipartFile file = multipartRequest.getFile("file");  
-//        if(file.isEmpty()){  
-//            throw new Exception("文件不存在！");  
-//        }  
-//          
-//        in = file.getInputStream();  
-//        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());  
-//        
-//        Exam exam=new Exam();
-//        String sjCode=String.valueOf(listob.get(1).get(0));
-//        String sjName=String.valueOf(listob.get(1).get(1));
-//        exam.setName(sjName);
-//        examService.insert(exam);
-//        List<Subject> subjectList=new ArrayList<Subject>();
-//        for (int i = 3; i < listob.size(); i++) {  
-//            List<Object> lo = listob.get(i);  
-//            Subject subject = new Subject();  
-//            subject.setTmtitle(String.valueOf(lo.get(0)));
-//            subject.setOptionA(String.valueOf(lo.get(1)));
-//            subject.setOptionB(String.valueOf(lo.get(2)));
-//            subject.setOptionC(String.valueOf(lo.get(3)));
-//            subject.setOptionD(String.valueOf(lo.get(4)));
-//            subject.setAnswer(String.valueOf(lo.get(5)));
-//            subject.setParse(String.valueOf(lo.get(6))); 
-//            if(i<54) {
-//            	subject.setType(Subject.TYPE_DANXUAN);
-//            }else if(53<i&&i<89) {
-//            	subject.setType(Subject.TYPE_DUOXUAN);
-//            }else {
-//            	subject.setType(Subject.TYPE_BUDINGXIANG);
-//            }
-//            subject.setSjid(exam.getId());
-//            subjectList.add(subject);
-//            subjectService.insert(subject);
-//        }  
-//          
-////        PrintWriter out = null;  
+        InputStream in =null;  
+        List<List<Object>> listob = null;  
+        MultipartFile file = multipartRequest.getFile("file");  
+        if(file.isEmpty()){  
+            throw new Exception("文件不存在！");  
+        }  
+          
+        in = file.getInputStream();  
+        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());  
+        
+        Exam exam=new Exam();
+        String sjCode=String.valueOf(listob.get(0).get(0));
+        String sjName=String.valueOf(listob.get(0).get(1));
+        exam.setName(sjName);
+        exam.setCode(sjCode);
+        examService.insertExam(exam);
+        List<Subject> subjectList=new ArrayList<Subject>();
+        int k =0;
+        for (int i = 2; i < listob.size(); i++) {  
+        	k++;
+            List<Object> lo = listob.get(i);  
+            Subject subject = new Subject();  
+            subject.setTmtitle(String.valueOf(lo.get(0)));
+            subject.setOptionA(String.valueOf(lo.get(1)));
+            subject.setOptionB(String.valueOf(lo.get(2)));
+            subject.setOptionC(String.valueOf(lo.get(3)));
+            subject.setOptionD(String.valueOf(lo.get(4)));
+            subject.setAnswer(String.valueOf(lo.get(5)));
+            subject.setTmxh(k+"");
+            subject.setParse(String.valueOf(lo.get(6))); 
+            if(k<51) {
+            	subject.setType(Subject.TYPE_DANXUAN);
+            }else if(50<k&&k<86) {
+            	subject.setType(Subject.TYPE_DUOXUAN);
+            }else {
+            	subject.setType(Subject.TYPE_BUDINGXIANG);
+            }
+            subject.setSjid(exam.getId());
+            subjectList.add(subject);
+            subjectService.insert(subject);
+        }  
+          
+//        PrintWriter out = null;  
         response.setCharacterEncoding("utf-8");  //防止ajax接受到的中文信息乱码  
 //        out = response.getWriter();  
 //        out.print("文件导入成功！");  

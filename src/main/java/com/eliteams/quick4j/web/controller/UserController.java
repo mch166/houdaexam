@@ -25,9 +25,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.ApplicationUtils;
 import com.eliteams.quick4j.core.util.Page;
+import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.security.PermissionSign;
 import com.eliteams.quick4j.web.security.RoleSign;
+import com.eliteams.quick4j.web.service.ExamService;
 import com.eliteams.quick4j.web.service.UserService;
 
 /**
@@ -42,6 +44,9 @@ public class UserController {
 
     @Resource
     private UserService userService;
+    
+    @Resource
+	private ExamService examService;
     
     private int rows = 10;
     
@@ -75,6 +80,19 @@ public class UserController {
             }
             // 验证成功在Session中保存用户信息
              User userInfo = userService.selectByUsername(user.getUsername());
+             Map<String, Object> paramMap = new HashMap<String, Object>();
+             Map resultMap=examService.selectList(paramMap);
+         	if(resultMap!=null&&resultMap.get("list")!=null) {
+         		List<Exam> resultList=(List<Exam>) resultMap.get("list");
+         		//随机数
+         		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
+         		if(randomNumber==-1) {
+         			randomNumber=0;
+         		}
+         		Long randomsjid=resultList.get(randomNumber).getId();
+             	userInfo.setSjid(randomsjid+"");
+
+         	}
              request.getSession().setAttribute("userInfo", userInfo);
              map.put("userInfo", userInfo);
              return  map;
@@ -203,7 +221,7 @@ public class UserController {
     }
     
     /**
-     * 根据主键查用户 
+     * 重置密码
      *
      * @return
      */

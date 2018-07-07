@@ -3,11 +3,13 @@
 <mapper namespace="com.eliteams.quick4j.web.dao.ExamMapper">
     <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Exam">
         <id column="id" property="id" jdbcType="BIGINT" />
-         <result column="name" property="name" jdbcType="VARCHAR" />     
+         <result column="name" property="name" jdbcType="VARCHAR" />  
+           <result column="code" property="code" jdbcType="VARCHAR" />     
+            
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, name
+        id, name,code
     </sql>
     
     
@@ -22,6 +24,9 @@
         <if test="name !=null and name != ''">
 			and name=#{name}
 		</if>	
+		 <if test="code !=null and code != ''">
+			and code=#{code}
+		</if>
 		order by id desc
 		<if test="m!=null and n!=null">
 			Limit ${m},${n}
@@ -47,16 +52,19 @@
             <if test="name != null">
                 name = #{name,jdbcType=VARCHAR},
             </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
             
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
         
     
-    <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Exam" useGeneratedKeys="true" keyProperty="id">
-        insert into sj_tbl (name)
-        values (#{name,jdbcType=VARCHAR})
-         <selectKey resultType="int" keyProperty="id" order="AFTER">select last_insert_id()</selectKey>  
+    <insert id="insertExam" parameterType="com.eliteams.quick4j.web.model.Exam">
+        insert into sj_tbl (name,code)
+        values (#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR})
+         <selectKey resultType="Long" keyProperty="id" order="AFTER">select last_insert_id()</selectKey>  
     </insert>
     
     

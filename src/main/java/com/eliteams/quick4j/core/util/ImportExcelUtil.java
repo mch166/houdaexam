@@ -53,7 +53,12 @@ public class ImportExcelUtil {
 				List<Object> li = new ArrayList<Object>();
 				for (int y = row.getFirstCellNum(); y < row.getLastCellNum(); y++) {
 					cell = row.getCell(y);
+					if(cell==null) {
+					//	System.out.println("为空");
+						li.add("");
+					}else {
 					li.add(this.getCellValue(cell));
+					}
 				}
 				list.add(li);
 			}

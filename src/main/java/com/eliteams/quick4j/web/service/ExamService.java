@@ -11,5 +11,5 @@ import com.eliteams.quick4j.web.model.Exam;
  **/
 public interface ExamService extends GenericService<Exam, Long> {
 		
-
+	public Long insertExam(Exam exam) ;
 }

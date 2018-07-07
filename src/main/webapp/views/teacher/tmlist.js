@@ -14,7 +14,7 @@ layui
 					var options = {
 						tableTitleUrl : layui.setter.base+"json/teacher/tmlisthead.json",//(必需)
 						//HLTODO 请求题目list数据
-						dataUrl : '/houdaexam/rest/subject/selectBySjid?sjid=1',//(必需)
+						dataUrl : '/houdaexam/rest/subject/selectAll',//(必需)
 						//新增编辑页面
 						editHtml : 'tmedit.html',//(必需)
 						//查看页面

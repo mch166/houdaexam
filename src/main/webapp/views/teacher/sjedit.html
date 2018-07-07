@@ -16,10 +16,19 @@
 	<!-- 使用自动遍历赋值 需要：layerCard -->
 	<div class="layui-fluid layerCard">
 		<form class="layui-form" action="" lay-filter="component-form-group">
+		
+		<div class="layui-form-item">
+				<label class="layui-form-label">试卷ID</label>
+				<div class="layui-input-inline">
+					<input type="text" id="id" name="id" layui-disable lay-verify="required"
+						autocomplete="off" class="layui-input">
+				</div>
+			</div>
+		
 			<div class="layui-form-item">
 				<label class="layui-form-label">试卷编号</label>
 				<div class="layui-input-inline">
-					<input type="text" id="id" name="id" layui-disable lay-verify="required"
+					<input type="text" id="code" name="code" layui-disable lay-verify="required"
 						autocomplete="off" class="layui-input">
 				</div>
 			</div>

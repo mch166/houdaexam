@@ -17,7 +17,7 @@
 	<div class="layui-card-body layerCard">
 		<div class="layui-form-item">
 			<label class="layui-form-label">试卷编号：</label>
-			<div class="layui-input-inline layui-input-company" name="sjid"></div>
+			<div class="layui-input-inline layui-input-company" name="sjcode"></div>
 		</div>
 		<div class="layui-form-item">
 			<label class="layui-form-label">题目名称：</label>
@@ -61,7 +61,7 @@
 	//设置参数
 	var options = {
 		operType : 'view',
-		showDataUrl : ""
+		showDataUrl : "/houdaexam/rest/subject/getSubjectByid"
 	};
 	//定义自己的对象
 	var codeview = function(options){
