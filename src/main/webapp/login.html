@@ -157,12 +157,17 @@
         ,data: obj.field
         ,type:'post'
         ,done: function(res){
-        
+        debugger;
           //请求成功后，写入 access_token
           layui.data(setter.tableName, {
             key: setter.request.tokenName
             ,value: res.access_token
           });
+          layui.data(setter.userInfo,{
+        	  key:setter.userInfo,
+        	  value: res.userInfo
+          })
+          var loginUser = layui.data(setter.userInfo)[setter.userInfo];
           
           //登入成功的提示与跳转
           layer.msg('登入成功', {

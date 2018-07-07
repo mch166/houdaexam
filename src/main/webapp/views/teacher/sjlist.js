@@ -1,10 +1,11 @@
 layui
 		.define(
-				[ 'baseUtil', 'autotable', 'jquery', 'table' ],
+				[ 'baseUtil', 'autotable', 'jquery', 'table','upload' ],
 				function(exports) {
 					
 					//引入其他模块
 					var $ = layui.$;
+					var upload = layui.upload;
 					var autotable = layui.autotable;
 					var table = layui.table;
 					var baseUtil = layui.baseUtil;
@@ -25,9 +26,28 @@ layui
 					//并且继承autotable.tableClass
 					var sjlist = function(options){
 						sjlist.superClass.constructor.apply(this, arguments);
+						
+						this.initUpload();
 					}
 					baseUtil.extend(sjlist, autotable.tableClass);
 					
+					sjlist.prototype.initUpload = function(){
+						var that = this;
+						 upload.render({ //允许上传的文件后缀
+							    elem: '#upToolbar'
+							    ,url: 'toolbarData/layuiadmin/json/teacher/'
+							    ,accept: 'file' //普通文件
+							    ,exts: 'xls|xlsx'
+							    ,done: function(res){
+							      console.log(res)
+							    }
+						 });
+					}
+					
+					sjlist.prototype.upToolbar = function(){
+						
+						
+					}
 					/**
 					 * 加载表格数据
 					 * 满屏调整：

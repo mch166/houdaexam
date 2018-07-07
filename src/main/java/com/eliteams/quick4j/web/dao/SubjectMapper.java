@@ -31,7 +31,7 @@ public interface SubjectMapper extends GenericDao<Subject, Long> {
      * @param tmxh
      * @return
      */
-    Subject selectByTmxh(Long sjid,String tmxh);
+    Subject selectByTmxh(@Param("sjid") Long sjid,@Param("tmxh")String tmxh);
     
     /**
      * 根据试卷id删除试题

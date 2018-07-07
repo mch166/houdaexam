@@ -313,7 +313,7 @@ layui.define([ 'jquery','form','baseUtil', 'table' ], function(exports) {
 	 */
 	autotable.createOperationBtn = function(tableClassObj,operationBtnData){
 		for(var i=0; i<operationBtnData.length; i++){
-			var operationBtnHtml = "<a class='layui-btn layui-btn-xs {clazz}' lay-event='{code}'>{name}</a>";
+			var operationBtnHtml = "<a id='{codeid}' class='layui-btn layui-btn-xs {clazz}' lay-event='{code}'>{name}</a>";
 			operationBtnHtml = operationBtnHtml.replace(/\{clazz\}/g,operationBtnData[i].clazz)
 								.replace(/\{code\}/g,operationBtnData[i].code)
 								.replace(/\{name\}/g,operationBtnData[i].name);
@@ -327,9 +327,10 @@ layui.define([ 'jquery','form','baseUtil', 'table' ], function(exports) {
 	 */
 	autotable.createToolBar = function(tableClassObj,toolbarData){
 		for(var i=0; i<toolbarData.length; i++){
-			var toolbarHtml = '<button class="layui-btn layui-btn-sm" data-type="{code}"><i class="layui-icon">{icon}</i>{name}</button>';
+			var toolbarHtml = '<button id="{codeid}" class="layui-btn layui-btn-sm" data-type="{code}"><i class="layui-icon">{icon}</i>{name}</button>';
 			toolbarHtml = toolbarHtml.replace(/\{code\}/g,toolbarData[i].code)
 								.replace(/\{icon\}/g,baseUtil.isNullOrEmpty(toolbarData[i].icon)? '':(toolbarData[i].icon+";"))
+								.replace(/\{codeid\}/g,toolbarData[i].code+"Toolbar")
 								.replace(/\{name\}/g,toolbarData[i].name);
 			$("#"+tableClassObj.toolbarId).append(toolbarHtml);
 		}
