@@ -35,7 +35,7 @@ layui
 						var that = this;
 						 upload.render({ //允许上传的文件后缀
 							    elem: '#upToolbar'
-							    ,url: 'toolbarData/layuiadmin/json/teacher/'
+							    ,url: '/houdaexam/rest/subject/importSubject'
 							    ,accept: 'file' //普通文件
 							    ,exts: 'xls|xlsx'
 							    ,done: function(res){

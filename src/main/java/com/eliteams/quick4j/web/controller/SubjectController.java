@@ -217,45 +217,45 @@ public class SubjectController {
           
         System.out.println("通过 jquery.form.js 提供的ajax方式上传文件！");  
         AjaxJson ajaxJson=new AjaxJson();
-        InputStream in =null;  
-        List<List<Object>> listob = null;  
-        MultipartFile file = multipartRequest.getFile("upfile");  
-        if(file.isEmpty()){  
-            throw new Exception("文件不存在！");  
-        }  
-          
-        in = file.getInputStream();  
-        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());  
-        
-        Exam exam=new Exam();
-        String sjCode=String.valueOf(listob.get(1).get(0));
-        String sjName=String.valueOf(listob.get(1).get(1));
-        exam.setName(sjName);
-        examService.insert(exam);
-        List<Subject> subjectList=new ArrayList<Subject>();
-        for (int i = 3; i < listob.size(); i++) {  
-            List<Object> lo = listob.get(i);  
-            Subject subject = new Subject();  
-            subject.setTmtitle(String.valueOf(lo.get(0)));
-            subject.setOptionA(String.valueOf(lo.get(1)));
-            subject.setOptionB(String.valueOf(lo.get(2)));
-            subject.setOptionC(String.valueOf(lo.get(3)));
-            subject.setOptionD(String.valueOf(lo.get(4)));
-            subject.setAnswer(String.valueOf(lo.get(5)));
-            subject.setParse(String.valueOf(lo.get(6))); 
-            if(i<54) {
-            	subject.setType(Subject.TYPE_DANXUAN);
-            }else if(53<i&&i<89) {
-            	subject.setType(Subject.TYPE_DUOXUAN);
-            }else {
-            	subject.setType(Subject.TYPE_BUDINGXIANG);
-            }
-            subject.setSjid(exam.getId());
-            subjectList.add(subject);
-            subjectService.insert(subject);
-        }  
-          
-//        PrintWriter out = null;  
+//        InputStream in =null;  
+//        List<List<Object>> listob = null;  
+//        MultipartFile file = multipartRequest.getFile("file");  
+//        if(file.isEmpty()){  
+//            throw new Exception("文件不存在！");  
+//        }  
+//          
+//        in = file.getInputStream();  
+//        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());  
+//        
+//        Exam exam=new Exam();
+//        String sjCode=String.valueOf(listob.get(1).get(0));
+//        String sjName=String.valueOf(listob.get(1).get(1));
+//        exam.setName(sjName);
+//        examService.insert(exam);
+//        List<Subject> subjectList=new ArrayList<Subject>();
+//        for (int i = 3; i < listob.size(); i++) {  
+//            List<Object> lo = listob.get(i);  
+//            Subject subject = new Subject();  
+//            subject.setTmtitle(String.valueOf(lo.get(0)));
+//            subject.setOptionA(String.valueOf(lo.get(1)));
+//            subject.setOptionB(String.valueOf(lo.get(2)));
+//            subject.setOptionC(String.valueOf(lo.get(3)));
+//            subject.setOptionD(String.valueOf(lo.get(4)));
+//            subject.setAnswer(String.valueOf(lo.get(5)));
+//            subject.setParse(String.valueOf(lo.get(6))); 
+//            if(i<54) {
+//            	subject.setType(Subject.TYPE_DANXUAN);
+//            }else if(53<i&&i<89) {
+//            	subject.setType(Subject.TYPE_DUOXUAN);
+//            }else {
+//            	subject.setType(Subject.TYPE_BUDINGXIANG);
+//            }
+//            subject.setSjid(exam.getId());
+//            subjectList.add(subject);
+//            subjectService.insert(subject);
+//        }  
+//          
+////        PrintWriter out = null;  
         response.setCharacterEncoding("utf-8");  //防止ajax接受到的中文信息乱码  
 //        out = response.getWriter();  
 //        out.print("文件导入成功！");  
