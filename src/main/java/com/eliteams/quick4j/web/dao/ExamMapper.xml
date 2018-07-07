@@ -53,9 +53,10 @@
     </update>
         
     
-    <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Exam">
+    <insert id="insert" parameterType="com.eliteams.quick4j.web.model.Exam" useGeneratedKeys="true" keyProperty="id">
         insert into sj_tbl (name)
         values (#{name,jdbcType=VARCHAR})
+         <selectKey resultType="int" keyProperty="id" order="AFTER">select last_insert_id()</selectKey>  
     </insert>
     
     

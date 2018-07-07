@@ -108,30 +108,20 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 	    		String userAnswer = answerMap.get(tmxh);
 	    		//TODO 计算规则待定
     		if(answer!=null&&!"".equals(answer)&&userAnswer!=null&&!"".equals(userAnswer)) {
-    			//单选
-    			if(Subject.TYPE_DANXUAN.equals(type)) {
-    					if(answer.equals(userAnswer)) {
-    						score=score+Subject.VALUE_DANXUAN;
-    					}
-    			//多选
-	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {
-	    			if(answer.equals(userAnswer)) {
-						score=score+Subject.VALUE_DUOXUAN;
-					}else {
-						
-					}
-	    		//不定项
-	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {
-	    			if(answer.equals(userAnswer)) {
-						score=score+Subject.VALUE_BUDINGXIANG;
-					}else {
-						
-					}
+    			
+				if(answer.equals(userAnswer)) {
+    			if(Subject.TYPE_DANXUAN.equals(type)) {//单选
+    						score=score+Subject.VALUE_DANXUAN;    					 		
+	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {	//多选
+						score=score+Subject.VALUE_DUOXUAN;    		
+	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {//不定项
+						score=score+Subject.VALUE_BUDINGXIANG;					
 	    		}
-			}	
 	    	}
+    	}
+	  }
 	    	return score+"";
-	    }
+ }
 
 	    public static void main(String[] args) {
 			Answer answer=new Answer();
