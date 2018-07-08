@@ -45,8 +45,6 @@ layui
 					}
 					
 					sjlist.prototype.upToolbar = function(){
-						
-						
 					}
 					/**
 					 * 加载表格数据

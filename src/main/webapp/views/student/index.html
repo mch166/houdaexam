@@ -48,11 +48,11 @@
 	<div class="fly-panel fly-column">
 		<div class="layui-container">
 			<div class="fly-column-right layui-hide-xs">
-				<button class="layui-btn layui-btn-danger"
+				<button id="submitexam" class="layui-btn layui-btn-danger"
 					style="margin-right: 10px;">
 					<i class="layui-icon">O</i>交&nbsp;&nbsp;卷
 				</button>
-				结束时间：<span id="examTime"></span>
+				结束时间：<span id="examTime">0时0分0秒</span>
 			</div>
 		</div>
 	</div>
@@ -306,7 +306,7 @@
 					<div class="fly-panel-title fly-filter">
 						<a>题目</a>
 					</div>
-					<form class="layui-form" action="">
+					<form class="layui-form" lay-filter="tmoptionform">
 						<div class="layui-input-block tm-title">
 							<span id="tmxhSpan" class="layui-badge-rim"></span>
 							<span id="tmTypeSpan" class="layui-badge-rim"></span>
@@ -342,16 +342,10 @@
 						</div>
 						
 						<div id="dxCheckDiv" style="display:none" class="layui-input-block">
-							<input type="radio" name="dxxzoption" lay-filter="dxxzoption" value="A" title="A">
-							<input type="radio" name="dxxzoption" lay-filter="dxxzoption" value="B" title="B">
-							<input type="radio" name="dxxzoption" lay-filter="dxxzoption" value="C" title="C">
-							<input type="radio" name="dxxzoption" lay-filter="dxxzoption" value="D" title="D">
+							
 						</div>
-						<div id="duoxCheckDiv" class="layui-input-block">
-							<input type="checkbox" name="duoxxzoption" lay-filter="duoxxzoption" value="A" title="A">
-							<input type="checkbox" name="duoxxzoption" lay-filter="duoxxzoption" value="B" title="B">
-							<input type="checkbox" name="duoxxzoption" lay-filter="duoxxzoption" value="C" title="C">
-							<input type="checkbox" name="duoxxzoption" lay-filter="duoxxzoption" value="D" title="D">
+						<div id="duoxCheckDiv" style="display:none" class="layui-input-block">
+							
 						</div>
 					</form>
 				</div>
@@ -361,7 +355,7 @@
 			<div class="layui-col-md8" style="height: 60px;">
 				<div class="fly-panel" style="height: 50px;" align="right">
 					<button id="warmTm" class="layui-btn layui-btn-warm" style="margin: 6px;">
-						<i class="layui-icon"></i>标记
+						<i class="layui-icon"></i><span id="warmspanid">标记</span>
 					</button>
 					<button id="upTm" class="layui-btn" style="margin: 6px;">
 						<i class="layui-icon"></i>上一题

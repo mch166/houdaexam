@@ -39,12 +39,9 @@
 							class="layui-icon layui-icon-screen-full"></i>
 					</a></li>
 					<li class="layui-nav-item" lay-unselect><a href="javascript:;">
-							<cite>用户名称</cite>
+							<cite id="loginusername">用户名称</cite>
 					</a>
 						<dl class="layui-nav-child">
-							<dd>
-								<a lay-href="set/user/info.html">基本资料</a>
-							</dd>
 							<dd>
 								<a lay-href="set/user/password.html">修改密码</a>
 							</dd>
@@ -120,6 +117,11 @@
 		}).use(['index','navbar'],function(){
 			var index = layui.index;
 			var navbar = layui.navbar;
+			var $ = layui.$;
+			var setter = layui.setter;
+			var loginUser = layui.data(setter.userInfo)[setter.userInfo];
+			
+			$("#loginusername").text(loginUser.name);
 			//设置navbar
 		    navbar.render({
 		    	menuTitle:"菜单管理",//菜单标题
