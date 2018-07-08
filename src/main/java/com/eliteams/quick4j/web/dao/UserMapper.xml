@@ -66,8 +66,9 @@
             <if test="state != null">
                 state,
             </if>
+            <if test="createTime != null">
                 create_time,
-                
+            </if>                
               <if test="name != null">
                 name,
             </if>
@@ -91,7 +92,10 @@
             <if test="state != null">
                 #{state,jdbcType=VARCHAR},
             </if>
+            <if test="createTime != null">
                 now(),
+            </if>
+                
               <if test="name != null">
                #{name,jdbcType=VARCHAR},
             </if>

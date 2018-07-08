@@ -381,6 +381,7 @@ public class UserController {
             user.setPassword(ApplicationUtils.sha256Hex("123456"));
             user.setType(0);
             user.setState("0");
+            user.setCreateTime("2018");
             userService.insert(user);
             userList.add(user);
         }  

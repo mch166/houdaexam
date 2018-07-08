@@ -16,10 +16,10 @@
     </sql>
     
       <sql id="Base_Column_join_List">
-        dt.id, dt.sjid, dt.userid, dt.answer, dt.answerTime,dt.score,dt.submitTime,user.name username,sj.name sjName
+        dt.id, dt.sjid, dt.userid, dt.answer, dt.answerTime,dt.score,dt.submitTime,user.name  username,sj.name sjName
     </sql>
     
-    <select id="selectByOther" resultMap="BaseResultMap" parameterType="map">
+    <select id="selectByOther" resultType="com.eliteams.quick4j.web.model.Answer" parameterType="map">
         select SQL_CALC_FOUND_ROWS 
         <include refid="Base_Column_join_List" />
         from dt_tbl dt, user_tbl user, sj_tbl sj
