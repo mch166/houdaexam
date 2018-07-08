@@ -355,7 +355,7 @@ public class UserController {
      * @throws Exception 
      */  
     @ResponseBody  
-    @RequestMapping(value="importUser",method={RequestMethod.GET,RequestMethod.POST})  
+    @RequestMapping(value="/importUser",method={RequestMethod.GET,RequestMethod.POST})  
     public  AjaxJson  importSubject(HttpServletRequest request,HttpServletResponse response) throws Exception {  
         MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;    
           
