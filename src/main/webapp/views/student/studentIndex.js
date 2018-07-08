@@ -32,6 +32,8 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		this.upTmBtn = "upTm";//上一题按钮
 		this.downTmBtn = "downTm";//下一题按钮
 		
+		this.timer = "";
+		
 //		this.getAllTm();
 		this.initEvent();
 		this.initView();
@@ -104,7 +106,22 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		});
 		//交卷
 		$("#"+this.submitexam).on('click',function(){
-			that.endExam();
+			layer.open({
+		        type: 1
+		        ,title: false //不显示标题栏
+		        ,closeBtn: false
+		        ,area: '300px;'
+		        ,shade: 0.3
+		        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+		        ,btn: ['确定', '取消']
+		        ,btnAlign: 'c'
+		        ,moveType: 1 //拖拽模式，0或者1
+		        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">是否确认提交试卷<br>试卷提交后将不能更改</div>'
+		        ,yes: function(index){
+		        	that.endExam();
+		        	layer.closeAll();
+		        }
+		      });
 		});
 	}
 	
@@ -155,16 +172,36 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			dataType : "json",
 			success:function(returnData){
 				if(returnData.success){
-				
-				}else{
-					
+					clearTimeout(that.timer)
+					$("#submitexam").hide();
+					layer.msg("试卷提交成功");
+					that.setViewExam();
 				}
 			},
 			error:function(jqXHR,textStatus,errorThrown){
-				layer.msg("题目获取失败");
+				layer.msg("试卷提交失败");
 			}
 		});
 	}
+	//交卷后查看卷子
+	studentExam.prototype.setViewExam = function(){
+		var that = this;
+		layer.open({
+	        type: 1
+	        ,id: 'layerDemoendview' //防止重复弹出
+	        ,content: '<div style="padding: 20px 100px;">您是否需要继续查看试卷 </div>'
+	        ,btn: ['确定','取消']
+	        ,btnAlign: 'c' //按钮居中
+	        ,shade: 0.3 //不显示遮罩
+	        ,yes: function(){
+	        	layer.closeAll();
+	        }
+			,btn2:function(){
+				$("#logoutBtnid").click();
+			}
+	      });
+	}
+	
 	/**
 	 * 设置标记按钮
 	 * @param tmid
@@ -369,6 +406,8 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		
 		util.countdown(endTime, serverTime, function(date, serverTime, timer){
 			var str = date[1] + '时' +  date[2] + '分' + date[3] + '秒';
+			layer.msg(timer);
+			studentExamObj.timer = timer;
 			lay('#examTime').html(str);
 			if(date[1] == 0 && date[2] == 0 && date[3] == 0){
 				studentExamObj.endExam();
