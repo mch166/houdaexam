@@ -35,6 +35,11 @@ public class UserServiceImpl extends GenericServiceImpl<User, Long> implements U
     public int update(User model) {
         return userMapper.updateByPrimaryKeySelective(model);
     }
+    
+    @Override
+    public int updatePwd(User model) {
+        return userMapper.updatePwd(model);
+    }
 
     @Override
     public int delete(Long id) {

@@ -30,6 +30,8 @@ public class User implements Serializable {
     private int type;
     
     private String sjid;
+    
+    private String phone;
 
     public User() {
 
@@ -106,6 +108,16 @@ public class User implements Serializable {
 
 	public void setSjid(String sjid) {
 		this.sjid = sjid;
+	}
+	
+	
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	@Override

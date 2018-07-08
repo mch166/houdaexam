@@ -26,4 +26,8 @@ public interface UserService extends GenericService<User, Long> {
      * @return
      */
     User selectByUsername(String username);
+    
+    
+    int updatePwd(User record);
+
 }

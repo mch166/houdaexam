@@ -18,11 +18,8 @@ import com.eliteams.quick4j.web.model.UserExample;
 public interface UserMapper extends GenericDao<User, Long> {
     int countByExample(UserExample example);
 
-    int deleteByExample(UserExample example);
-
     int deleteByPrimaryKey(Long id);
 
-    int insert(User record);
 
     int insertSelective(User record);
 
@@ -30,13 +27,11 @@ public interface UserMapper extends GenericDao<User, Long> {
 
     User selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") User record, @Param("example") UserExample example);
-
-    int updateByExample(@Param("record") User record, @Param("example") UserExample example);
-
     int updateByPrimaryKeySelective(User record);
+    
+    int updatePwd(User record);
 
-    int updateByPrimaryKey(User record);
+
 
     /**
      * 用户登录验证查询
@@ -46,15 +41,7 @@ public interface UserMapper extends GenericDao<User, Long> {
      */
     User authentication(@Param("record") User record);
 
-    /**
-     * 分页条件查询
-     * 
-     * @param page
-     * @param example
-     * @return
-     */
-    List<User> selectByExampleAndPage(Page<User> page, UserExample example);
-    
+   
     /**
      * 获得记录数
      * @return

@@ -24,7 +24,7 @@
     </sql>
     
     <select id="selectBySjid" resultType="com.eliteams.quick4j.web.model.Subject" parameterType="map">
-        select
+        select SQL_CALC_FOUND_ROWS 
         <include refid="Base_Column_List_sj" />
         from tm_tbl tm
         left join sj_tbl sj on sj.id=tm.sjid
@@ -36,7 +36,7 @@
     </select>
     
         <select id="selectAll" resultType="com.eliteams.quick4j.web.model.Subject" parameterType="map">
-        select
+        select SQL_CALC_FOUND_ROWS
         <include refid="Base_Column_List_sj" />
         from tm_tbl tm
         INNER join sj_tbl sj on sj.id=tm.sjid

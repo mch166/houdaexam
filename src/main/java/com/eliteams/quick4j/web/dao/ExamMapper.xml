@@ -15,9 +15,7 @@
     
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="Map">
         select
-        <if test="distinct">
-            distinct
-        </if>
+        SQL_CALC_FOUND_ROWS 
         <include refid="Base_Column_List" />
         from sj_tbl
         where 1=1

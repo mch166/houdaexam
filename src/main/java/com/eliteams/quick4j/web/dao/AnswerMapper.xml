@@ -15,11 +15,16 @@
         id, sjid, userid, answer, answerTime,score,submitTime
     </sql>
     
+      <sql id="Base_Column_join_List">
+        dt.id, dt.sjid, dt.userid, dt.answer, dt.answerTime,dt.score,dt.submitTime,user.name username,sj.name sjName
+    </sql>
+    
     <select id="selectByOther" resultMap="BaseResultMap" parameterType="map">
-        select
-        <include refid="Base_Column_List" />
-        from dt_tbl
-         where 1=1
+        select SQL_CALC_FOUND_ROWS 
+        <include refid="Base_Column_join_List" />
+        from dt_tbl dt, user_tbl user, sj_tbl sj
+         where dt.userid=user.id
+         	and dt.sjid=sj.id 
         <if test="sjid !=null and sjid != ''">
 			and sjid=#{sjid}
 		</if>	

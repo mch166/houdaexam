@@ -1,5 +1,6 @@
 package com.eliteams.quick4j.web.controller;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.apache.shiro.SecurityUtils;
@@ -21,16 +23,22 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.ApplicationUtils;
+import com.eliteams.quick4j.core.util.ImportExcelUtil;
 import com.eliteams.quick4j.core.util.Page;
+import com.eliteams.quick4j.core.util.RedisUtil;
 import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.security.PermissionSign;
 import com.eliteams.quick4j.web.security.RoleSign;
 import com.eliteams.quick4j.web.service.ExamService;
 import com.eliteams.quick4j.web.service.UserService;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * 用户控制器
@@ -67,6 +75,15 @@ public class UserController {
                 map.put("msg", "参数错误");
                 return map;
             }
+		     RedisUtil redisUtil = new RedisUtil();
+            Jedis jedis = redisUtil.getJedis();
+            Boolean exists = jedis.exists("user_"+user.getUsername());
+            if(exists){
+            	  map.put("code", "1");
+                  map.put("msg", "退出后30分钟内不允许登录，请稍后再试！");
+                  return map;
+            }
+            
             Subject subject = SecurityUtils.getSubject();
             
             // 已登陆
@@ -114,20 +131,23 @@ public class UserController {
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     @ResponseBody
     public Map logout(HttpSession session) {
+    	User user = (User) session.getAttribute("userInfo");
+		if(user!=null&&user.getType()!=1) {
+		     RedisUtil redisUtil = new RedisUtil();
+		        Jedis jedis = redisUtil.getJedis();
+		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
+		}
         session.removeAttribute("userInfo");
         // 登出操作
-        Subject subject = SecurityUtils.getSubject();
+        Subject subject = SecurityUtils.getSubject();      
         subject.logout();
+        
         Map<String , Object> map = new HashMap<String, Object>();
         map.put("code", 0);
         map.put("msg", "退出成功");
         map.put("data", null);
         return map;
     }
-
-   
-   
-
 
     /**
      *更新用户
@@ -237,6 +257,38 @@ public class UserController {
     }
     
     /**
+     * 用户更新密码
+     *
+     * @return
+     */
+    @RequestMapping(value = "/updatePwd4user")
+    @ResponseBody
+    public AjaxJson updatePwd4user(HttpServletRequest request,String username,String oldpwd,String newpwd) {
+    	AjaxJson j = new AjaxJson();
+    	if(username==null||"".equals(username)
+    			||oldpwd==null||"".equals(oldpwd)
+    			 	||newpwd==null||"".equals(newpwd)) {
+    		j.setSuccess(false);
+    		j.setMsg("参数有误！");
+    		return j;
+    	}
+    	User user =new User();
+    	user.setUsername(username);
+    	user.setPassword(ApplicationUtils.sha256Hex(oldpwd));
+    	User authentication = userService.authentication(user);
+    	if(authentication==null) {
+    		j.setSuccess(false);
+    		j.setMsg("原密码不正确！");
+    		return j;
+    	}
+    	user.setPassword(ApplicationUtils.sha256Hex(newpwd));
+    	userService.updatePwd(user);
+    	j.setSuccess(true);
+    	j.setMsg("修改成功");
+    	return j;
+    }
+    
+    /**
      * 用户列表
      * @return
      */
@@ -262,7 +314,7 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserByOther")
     @ResponseBody
-    public Page<User> getUserByOther(HttpServletRequest request,Page<User> page,String name,String username,String state,String type) {      	
+    public Page<User> getUserByOther(HttpServletRequest request,Page<User> page,String name,String username,String state,String type,String phone) {      	
         	 Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
              if(name!=null&&!"".equals(name.trim())) {
@@ -277,6 +329,9 @@ public class UserController {
              if(type!=null&&!"".equals(type.trim())) {
             	 paramMap.put("type", type);
              }
+             if(phone!=null&&!"".equals(phone.trim())) {
+            	 paramMap.put("phone", phone);
+             }
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
              paramMap.put("n", page.getLimit());        
              map  = userService.selectList(paramMap);        	
@@ -288,5 +343,56 @@ public class UserController {
             return page;
      
     }
+    
+
+    /** 
+     * 描述：通过 jquery.form.js 插件提供的ajax方式上传文件 
+     * @param request 
+     * @param response 
+     * @throws Exception 
+     */  
+    @ResponseBody  
+    @RequestMapping(value="importUser",method={RequestMethod.GET,RequestMethod.POST})  
+    public  AjaxJson  importSubject(HttpServletRequest request,HttpServletResponse response) throws Exception {  
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;    
+          
+        System.out.println("通过 jquery.form.js 提供的ajax方式上传文件！");  
+        AjaxJson ajaxJson=new AjaxJson();
+        InputStream in =null;  
+        List<List<Object>> listob = null;  
+        MultipartFile file = multipartRequest.getFile("file");  
+        if(file.isEmpty()){  
+            throw new Exception("文件不存在！");  
+        }  
+          
+        in = file.getInputStream();  
+        listob = new ImportExcelUtil().getBankListByExcel(in,file.getOriginalFilename());  
+        
+        List<User> userList=new ArrayList<User>();
+        for (int i = 0; i < listob.size(); i++) {  
+            List<Object> lo = listob.get(i);  
+            User user = new User();  
+            user.setUsername(String.valueOf(lo.get(0)));
+            user.setName(String.valueOf(lo.get(1)));
+            user.setPhone(String.valueOf(lo.get(2)));
+            user.setPassword(ApplicationUtils.sha256Hex("123456"));
+            user.setType(0);
+            user.setState("0");
+            userService.insert(user);
+            userList.add(user);
+        }  
+          
+//        PrintWriter out = null;  
+        response.setCharacterEncoding("utf-8");  //防止ajax接受到的中文信息乱码  
+//        out = response.getWriter();  
+//        out.print("文件导入成功！");  
+//        out.flush();  
+//        out.close();  
+        ajaxJson.setSuccess(true);
+    	//j.setObj(subject);
+    	return ajaxJson;
+    }  
+  
+  
 
 }

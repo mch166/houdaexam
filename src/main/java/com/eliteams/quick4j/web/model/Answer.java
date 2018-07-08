@@ -14,6 +14,9 @@ public class Answer implements Serializable{
 	private String answerTime;//答题所用时间
 	private String score;
 	private String submitTime;//交卷时间
+	
+	private String username;
+	private String sjName;
 	public Long getId() {
 		return id;
 	}
@@ -58,6 +61,20 @@ public class Answer implements Serializable{
 	}
 	
 	
+	
+	
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getSjName() {
+		return sjName;
+	}
+	public void setSjName(String sjName) {
+		this.sjName = sjName;
+	}
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub

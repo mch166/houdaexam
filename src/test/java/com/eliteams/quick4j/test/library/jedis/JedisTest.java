@@ -26,6 +26,7 @@ public class JedisTest extends TestSupport {
 
     @Test
     public void testGet() {
+        redisCache.cache("anchor", "StarZou", 1 * 60 * 24);
         System.out.printf(redisCache.get("anchor"));
     }
 }
