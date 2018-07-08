@@ -1,13 +1,10 @@
 {
 "code":"app_code",
-"data":[ {
-	"field" : "sjid",
-	"title" : "试卷编号",
-	"sort" : "true"
-}, {
+"data":[{
 	"field" : "sjmc",
 	"title" : "试卷名称",
-	"sort" : "true"
+	"sort" : "true",
+	"width": "20%"
 },{
 	"field" : "tmtitle",
 	"title" : "题目名称",

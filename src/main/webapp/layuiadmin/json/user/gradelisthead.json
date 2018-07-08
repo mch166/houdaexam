@@ -5,10 +5,13 @@
 	"title" : "姓名",
 	"sort" : "true"
 }, {
-	"field" : "name",
+	"field" : "sjName",
 	"title" : "考卷"
 }, {
 	"field" : "score",
 	"title" : "成绩"
+}, {
+	"field" : "submitTime",
+	"title" : "考试时间"
 }]
 }

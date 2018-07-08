@@ -49,7 +49,6 @@ layui.define([ 'jquery','form','baseUtil'], function(exports) {
 		var that = this;
 		var param = baseUtil.getLayerParentParam();
 		var dataUrl = that.showDataUrl;
-		debugger;
 		var data = that.getDataObj(dataUrl,param);
 		$.each(data, function(i, val) {
 			if(!baseUtil.isNullOrEmpty(val)){
