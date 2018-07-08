@@ -39,7 +39,8 @@ layui
 							    ,accept: 'file' //普通文件
 							    ,exts: 'xls|xlsx'
 							    ,done: function(res){
-							      console.log(res)
+							      console.log(res);
+							      that.reload();
 							    }
 						 });
 					}
