@@ -294,11 +294,14 @@ public class UserController {
      */
     @RequestMapping(value = "/getUserList")
     @ResponseBody
-    public Page<User> getUserList(HttpServletRequest request,Page<User> page) {      	
+    public Page<User> getUserList(HttpServletRequest request,Page<User> page,User user) {      	
         	 Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
-             paramMap.put("n", page.getLimit());        
+             paramMap.put("n", page.getLimit());
+             if(null!=user && null != user.getName() && !"".equals(user.getName())){
+            	 paramMap.put("name", user.getName());
+             }
              map  = userService.selectList(paramMap);        	
              List<User> userList = (List<User>)map.get("list");
         	int count = (int)map.get("total");             

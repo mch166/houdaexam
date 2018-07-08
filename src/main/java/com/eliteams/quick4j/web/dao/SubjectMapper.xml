@@ -42,7 +42,10 @@
         INNER join sj_tbl sj on sj.id=tm.sjid
         where 1=1 
          <if test="sjid != null">
-       		 sjid= #{sjid}
+       		 and sjid= #{sjid}
+        </if>
+        <if test="tmxh != null">
+       		 and tmxh= #{tmxh}
         </if>
 		order by tmxh 
 		<if test="m!=null and n!=null">

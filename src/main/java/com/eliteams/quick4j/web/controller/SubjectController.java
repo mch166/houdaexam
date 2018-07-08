@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -89,15 +90,21 @@ public class SubjectController {
 	
 	@RequestMapping(value = "/selectAll")
     @ResponseBody
-	public Page selectAll(HttpServletRequest request,Page<Subject> page) {
+	public Page selectAll(HttpServletRequest request,Page<Subject> page,Subject subject) {
 		
 		 Map<String , Object> map = new HashMap<String, Object>();      	 
          Map<String, Object> paramMap = new HashMap<String, Object>();
          List<Subject> examList=null;
          int count =0;
          paramMap.put("m", (page.getPage() - 1) * page.getLimit());
-         paramMap.put("n", page.getLimit());        
-         map  = subjectService.selectAll(paramMap);     	
+         paramMap.put("n", page.getLimit());
+         if(null != subject && null != subject.getSjid() && subject.getSjid()>0){
+        	 paramMap.put("sjid", subject.getSjid());
+         }
+         if(null != subject && null != subject.getTmxh() && "" != subject.getTmxh() && !StringUtils.isEmpty(subject.getTmxh())){
+        	 paramMap.put("tmxh", subject.getTmxh());
+         }
+         map  = subjectService.selectAll(paramMap);
           examList = (List<Subject>)map.get("list");
     	 count = (int)map.get("total");   	 
     	page.setData(examList);
@@ -105,6 +112,7 @@ public class SubjectController {
     	page.setCode(0);       
         return page;
 }
+	
 	 
     /**
      * 根据主键查试题 

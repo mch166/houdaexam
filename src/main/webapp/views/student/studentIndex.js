@@ -406,7 +406,6 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		
 		util.countdown(endTime, serverTime, function(date, serverTime, timer){
 			var str = date[1] + '时' +  date[2] + '分' + date[3] + '秒';
-			layer.msg(timer);
 			studentExamObj.timer = timer;
 			lay('#examTime').html(str);
 			if(date[1] == 0 && date[2] == 0 && date[3] == 0){

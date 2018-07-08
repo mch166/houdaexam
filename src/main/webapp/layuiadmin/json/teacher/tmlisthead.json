@@ -6,6 +6,11 @@
 	"sort" : "true",
 	"width": "20%"
 },{
+	"field" : "tmxh",
+	"title" : "题目序号",
+	"sort" : "true",
+	"width": "10%"
+},{
 	"field" : "tmtitle",
 	"title" : "题目名称",
 	"sort" : "true"

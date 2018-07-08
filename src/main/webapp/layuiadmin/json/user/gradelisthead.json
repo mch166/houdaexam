@@ -13,5 +13,10 @@
 }, {
 	"field" : "submitTime",
 	"title" : "考试时间"
+}],
+"toolbar":[{
+	"code":"gradedown",
+	"name":"导出成绩",
+	"icon":""
 }]
 }
