@@ -26,9 +26,22 @@ layui
 					//并且继承autotable.tableClass
 					var userlist = function(options){
 						userlist.superClass.constructor.apply(this, arguments);
+						this.initUpload();
 					}
 					baseUtil.extend(userlist, autotable.tableClass);
 					
+					userlist.prototype.initUpload = function(){
+						var that = this;
+						 upload.render({ //允许上传的文件后缀
+							    elem: '#upToolbar'
+							    ,url: '/houdaexam/rest'
+							    ,accept: 'file' //普通文件
+							    ,exts: 'xls|xlsx'
+							    ,done: function(res){
+							      console.log(res)
+							    }
+						 });
+					}
 					/**
 					 * 密码重置
 					 */

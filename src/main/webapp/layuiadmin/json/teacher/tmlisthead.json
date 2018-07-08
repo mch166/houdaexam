@@ -20,14 +20,5 @@
 },{
 	"code":"edit",
 	"name":"编辑"
-}],
-"toolbar":[{
-	"code":"add",
-	"name":"新增",
-	"icon":""
-},{
-	"code":"del",
-	"name":"删除",
-	"icon":"&#xe640"
 }]
 }
