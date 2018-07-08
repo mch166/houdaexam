@@ -178,6 +178,20 @@
         	  if(res.userInfo.type==1){
                   location.href = './views/index.html'; //后台主页
         	  }else{
+        		  var serverTime = new Date();
+        		  var endTime = layui.sessionData("examendtime")['endtime'];
+        		  if(endTime != undefined && endTime != ""){
+        				var a = (endTime - serverTime) / 3600 / 1000;
+          		    	if (a <= 0) {
+          		    		layui.sessionData("examendtime",null);
+          		    	}
+        		  	}
+        		  
+        		  var startTime = layui.sessionData("startServerTime").startServerTime;
+        			if(startTime == undefined || startTime == ""){
+        				layui.sessionData("startServerTime",null);
+        			}
+        			
                   location.href = './views/student/index.html'; //后台主页
         	  }
             

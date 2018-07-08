@@ -113,14 +113,41 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 */
 	studentExam.prototype.endExam = function(){
 		var that = this;
-		var paramdata = {
-				userid:123,
-				sjid:that.sjid,
-				answerMap:{
-					'1':'B',
-					'2':'c'
-				}
-		};
+		var paramdata = {};
+		paramdata.userid = that.userid;
+		paramdata.sjid = that.sjid;
+		
+		var serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
+		var year =serverTime.getFullYear();
+		var yue = serverTime.getMonth();
+		var ri = serverTime.getDate();
+		var shi = serverTime.getHours();
+		var fen = serverTime.getMinutes();
+		var miao = serverTime.getSeconds();
+		
+		var startTime = layui.sessionData("startServerTime").startServerTime;
+		
+		var date3=serverTime.getTime()-Date.parse(layui.sessionData("startServerTime").startServerTime);
+		var leave1=date3%(24*3600*1000);    //计算天数后剩余的毫秒数
+		var hours=Math.floor(leave1/(3600*1000));
+		
+		var leave2=leave1%(3600*1000);        //计算小时数后剩余的毫秒数
+		var minutes=Math.floor(leave2/(60*1000));
+		
+		var leave3=leave2%(60*1000);      //计算分钟数后剩余的毫秒数
+		var seconds=Math.round(leave3/1000);
+		
+		paramdata.answerTime = hours+":"+minutes+":"+seconds;
+		paramdata.submitTime = year+"-"+yue+"-"+ri+" "+shi+":"+fen+":"+miao;
+		var blTmxh = "";
+		var blTmval = "";
+		var answers = {};
+		$("button[name=tm]").each(function(i){
+			blTmxh = $(this).attr("id").split("_")[1];
+			blTmval = $(this).val();
+			answers[blTmxh] = blTmval;
+		});
+		paramdata.answerMap = answers;
 		$.ajax({
 			url:'/houdaexam/rest/answer/submitAnswer',//HLTODO 获取所选题目
 			type:'post',
@@ -215,7 +242,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		 * 2.获取题目，改变题目显示内容
 		 */
 	    $.ajax({
-			url:'/houdaexam/rest/subject/selectByTmxh?sjid='+1+'&tmxh='+tmxh,//HLTODO 获取所选题目
+			url:'/houdaexam/rest/subject/selectByTmxh?sjid='+that.sjid+'&tmxh='+tmxh,//HLTODO 获取所选题目
 			type:'get',
 			dataType : "json",
 			success:function(returnData){
@@ -259,7 +286,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				layer.msg("题目获取失败");
 			}
 		});
-	   
+	    
 	}
 	
 	studentExam.prototype.setRadioOrCheckbox = function(nowTmBtnid){
@@ -289,7 +316,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		var that = this;
 		var theEndValue = "";
 		if(nowTmlx == "danxuan"){
-			
+			theEndValue = xzvalue;
 		}else{
 			var tmAnswer = $("#"+that.nowTmxhBtnid).val();
 			var arr =[];
@@ -323,11 +350,18 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		var shi = serverTime.getHours();
 		var fen = serverTime.getMinutes();
 		var miao = serverTime.getSeconds();
+		var startTime = layui.sessionData("startServerTime").startServerTime;
+		if(startTime == undefined || startTime == ""){
+			layui.sessionData("startServerTime",{
+				key:'startServerTime',
+				value:serverTime
+			});
+		}
 		
-		var endTime = layui.data("examendtime")['endtime'];
+		var endTime = layui.sessionData("examendtime")['endtime'];
 		if(endTime == undefined || endTime == ""){
 			endTime = new Date(year,yue,ri,parseInt(shi)+3,fen,miao); //结束日期
-			var loginUser = layui.data("examendtime",{
+			var loginUser = layui.sessionData("examendtime",{
 				key:"endtime",
 				value:endTime
 			})
@@ -338,6 +372,20 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			lay('#examTime').html(str);
 			if(date[1] == 0 && date[2] == 0 && date[3] == 0){
 				studentExamObj.endExam();
+				layer.open({
+			        type: 1
+			        ,offset: 'rt' 
+			        ,id: 'layerDemo'+type //防止重复弹出
+			        ,content: '<div style="padding: 20px 100px;">答卷时间已到，系统将自动交卷。 </div>'
+			        ,btn: '确定'
+			        ,btnAlign: 'c' //按钮居中
+			        ,shade: 0.3 //不显示遮罩
+			        ,yes: function(){
+			          layer.closeAll();
+			        }
+			      });
+				layui.sessionData("examendtime",null);
+				$("#logoutBtnid").click();
 			}
 		});
 		
