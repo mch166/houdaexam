@@ -10,11 +10,6 @@
 }, {
 	"field" : "phone",
 	"title" : "手机号"
-}, {
-	"field" : "state",
-	"title" : "用户状态",
-	"templet": "#stateTpl",
-	"unresize": "true"
 }],
 "operationBtn":[{
 	"code":"detail",

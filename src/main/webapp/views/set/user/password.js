@@ -26,7 +26,7 @@ layui.define(["form"],function(exports){
 					if(loginUser.type == 0){
 						layer.closeAll();
 					}else{
-						location.href = '../../../login.html';
+//						location.href = '../../../login.html';
 					}
 				}else{
 					layer.msg(returnData.msg);

@@ -23,18 +23,17 @@
 							<form class="layui-form" id="query_form">
 								<div id="search" class="layui-form-item">
 									<div class="layui-inline">
-										<label class="layui-form-mid">姓名：</label>
-										<div class="layui-input-inline" style="width: 150px;">
-											<input class="layui-input layui-input-sm" name="name"
-												id="test-table-demoReload" autocomplete="off">
+										<label class="layui-form-mid">所属试卷</label>
+										<div class="layui-input-inline">
+											<select id="sjid" name="sjid">
+												<option value="">请选择</option>
+											</select>
 										</div>
 									</div>
 									<div class="layui-inline">
 										<div class="layui-input-inline">
-											<button class="layui-btn" type="button" data-type="reload"
-												function="query">
-												查询
-											</button>
+											<button class="layui-btn" type="button" lay-submit lay-filter="searchSubmit" data-type="reload"
+												function="query">查询</button>
 										</div>
 									</div>
 								</div>
@@ -69,6 +68,7 @@
 			var table = layui.table;
 			var baseUtil = layui.baseUtil;
 			var admin = layui.admin;
+			var form = layui.form;
 			
 			//设置table参数
 			var options = {
@@ -79,15 +79,82 @@
 			//定义当前页面对象
 			//并且继承autotable.tableClass
 			var gradelist = function(options){
+				this.initView();
+				this.initSearch();
 				gradelist.superClass.constructor.apply(this, arguments);
 			}
 			baseUtil.extend(gradelist, autotable.tableClass);
+			
+			//页面初始化
+			gradelist.prototype.initView = function() {
+				$.ajax({
+					async : false,
+					url : "/houdaexam/rest/exam/getAllExam",
+					type : 'post',
+					dataType : "json",
+					success : function(returnData) {
+						if (returnData.success) {
+							var data = returnData.obj;
+							$.each(data, function(i, val) {
+								if (!baseUtil.isNullOrEmpty(val)) {
+									$("#sjid").append(
+											'<option value="' + data[i].id + '">'
+													+ data[i].name + '</option>');
+								}
+							});
+							form.render();
+						} else {
+							parent.layer.msg(returnData.msg);
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+					}
+				});
+			}
+			
+			/**
+			 * 查询监听
+			 */
+			gradelist.prototype.initSearch = function(data){
+				/* 监听提交 */
+				form.on('submit(searchSubmit)', function(data) {
+					table.reload('table-page',{
+						where : { // 设定异步数据接口的额外参数，任意设
+							sjid : data.field.sjid
+						},
+						page : {
+							curr : 1
+						}
+					});
+				});
+			}
 			
 			/**
 			 * 查询
 			 */
 			gradelist.prototype.searchOperation = function(data){
 				
+			}
+			//导出
+			gradelist.prototype.gradedownToolbar = function(){
+				var sjid = $("#sjid").val();
+				var param = {};
+				param.sjid = sjid;
+				
+				$.ajax({
+					url : "/houdaexam/rest/answer/exportAnswers",//HLTODO 导出连接
+					type : 'post',
+					data : param,
+					dataType : "json",
+					success : function(returnData) {
+						if (returnData.success) {
+							layer.msg("导出成功");
+						}
+					},
+					error : function(jqXHR, textStatus, errorThrown) {
+						layer.msg("导出失败");
+					}
+				});
 			}
 			
 			var gradelistObj = new gradelist(options);
