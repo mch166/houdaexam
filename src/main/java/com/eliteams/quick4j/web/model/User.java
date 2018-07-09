@@ -32,6 +32,9 @@ public class User implements Serializable {
     private String sjid;
     
     private String phone;
+    
+    //用户更改密码使用
+    private String newpassword;
 
     public User() {
 
@@ -124,5 +127,14 @@ public class User implements Serializable {
     public String toString() {
         return "User [id=" + id + ", username=" + username + ", password=" + password + ", state=" + state + ", createTime=" + createTime + "]";
     }
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
+	}
+
 
 }

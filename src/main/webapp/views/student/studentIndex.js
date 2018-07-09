@@ -123,6 +123,17 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		        }
 		      });
 		});
+		//修改密码
+		$("#resetpassword").on('click',function(){
+			layer.open({
+		        type: 2
+		        ,title: '修改密码' //不显示标题栏
+		        ,area: ['550px','370px']
+		        ,shade: 0.3
+		        ,id: 'layer_resetpassword' //设定一个id，防止重复弹出
+		        ,content: '../set/user/password.html'
+		      });
+		})
 	}
 	
 	/**
@@ -136,7 +147,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		
 		var serverTime = new Date(); //假设为当前服务器时间，这里采用的是本地时间，实际使用一般是取服务端的
 		var year =serverTime.getFullYear();
-		var yue = serverTime.getMonth();
+		var yue = parseInt(serverTime.getMonth())+1;
 		var ri = serverTime.getDate();
 		var shi = serverTime.getHours();
 		var fen = serverTime.getMinutes();
@@ -426,7 +437,6 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				$("#logoutBtnid").click();
 			}
 		});
-		
 	}
 	var studentExamObj = new studentExam();
 	

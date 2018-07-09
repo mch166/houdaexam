@@ -347,6 +347,29 @@ public class UserController {
      
     }
     
+    /**
+     * 更改密码
+     * @return
+     */
+    @RequestMapping(value = "/updateUserPassword")
+    @ResponseBody
+    public AjaxJson updateUserPassword(HttpServletRequest request,User userParam) {      	
+    	AjaxJson ajaxJson=new AjaxJson();
+    	User user = userService.selectById(userParam.getId());
+    	if(user.getPassword().equals(ApplicationUtils.sha256Hex(userParam.getNewpassword()))){
+    		int result = userService.updatePwd(userParam);
+    		if(result > 0){
+    			ajaxJson.setSuccess(true);
+    		}else{
+    			ajaxJson.setSuccess(false);
+        		ajaxJson.setMsg("密码修改失败");
+    		}
+    	}else{
+    		ajaxJson.setSuccess(false);
+    		ajaxJson.setMsg("原密码不正确");
+    	}
+    	return ajaxJson;
+    }
 
     /** 
      * 描述：通过 jquery.form.js 插件提供的ajax方式上传文件 

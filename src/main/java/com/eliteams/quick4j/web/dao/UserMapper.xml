@@ -138,8 +138,14 @@
     
     
     <update id="updatePwd" parameterType="com.eliteams.quick4j.web.model.User">
-        update user_tbl  set password = #{password},   
-        where username = #{username}
+        update user_tbl  set password = #{password},
+        where 1=1
+        <if test="username !=null and username != ''">
+			and username=#{username}
+		</if>
+		<if test="id !=null and id != ''">
+			and id=#{id}
+		</if>
     </update>
     
    

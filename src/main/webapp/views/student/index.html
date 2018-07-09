@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>基于 layui 的极简社区页面模版</title>
+<title>在线考试</title>
 <meta name="viewport"
 	content="width=device-width, initial-scale=1, maximum-scale=1">
 <link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
@@ -36,10 +36,14 @@
 			<a class="fly-logo" href="/"> <img alt="">
 			</a>
 
-			<ul class="layui-nav fly-nav-user">
-				<!-- 未登入的状态 -->
-				<li class="layui-nav-item"><a id="loginuserimg"
-					class="iconfont icon-touxiang layui-hide-xs" href="javascript:0#" title=""></a>
+			<ul class="layui-nav fly-nav-user" lay-filter="layadmin-layout-right">
+				<li class="layui-nav-item">
+					<a id="loginuserimg" class="iconfont icon-touxiang layui-hide-xs" href="javascript:0#" title=""></a>
+					<dl class="layui-nav-child">
+						<dd>
+							<a id="resetpassword">修改密码</a>
+						</dd>
+					</dl>
 				</li>
 			</ul>
 			<button id="logoutBtnid" layadmin-event="logout" style="text-align: center;"></button>
