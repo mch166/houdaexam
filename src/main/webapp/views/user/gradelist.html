@@ -141,20 +141,7 @@
 				var param = {};
 				param.sjid = sjid;
 				
-				$.ajax({
-					url : "/houdaexam/rest/answer/exportAnswers",//HLTODO 导出连接
-					type : 'post',
-					data : param,
-					dataType : "json",
-					success : function(returnData) {
-						if (returnData.success) {
-							layer.msg("导出成功");
-						}
-					},
-					error : function(jqXHR, textStatus, errorThrown) {
-						layer.msg("导出失败");
-					}
-				});
+				window.open("/houdaexam/rest/answer/exportAnswers?sjid="+sjid);
 			}
 			
 			var gradelistObj = new gradelist(options);
