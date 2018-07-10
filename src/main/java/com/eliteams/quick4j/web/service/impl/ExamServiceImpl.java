@@ -67,5 +67,12 @@ public class ExamServiceImpl extends GenericServiceImpl<Exam, Long> implements E
 	        return examMapper.deleteByPrimaryKey(id);
 	    }
 
+		@Override
+		public void setExamSfky(int id) {
+			examMapper.setAllExamSfkyIsNo();
+			examMapper.setExamSfkyIsYes(id);
+			
+		}
+
 
 }

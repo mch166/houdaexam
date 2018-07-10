@@ -47,6 +47,26 @@ layui
 					
 					sjlist.prototype.upToolbar = function(){
 					}
+					
+					sjlist.prototype.checkexamToolbar = function(){
+						layer.open({
+							type : 2,
+							title : "添加",
+							content : 'sjcheckin.html',
+							maxmin : !0,
+							area : admin.screen() < 2 ? ['50%', '55%'] : ['50%', '50%'],
+							btn : [ "确定","取消" ],
+							yes : function(index, layero) {
+								var submit = layero.find('iframe').contents().find(".layerCard button[lay-submit]");
+					            submit.trigger('click');
+							},
+							btn2 : function(index, layero){
+								layer.close(index);
+							},
+							success : function(layero, index) {
+							}
+						});
+					}
 					/**
 					 * 加载表格数据
 					 * 满屏调整：

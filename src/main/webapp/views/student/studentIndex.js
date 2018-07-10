@@ -33,6 +33,8 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		this.downTmBtn = "downTm";//下一题按钮
 		
 		this.timer = "";
+		this.answerMap = {};//保存学生最后做题情况，展示结果用
+		this.examisend = null;
 		
 //		this.getAllTm();
 		this.initEvent();
@@ -66,6 +68,11 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 */
 	studentExam.prototype.initView = function(){
 		var that = this;
+		that.examisend = layui.sessionData("examisend").examisend;
+		if(that.examisend || that.examisend == "true"){
+			clearTimeout(that.timer);
+			$("#submitexam").hide();
+		}
 		that.tmChange(that.nowTmxhBtnid);
 	}
 	
@@ -176,8 +183,9 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			answers[blTmxh] = blTmval;
 		});
 		paramdata.answerMap = answers;
+		that.answerMap = answers;
 		$.ajax({
-			url:'/houdaexam/rest/answer/submitAnswer',//HLTODO 获取所选题目
+			url:'/houdaexam/rest/answer/submitAnswer',
 			type:'post',
 			data:paramdata,
 			dataType : "json",
@@ -186,6 +194,10 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 					clearTimeout(that.timer)
 					$("#submitexam").hide();
 					layer.msg("试卷提交成功");
+					layui.sessionData("examisend",{
+						key:'examisend',
+						value:true
+					});
 					that.setViewExam();
 				}
 			},
@@ -200,15 +212,44 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		layer.open({
 	        type: 1
 	        ,id: 'layerDemoendview' //防止重复弹出
-	        ,content: '<div style="padding: 20px 100px;">您是否需要继续查看试卷 </div>'
+	        ,content: '<div style="padding: 20px 100px;">您是否需要查看试卷答题情况 </div>'
 	        ,btn: ['确定','取消']
 	        ,btnAlign: 'c' //按钮居中
 	        ,shade: 0.3 //不显示遮罩
-	        ,yes: function(){
-	        	layer.closeAll();
+	        ,yes: function(index,layero){
+	        	layer.close(index);
+	        	that.studentViewExam();
 	        }
 			,btn2:function(){
 				$("#logoutBtnid").click();
+			}
+	      });
+	}
+	//交卷后查看卷子做题情况
+	studentExam.prototype.studentViewExam = function(){
+		var that = this;
+		
+		layer.open({
+	        type: 1
+	        ,id: 'layerDemoStudentendview' //防止重复弹出
+	        ,area : ['1010px', '500px']
+	        ,content: '<div id="studentendviewanswer"></div>'
+	        ,btn: ['确定']
+	        ,shade: 0.3 //不显示遮罩
+	        ,yes: function(index,layero){
+	        	layer.close(index);
+	        }
+			,success:function(){
+				var strHtml = '<button class="layui-btn layui-btn-disabled" style="width:90px;color: black;"><span>{tmxh}</span>:<span>{tmanswer}</span></button>';
+				var endStrHtml = "";
+				$.each(that.answerMap, function(i, val) {
+					endStrHtml += strHtml.replace(/\{tmxh\}/g,i)
+										.replace(/\{tmanswer\}/g,val);
+					if(parseInt(i)%10 == 0){
+						endStrHtml += '<br/>';
+					}
+				});
+				$("#studentendviewanswer").html(endStrHtml);
 			}
 	      });
 	}
@@ -450,5 +491,13 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 							'<input type="checkbox" id="duoxxzoptionC" name="duoxxzoption" lay-filter="duoxxzoption" value="C" title="C">'+
 							'<input type="checkbox" id="duoxxzoptionD" name="duoxxzoption" lay-filter="duoxxzoption" value="D" title="D">';
 	
-	exports('studentIndex',studentIndex());
+	var examisend = layui.sessionData("examisend").examisend;
+	if(studentExamObj.examisend || studentExamObj.examisend == "true"){
+		clearTimeout(studentExamObj.timer);
+		$("#submitexam").hide();
+	}else{
+		studentIndex();
+	}
+	
+	exports('studentIndex',{});
 });

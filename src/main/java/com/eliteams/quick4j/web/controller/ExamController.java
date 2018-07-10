@@ -61,6 +61,19 @@ public class ExamController {
     	j.setObj(examList);
     	return j;
 }
+	/**
+	 * 设置试卷是否可用
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping(value = "/setExamSfky")
+    @ResponseBody
+	public AjaxJson setExamSfky(HttpServletRequest request,String sjid) {
+		AjaxJson j = new AjaxJson();
+		examService.setExamSfky(Integer.parseInt(sjid));;
+        j.setSuccess(true);
+    	return j;
+	}
 
 	 
     /**

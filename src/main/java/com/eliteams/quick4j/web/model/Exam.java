@@ -10,7 +10,8 @@ public class Exam implements Serializable{
 	private Long id;
 	private String name;
 	private String code;
-
+	private String sfky = "否";//是否可用
+	
 	public Long getId() {
 		return id;
 	}
@@ -28,6 +29,12 @@ public class Exam implements Serializable{
 	}
 	public void setCode(String code) {
 		this.code = code;
+	}
+	public String getSfky() {
+		return sfky;
+	}
+	public void setSfky(String sfky) {
+		this.sfky = sfky;
 	}
 	
 	

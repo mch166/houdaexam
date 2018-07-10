@@ -12,6 +12,9 @@
 	"field" : "name",
 	"title" : "试卷名称",
 	"sort" : "true"
+},{
+	"field" : "sfky",
+	"title" : "是否可用"
 }],
 "operationBtn":[{
 	"code":"edit",
@@ -24,5 +27,8 @@
 },{
 	"code":"up",
 	"name":"导入试卷"
+},{
+	"code":"checkexam",
+	"name":"选择考试试卷"
 }]
 }

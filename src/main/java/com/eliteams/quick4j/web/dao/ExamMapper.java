@@ -34,5 +34,9 @@ public interface ExamMapper extends GenericDao<Exam, Long> {
 	     * @return
 	     */
 	    int getRowCnts();
+	    
+	    int setAllExamSfkyIsNo();
+	    
+	    int setExamSfkyIsYes(int id);
 	
 }

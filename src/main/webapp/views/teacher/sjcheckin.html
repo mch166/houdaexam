@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>编码编辑</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css"
+	media="all">
+<link rel="stylesheet" href="../../layuiadmin/style/admin.css"
+	media="all">
+</head>
+<body>
+	<!-- 使用自动遍历赋值 需要：layerCard -->
+	<div class="layui-fluid layerCard">
+		<form class="layui-form" action="" lay-filter="component-form-group">
+			<input type="hidden" name="id">
+			
+			<div class="layui-form-item">
+				<label class="layui-form-label">考试试卷</label>
+				<div class="layui-input-inline">
+					<select id="sjid" name="sjid">
+        				<option value="">请选择</option>
+      				</select>
+				</div>
+			</div>
+    		
+			<div class="layui-form-item" style='display: none'>
+				<div class="layui-input-block">
+					<div class="layui-footer">
+						<!-- 这里提交按钮的ID是用在layer弹窗中点击确定按钮代替该按钮用 -->
+						<button class="layui-btn" lay-submit lay-filter="saveOrUpdate">立即提交</button>
+						<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+
+
+<script src="../../layuiadmin/layui/layui.js"></script>
+<script>
+	layui.config({
+		base : '../../layuiadmin/' //静态资源所在路径
+	}).extend({
+		index : 'lib/index' //主入口模块
+	}).use(['index','baseUtil','form','tableoperation'],function(){
+		var baseUtil = layui.baseUtil;
+		var tableoperation = layui.tableoperation;
+		var form = layui.form;
+		var $ = layui.$;
+		
+		//设置参数
+		var options = {
+			operType : 'edit'
+			,submitUrl : '/houdaexam/rest/exam/setExamSfky',
+		};
+		//定义自己的对象
+		var sjcheckin = function(options){
+			this.initView();
+			sjcheckin.superClass.constructor.apply(this, arguments);
+		}
+		baseUtil.extend(sjcheckin, tableoperation.showClass);
+		
+		sjcheckin.prototype.initView = function(){
+			$.ajax({
+				async:false,
+				url:"/houdaexam/rest/exam/getAllExam",
+				type:'post',
+				dataType : "json",
+				success:function(returnData){
+					if(returnData.success){
+						var data = returnData.obj;
+						$.each(data, function(i, val) {
+							if(!baseUtil.isNullOrEmpty(val)){
+								$("#sjid").append('<option value="'+data[i].id+'">'+data[i].name+'</option>');
+							}
+						});
+						form.render();
+					}else{
+						parent.layer.msg(returnData.msg);
+					}
+				},
+				error:function(jqXHR,textStatus,errorThrown){
+				}
+			});
+		}
+		
+		//创建自己定义的对象
+		var sjcheckinObj = new sjcheckin(options);
+	});
+</script>
+</body>
+</html>

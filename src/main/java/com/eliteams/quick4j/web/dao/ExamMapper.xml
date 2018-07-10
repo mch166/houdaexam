@@ -4,12 +4,13 @@
     <resultMap id="BaseResultMap" type="com.eliteams.quick4j.web.model.Exam">
         <id column="id" property="id" jdbcType="BIGINT" />
          <result column="name" property="name" jdbcType="VARCHAR" />  
-           <result column="code" property="code" jdbcType="VARCHAR" />     
+           <result column="code" property="code" jdbcType="VARCHAR" /> 
+           <result column="sfky" property="sfky" jdbcType="VARCHAR" />    
             
     </resultMap>
     
     <sql id="Base_Column_List">
-        id, name,code
+        id, name,code,sfky
     </sql>
     
     
@@ -57,11 +58,17 @@
         </set>
         where id = #{id,jdbcType=BIGINT}
     </update>
-        
+    
+    <update id="setAllExamSfkyIsNo">   
+        update sj_tbl set sfky="否"
+    </update>
+    <update id="setExamSfkyIsYes" parameterType="java.lang.Long">   
+        update sj_tbl set sfky="是" where id =  #{id,jdbcType=BIGINT}
+    </update>
     
     <insert id="insertExam" parameterType="com.eliteams.quick4j.web.model.Exam">
-        insert into sj_tbl (name,code)
-        values (#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR})
+        insert into sj_tbl (name,code,sfky)
+        values (#{name,jdbcType=VARCHAR},#{code,jdbcType=VARCHAR},#{sfky,jdbcType=VARCHAR})
          <selectKey resultType="Long" keyProperty="id" order="AFTER">select last_insert_id()</selectKey>  
     </insert>
     
