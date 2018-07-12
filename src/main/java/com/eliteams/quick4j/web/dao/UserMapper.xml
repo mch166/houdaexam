@@ -155,6 +155,7 @@
         <include refid="Base_Column_List" />
         from user_tbl
         where username = #{record.username,jdbcType=VARCHAR} and password = #{record.password,jdbcType=CHAR}
+        limit 1
     </select>
 
 

@@ -93,6 +93,7 @@ public class UserController {
             if (subject.isAuthenticated()) {  
             }else {
             	 // 身份验证
+            	System.out.println(ApplicationUtils.sha256Hex(user.getPassword()));
                 subject.login(new UsernamePasswordToken(user.getUsername(), ApplicationUtils.sha256Hex(user.getPassword())));                        
             }
             // 验证成功在Session中保存用户信息
@@ -121,6 +122,7 @@ public class UserController {
              map.put("userInfo", userInfo);
              return  map;
         } catch (AuthenticationException e) {
+        	e.printStackTrace();
             // 身份验证失败
         	  map.put("code", "1");
               map.put("msg", "用户名或密码错误 ！");
