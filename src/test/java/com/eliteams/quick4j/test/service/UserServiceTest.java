@@ -20,6 +20,7 @@ public class UserServiceTest extends TestSupport {
         model.setUsername("admin");
         model.setPassword(ApplicationUtils.sha256Hex("admin"));
         model.setCreateTime("2018-06-26");
+        model.setType(1);
         userService.insert(model);
     }
 
