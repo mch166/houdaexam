@@ -236,10 +236,14 @@ public class SubjectController {
         examService.insertExam(exam);
         List<Subject> subjectList=new ArrayList<Subject>();
         int k =0;
-        for (int i = 2; i < listob.size(); i++) {  
+        for (int i = 2; i < listob.size()-1; i++) {  
         	k++;
             List<Object> lo = listob.get(i);  
             Subject subject = new Subject();  
+        	try {
+        		if(lo==null||"".equals(lo)){
+        			continue;
+        		}
             subject.setTmtitle(String.valueOf(lo.get(0)));
             subject.setOptionA(String.valueOf(lo.get(1)));
             subject.setOptionB(String.valueOf(lo.get(2)));
@@ -248,6 +252,10 @@ public class SubjectController {
             subject.setAnswer(String.valueOf(lo.get(5)));
             subject.setTmxh(k+"");
             subject.setParse(String.valueOf(lo.get(6))); 
+        	}catch (Exception e) {
+				e.printStackTrace();
+				System.out.println(i);
+			}
             if(k<51) {
             	subject.setType(Subject.TYPE_DANXUAN);
             }else if(50<k&&k<86) {
