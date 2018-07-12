@@ -65,14 +65,22 @@ public class SubjectController {
     	 count = (int)map.get("total");   	 
     }else {
     	Map resultMap=examService.selectList(paramMap);
+        Long randomsjid=7L;
     	if(resultMap!=null&&resultMap.get("list")!=null) {
     		List<Exam> resultList=(List<Exam>) resultMap.get("list");
-    		//随机数
-    		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
-     		if(randomNumber==-1) {
-     			randomNumber=0;
-     		}
-    		Long randomsjid=resultList.get(randomNumber).getId();
+//    		//随机数
+//    		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
+//     		if(randomNumber==-1) {
+//     			randomNumber=0;
+//     		}
+//    		Long randomsjid=resultList.get(randomNumber).getId();
+    		
+    		for (Exam exam : resultList) {
+				if("是".equals(exam.getSfky())) {
+					randomsjid=exam.getId();
+					break;
+				}
+			}
     		paramMap.put("sjid", randomsjid);
             paramMap.put("m", (page.getPage() - 1) * page.getLimit());
             paramMap.put("n", page.getLimit());        

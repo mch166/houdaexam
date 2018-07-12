@@ -99,17 +99,24 @@ public class UserController {
              User userInfo = userService.selectByUsername(user.getUsername());
              Map<String, Object> paramMap = new HashMap<String, Object>();
              Map resultMap=examService.selectList(paramMap);
+             Long randomsjid=7L;
          	if(resultMap!=null&&resultMap.get("list")!=null) {
          		List<Exam> resultList=(List<Exam>) resultMap.get("list");
-         		//随机数
-         		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
-         		if(randomNumber==-1) {
-         			randomNumber=0;
-         		}
-         		Long randomsjid=resultList.get(randomNumber).getId();
-             	userInfo.setSjid(randomsjid+"");
+//         		//随机数
+//         		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
+//         		if(randomNumber==-1) {
+//         			randomNumber=0;
+//         		}
+//             	userInfo.setSjid(randomsjid+"");
+         		for (Exam exam : resultList) {
+					if("是".equals(exam.getSfky())) {
+						randomsjid=exam.getId();
+						break;
+					}
+				}
 
          	}
+         	userInfo.setSjid(randomsjid+"");
              request.getSession().setAttribute("userInfo", userInfo);
              map.put("userInfo", userInfo);
              return  map;
