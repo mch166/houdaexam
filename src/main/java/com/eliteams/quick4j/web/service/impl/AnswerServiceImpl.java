@@ -77,6 +77,24 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answerMapper.insert(answer);
 		return score;
 	}
+	
+	@Override
+	public void  ReSubmitAnswer(String sjid) {
+		
+        Map<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("sjid", Long.parseLong(sjid));
+        paramMap.put("m", 0);
+        paramMap.put("n",1000);        
+        Map<String, Object>  map  = selectList(paramMap); 	
+        List<Answer> answerList = (List<Answer>)map.get("list");	
+        for (Answer answer : answerList) {
+		String score = marking(answer);
+		answer.setScore(score);
+		answerMapper.updateScore(answer);	
+	}
+	}
+	
+	
    
 	
 	  @Override
@@ -112,9 +130,45 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 				if(answer.equals(userAnswer)) {
     			if(Subject.TYPE_DANXUAN.equals(type)) {//单选
     						score=score+Subject.VALUE_DANXUAN;    					 		
-	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {	//多选
+	    		}else if (Subject.TYPE_DUOXUAN.equals(type)) {	//多选
 						score=score+Subject.VALUE_DUOXUAN;    		
-	    		}else if (Subject.TYPE_DANXUAN.equals(type)) {//不定项
+	    		}else if (Subject.TYPE_BUDINGXIANG.equals(type)) {//不定项
+						score=score+Subject.VALUE_BUDINGXIANG;					
+	    		}
+	    	}
+    	}
+	  }
+	    	return score+"";
+ }
+	    
+	    /**
+	     * 打分
+	     * @param answerDisp
+	     * @return
+	     */
+	    public String marking(Answer answer){
+	    	String sjid = answer.getSjid();
+	    	String answerjson = answer.getAnswer();
+	    	Map params=new HashMap();
+			 Type mapType = new TypeToken<Map>() {}.getType();
+	    	Map<String,String> answerMap=new Gson().fromJson(answerjson,mapType);
+	    	params.put("sjid", sjid);
+	    	List<Subject> subjectList = subjectMapper.selectBySjid(params);
+	    	int score=0;
+	    	for (Subject subject : subjectList) {
+	    		String tmxh = subject.getTmxh();
+	    		String type = subject.getType();
+	    		String rightAnswer = subject.getAnswer();
+	    		String userAnswer = answerMap.get(tmxh);
+	    		//TODO 计算规则待定
+    		if(rightAnswer!=null&&!"".equals(rightAnswer)&&userAnswer!=null&&!"".equals(userAnswer)) {
+    			
+				if(rightAnswer.equals(userAnswer)) {
+    			if(Subject.TYPE_DANXUAN.equals(type)) {//单选
+    						score=score+Subject.VALUE_DANXUAN;    					 		
+	    		}else if (Subject.TYPE_DUOXUAN.equals(type)) {	//多选
+						score=score+Subject.VALUE_DUOXUAN;    		
+	    		}else if (Subject.TYPE_BUDINGXIANG.equals(type)) {//不定项
 						score=score+Subject.VALUE_BUDINGXIANG;					
 	    		}
 	    	}

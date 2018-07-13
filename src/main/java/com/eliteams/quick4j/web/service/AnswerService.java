@@ -17,6 +17,9 @@ public interface AnswerService extends GenericService<Answer, Long> {
 	 
 	 
 	 String submitAnswer(AnswerDisp answerDisp);
+
+
+	void ReSubmitAnswer(String sjid);
 		
 
 }

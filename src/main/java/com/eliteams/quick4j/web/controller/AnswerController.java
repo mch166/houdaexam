@@ -111,7 +111,6 @@ public class AnswerController {
     }
     
     
-    //删除题目
     @RequestMapping(value = "/submitAnswer")
     @ResponseBody
     public AjaxJson submitAnswer( AnswerDisp answerDisp ,HttpServletRequest request) {
@@ -126,6 +125,23 @@ public class AnswerController {
             return null;
         }
     }
+    
+    
+    @RequestMapping(value = "/ReSubmitAnswer")
+    @ResponseBody
+    public AjaxJson ReSubmitAnswer( String sjid ,HttpServletRequest request) {
+        try {
+        	AjaxJson j = new AjaxJson();
+        	answerService.ReSubmitAnswer(sjid);
+        	j.setSuccess(true);
+        	j.setMsg("执行成功");
+            return j;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     
     /**
      * 订单发票列表导出
