@@ -28,12 +28,16 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		this.duoxCheckDiv = "duoxCheckDiv";//多选按钮div
 		
 		this.submitexam = "submitexam";
+		this.viewmyexam = "viewmyexam";
 		this.warmTmBtn = "warmTm";//标记按钮
 		this.upTmBtn = "upTm";//上一题按钮
 		this.downTmBtn = "downTm";//下一题按钮
 		
 		this.timer = "";
-		this.answerMap = {};//保存学生最后做题情况，展示结果用
+		this.answerMap = layui.sessionData("answerMap").answerMap;//保存学生最后做题情况，展示结果用
+		if(this.answerMap == undefined || typeof(this.answerMap) == "undefined"){
+			this.answerMap = {};
+		}
 		this.examisend = null;
 		
 //		this.getAllTm();
@@ -68,11 +72,22 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 */
 	studentExam.prototype.initView = function(){
 		var that = this;
-		that.examisend = layui.sessionData("examisend").examisend;
-		if(that.examisend || that.examisend == "true"){
-			clearTimeout(that.timer);
-			$("#submitexam").hide();
-		}
+//		that.examisend = layui.sessionData("examisend").examisend;
+//		if(that.examisend || that.examisend == "true"){
+//			clearTimeout(that.timer);
+//			$("#submitexam").hide();
+//		}
+		//刷新操作，从缓存中读取做题情况并重新赋值
+		var pagetmbtnid = "";
+		$.each(this.answerMap, function(i, val) {
+			pagetmbtnid = "tm_"+i;
+			$("#"+pagetmbtnid).val(val);
+			if(val != null && val!=""){
+				$("#"+pagetmbtnid).addClass("layui-btn-normal");
+				$("#"+pagetmbtnid).removeClass("layui-btn-blue");
+			}
+		});
+		
 		that.tmChange(that.nowTmxhBtnid);
 	}
 	
@@ -123,13 +138,18 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		        ,btn: ['确定', '取消']
 		        ,btnAlign: 'c'
 		        ,moveType: 1 //拖拽模式，0或者1
-		        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">是否确认提交试卷<br>试卷提交后将不能更改</div>'
+		        ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">是否确认提交试卷<br>试卷提交后将自动退出系统</div>'
 		        ,yes: function(index){
 		        	that.endExam();
 		        	layer.closeAll();
 		        }
 		      });
 		});
+		//查看答卷情况
+		$("#"+this.viewmyexam).on('click',function(){
+			that.studentViewExam();
+		});
+		
 		//修改密码
 		$("#resetpassword").on('click',function(){
 			layer.open({
@@ -140,7 +160,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		        ,id: 'layer_resetpassword' //设定一个id，防止重复弹出
 		        ,content: '../set/user/password.html'
 		      });
-		})
+		});
 	}
 	
 	/**
@@ -183,7 +203,11 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			answers[blTmxh] = blTmval;
 		});
 		paramdata.answerMap = answers;
-		that.answerMap = answers;
+		layui.sessionData("answerMap",{
+			key:'answerMap',
+			value:answers
+		});
+//		that.answerMap = answers;
 		$.ajax({
 			url:'/houdaexam/rest/answer/submitAnswer',
 			type:'post',
@@ -192,42 +216,78 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			success:function(returnData){
 				if(returnData.success){
 					clearTimeout(that.timer)
-					$("#submitexam").hide();
 					layer.msg("试卷提交成功");
-					layui.sessionData("examisend",{
-						key:'examisend',
-						value:true
-					});
-					that.setViewExam();
+					that.studentExamTheEnd();
 				}
 			},
 			error:function(jqXHR,textStatus,errorThrown){
-				layer.msg("试卷提交失败");
+				that.submitAnswerAgain();
 			}
 		});
 	}
-	//交卷后查看卷子
-	studentExam.prototype.setViewExam = function(){
+	
+	/**
+	 * 第一次提交失败后
+	 * 再次提交（无时间）
+	 */
+	studentExam.prototype.submitAnswerAgain = function(){
 		var that = this;
-		layer.open({
-	        type: 1
-	        ,id: 'layerDemoendview' //防止重复弹出
-	        ,content: '<div style="padding: 20px 100px;">您是否需要查看试卷答题情况 </div>'
-	        ,btn: ['确定','取消']
-	        ,btnAlign: 'c' //按钮居中
-	        ,shade: 0.3 //不显示遮罩
-	        ,yes: function(index,layero){
-	        	layer.close(index);
-	        	that.studentViewExam();
-	        }
-			,btn2:function(){
-				$("#logoutBtnid").click();
+		var paramdata = {};
+		paramdata.userid = that.userid;
+		paramdata.sjid = that.sjid;
+		var blTmxh = "";
+		var blTmval = "";
+		var answers = {};
+		$("button[name=tm]").each(function(i){
+			blTmxh = $(this).attr("id").split("_")[1];
+			blTmval = $(this).val();
+			answers[blTmxh] = blTmval;
+		});
+		paramdata.answerMap = answers;
+		$.ajax({
+			url:'/houdaexam/rest/answer/submitAnswer',
+			type:'post',
+			data:paramdata,
+			dataType : "json",
+			success:function(returnData){
+				if(returnData.success){
+					clearTimeout(that.timer)
+					layer.msg("试卷提交成功");
+					that.studentExamTheEnd();
+					
+				}
+			},
+			error:function(jqXHR,textStatus,errorThrown){
+				layer.msg("试卷提交失败:textStatus:"+textStatus);
 			}
-	      });
+		});
 	}
-	//交卷后查看卷子做题情况
+	/**
+	 * 试卷点击提交后提交成功后
+	 * 删除各个缓存、退出
+	 */
+	studentExam.prototype.studentExamTheEnd = function(){
+		layui.sessionData("answerMap",null);//答题结果
+		layui.sessionData("examisend",null);//试卷提交成功标志
+		layui.sessionData("startServerTime",null);//试卷开始时间
+		layui.sessionData("examendtime",null);//试卷结束时间
+		$("#logoutBtnid").click();
+	}
+	/**
+	 * 交卷后查看卷子做题情况
+	 */
 	studentExam.prototype.studentViewExam = function(){
 		var that = this;
+		
+		var blTmxh = "";
+		var blTmval = "";
+		var answers = {};
+		$("button[name=tm]").each(function(i){
+			blTmxh = $(this).attr("id").split("_")[1];
+			blTmval = $(this).val();
+			answers[blTmxh] = blTmval;
+		});
+		var viewanswerMap = answers;
 		
 		layer.open({
 	        type: 1
@@ -242,7 +302,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			,success:function(){
 				var strHtml = '<button class="layui-btn layui-btn-disabled" style="width:90px;color: black;"><span>{tmxh}</span>:<span>{tmanswer}</span></button>';
 				var endStrHtml = "";
-				$.each(that.answerMap, function(i, val) {
+				$.each(viewanswerMap, function(i, val) {
 					endStrHtml += strHtml.replace(/\{tmxh\}/g,i)
 										.replace(/\{tmanswer\}/g,val);
 					if(parseInt(i)%10 == 0){
@@ -265,11 +325,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		if(haswarm){
 			$("#"+tmid).removeClass("layui-btn-warm");
 			var tmAnswer = $("#"+tmid).val();
-//			if(tmAnswer == "" || tmAnswer == null || tmAnswer == undefined){
-//				$("#"+tmid).addClass("layui-btn-blue");
-//			}else{
-				$("#"+tmid).addClass("layui-btn-normal");
-//			}
+			$("#"+tmid).addClass("layui-btn-normal");
 			$("#warmspanid").text("标记");
 		}else{
 			$("#"+tmid).removeClass("layui-btn-blue");
@@ -319,6 +375,18 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			if(nowTmAns == "" || nowTmAns == null){
 				$("#"+that.nowTmxhBtnid).addClass("layui-btn-blue");
 				$("#"+that.nowTmxhBtnid).removeClass("layui-btn-normal");
+			}else{
+				//缓存学生做题记录
+				var answers = layui.sessionData("answerMap").answerMap;
+				var xsDtTmxh = that.nowTmxhBtnid.split("_")[1];//学生答题题目序号
+				if(answers=="undefined" || typeof(answers)=="undefined"){
+					answers = {};
+				}
+				answers[xsDtTmxh] = nowTmAns;
+				layui.sessionData("answerMap",{
+					key:'answerMap',
+					value:answers
+				});
 			}
 		}
 		//当前题目的操作
@@ -455,30 +523,66 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				value:endTime
 			})
 		}
-		
+		var timeStartFlag = true;
 		util.countdown(endTime, serverTime, function(date, serverTime, timer){
 			var str = date[1] + '时' +  date[2] + '分' + date[3] + '秒';
+			if((date[2]=="0" || date[2]=="15" || date[2]=="30" || date[2]=="45") && date[3]=="0"  && !timeStartFlag){
+				fifAutoSubmit();
+			}
 			studentExamObj.timer = timer;
 			lay('#examTime').html(str);
-			if(date[1] == 0 && date[2] == 0 && date[3] == 0){
-				studentExamObj.endExam();
+			if(date[1] == 0 && date[2] == 0 && date[3] == 0 && !timeStartFlag){
+				clearTimeout(studentExamObj.timer);
 				layer.open({
 			        type: 1
 			        ,offset: 'rt' 
-			        ,id: 'layerDemo'+type //防止重复弹出
-			        ,content: '<div style="padding: 20px 100px;">答卷时间已到，系统将自动交卷。 </div>'
+			        ,title: false
+			        ,id: 'layerDemoTimeOver' //防止重复弹出
+			        ,content: '<div style="padding: 20px 100px;">答卷时间已到，系统已自动交卷。 </div>'
 			        ,btn: '确定'
 			        ,btnAlign: 'c' //按钮居中
-			        ,shade: 0.3 //不显示遮罩
-			        ,yes: function(){
-			          layer.closeAll();
+			        ,shade: 0.3 
+			        ,yes: function(index, layero){
+			        	layer.close(index);
+			        	studentExamObj.studentViewExam();
+			        	studentExamObj.studentExamTheEnd()
 			        }
 			      });
-				layui.sessionData("examendtime",null);
-				$("#logoutBtnid").click();
+				studentExamObj.endExam();
+			}
+			timeStartFlag = false;
+		});
+	}
+	/**
+	 * 15分钟自动提交一次
+	 */
+	var fifAutoSubmit = function(){
+		var that = studentExamObj;
+		var paramdata = {};
+		paramdata.userid = that.userid;
+		paramdata.sjid = that.sjid;
+		var blTmxh = "";
+		var blTmval = "";
+		var answers = {};
+		$("button[name=tm]").each(function(i){
+			blTmxh = $(this).attr("id").split("_")[1];
+			blTmval = $(this).val();
+			answers[blTmxh] = blTmval;
+		});
+		paramdata.answerMap = answers;
+		$.ajax({
+			url:'/houdaexam/rest/answer/submitAnswer',
+			type:'post',
+			data:paramdata,
+			dataType : "json",
+			success:function(returnData){
+				if(returnData.success){
+					console.log("试卷自动提交成功");
+				}
 			}
 		});
 	}
+	
 	var studentExamObj = new studentExam();
 	
 	var dxCheckDivHtml = '<input type="radio" id="dxxzoptionA" name="dxxzoption" lay-filter="dxxzoption" value="A" title="A">'+
@@ -491,13 +595,13 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 							'<input type="checkbox" id="duoxxzoptionC" name="duoxxzoption" lay-filter="duoxxzoption" value="C" title="C">'+
 							'<input type="checkbox" id="duoxxzoptionD" name="duoxxzoption" lay-filter="duoxxzoption" value="D" title="D">';
 	
-	var examisend = layui.sessionData("examisend").examisend;
-	if(studentExamObj.examisend || studentExamObj.examisend == "true"){
-		clearTimeout(studentExamObj.timer);
-		$("#submitexam").hide();
-	}else{
-		studentIndex();
-	}
-	
+//	var examisend = layui.sessionData("examisend").examisend;
+//	if(studentExamObj.examisend || studentExamObj.examisend == "true"){
+//		clearTimeout(studentExamObj.timer);
+//		$("#submitexam").hide();
+//	}else{
+//		studentIndex();
+//	}
+	studentIndex();
 	exports('studentIndex',{});
 });

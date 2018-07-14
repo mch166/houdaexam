@@ -40,6 +40,7 @@
 			</li>
 			</ul>
 			<ul class="layui-nav fly-nav-user" lay-filter="layadmin-layout-right">
+				
 				<li class="layui-nav-item">
 					<a id="loginuserimg" class="iconfont icon-touxiang layui-hide-xs" href="javascript:0#" title=""></a>
 					<dl class="layui-nav-child">
@@ -48,6 +49,8 @@
 						</dd>
 					</dl>
 				</li>
+				<li class="layui-nav-item" id="usertitlename">
+				</li>
 			</ul>
 			<button id="logoutBtnid" style="display:none;" layadmin-event="logout" style="text-align: center;"></button>
 		</div>
@@ -55,11 +58,17 @@
 
 	<div class="fly-panel fly-column">
 		<div class="layui-container">
-			<div class="fly-column-right layui-hide-xs">
+			<div class="fly-column-right layui-hide-xs" style="margin-right:160px;">
+				<button id="viewmyexam" class="layui-btn layui-btn-normal"
+					style="margin-right: 10px;">
+					<i class="layui-icon"></i>查看答题
+				</button>
 				<button id="submitexam" class="layui-btn layui-btn-danger"
 					style="margin-right: 10px;">
 					<i class="layui-icon">O</i>交&nbsp;&nbsp;卷
 				</button>
+			</div>
+			<div class="fly-column-right layui-hide-xs">
 				结束时间：<span id="examTime">0时0分0秒</span>
 			</div>
 		</div>
@@ -389,7 +398,7 @@
 			var $ = layui.$;
 			var setter = layui.setter;
 			var loginUser = layui.data(setter.userInfo)[setter.userInfo];
-			$("#loginuserimg").attr("title",loginUser.name)
+			$("#usertitlename").text(loginUser.name)
 		});
 	</script>
 </body>
