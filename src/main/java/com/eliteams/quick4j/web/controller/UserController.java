@@ -122,7 +122,7 @@ public class UserController {
             map.put("msg", "登入成功");
          	userInfo.setSjid(randomsjid+"");       	
              request.getSession().setAttribute("userInfo", userInfo);
-             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+             SimpleDateFormat df = new SimpleDateFormat("YYYY-MM-DD HH:MM:SS");
      	    Date d=new Date();   
      	    log.info("用户登录user:"+user.getUsername()+";时间:"+df.format(d)); 
              request.getSession().setAttribute("loginTime", df.format(d));

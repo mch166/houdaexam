@@ -21,6 +21,8 @@ public interface AnswerMapper extends GenericDao<Answer, Long> {
 	
 	List selectByOther(Map map);
 	
+	int updateAnswer(Answer answer);
+	
 	int updateScore(Answer answer);
 	
     /**

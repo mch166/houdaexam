@@ -20,8 +20,9 @@ public interface SubjectService extends GenericService<Subject, Long> {
      * @param sjid
      * @param tmxh
      * @return
+     * @throws Exception 
      */
-    Subject selectByTmxh(Long sjid,String tmxh);
+    Subject selectByTmxh(Long sjid,String tmxh) throws Exception;
     
     /**
      * 根据试卷id删除试题

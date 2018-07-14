@@ -10,9 +10,11 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
+import com.eliteams.quick4j.web.controller.UserController;
 import com.eliteams.quick4j.web.dao.AnswerMapper;
 import com.eliteams.quick4j.web.dao.SubjectMapper;
 import com.eliteams.quick4j.web.model.Answer;
@@ -27,6 +29,9 @@ import com.google.gson.reflect.TypeToken;
  */
 @Service
 public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implements AnswerService {
+
+	
+    public static Logger log=Logger.getLogger(AnswerServiceImpl.class);
 
 	@Resource
 	private AnswerMapper answerMapper;
@@ -71,17 +76,19 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answer.setSubmitTime(answerDisp.getSubmitTime());
 		answer.setUserid(answerDisp.getUserid());
 		//查询学员在一定时间内是否有提交过答题
-		Map paramMap=new HashMap();
+		Map<String,Object> paramMap=new HashMap<String,Object>();
 		paramMap.put("sjid", answerDisp.getSjid());
 		paramMap.put("userid", answerDisp.getUserid());
 		paramMap.put("m", "0");
 		paramMap.put("n", "1");
 		List<Answer> resultList= answerMapper.selectByOther(paramMap);
-		if(resultList==null||compareSubmitTime(resultList.get(0).getSubmitTime())) {
+		if(resultList==null||resultList.size()==0||compareSubmitTime(resultList.get(0).getSubmitTime())) {
+			log.info("用户首次交卷，时间："+answer.getSubmitTime());
 			answerMapper.insert(answer);
 		}else {
+			log.info("用户上次交卷时间："+resultList.get(0).getSubmitTime()+"；本次交卷时间"+answer.getSubmitTime());
 			answer.setId(resultList.get(0).getId());
-			answerMapper.updateScore(answer);
+			answerMapper.updateAnswer(answer);
 		}		
 		return score;
 	}

@@ -6,11 +6,13 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
 import com.eliteams.quick4j.core.util.RedisUtil;
 import com.eliteams.quick4j.core.util.SerializeUtil;
+import com.eliteams.quick4j.web.controller.SubjectController;
 import com.eliteams.quick4j.web.dao.SubjectMapper;
 import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.Subject;
@@ -29,6 +31,7 @@ import redis.clients.jedis.Jedis;
  */
 @Service
 public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implements SubjectService {
+    public static Logger log=Logger.getLogger(SubjectServiceImpl.class);
 
     @Resource
     private SubjectMapper subjectMapper;
@@ -72,7 +75,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	    } 
 	  
 	  @Override
-	    public Subject selectByTmxh(Long sjid,String tmxh) {
+	    public Subject selectByTmxh(Long sjid,String tmxh)throws Exception {
 		  //先从缓存中取
 		  Subject subject=null;
 		  try {
@@ -92,7 +95,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 		        }
 		  }catch (Exception e) {
 			  e.printStackTrace();
-			  //"根据试卷和序号获取试题失败"
+			 log.error("根据试卷和序号获取试题失败", e); 
 		}
 	        return subject;
 	 } 

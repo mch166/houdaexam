@@ -123,6 +123,7 @@ public class AnswerController {
     	AjaxJson j = new AjaxJson();
     	try {
         	answerService.submitAnswer(answerDisp);
+        	log.info("用户交卷:"+answerDisp.getUserid());
         	j.setSuccess(true);
         	j.setMsg("提交成功");
         } catch (Exception e) {

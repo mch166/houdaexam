@@ -157,9 +157,17 @@ public class SubjectController {
     @ResponseBody
     public AjaxJson selectByTmxh(HttpServletRequest request,Long sjid,String tmxh) {
     	AjaxJson j = new AjaxJson();
+    	try {
     	Subject subject = subjectService.selectByTmxh(sjid, tmxh);
     	j.setSuccess(true);
     	j.setObj(subject);
+    	}catch (Exception e) {
+    		j.setSuccess(false);
+        	j.setObj("获取试题失败");
+    		e.printStackTrace();
+    		log.error("根据试卷和题目序号查试题异常",e);
+    	}
+
     	return j;
     }
 	
