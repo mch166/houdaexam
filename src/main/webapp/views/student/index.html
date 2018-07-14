@@ -398,6 +398,10 @@
 			var $ = layui.$;
 			var setter = layui.setter;
 			var loginUser = layui.data(setter.userInfo)[setter.userInfo];
+			if(loginUser == undefined || loginUser =="" || typeof(loginUser) == "undefined"){
+				layer.msg("您尚未登录，或已退出。请重新登录");
+				location.href = '../views/login.html'; //后台主页
+			}
 			$("#usertitlename").text(loginUser.name)
 		});
 	</script>
