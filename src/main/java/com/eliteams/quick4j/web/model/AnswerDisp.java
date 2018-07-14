@@ -67,7 +67,7 @@ public class AnswerDisp implements Serializable{
 	@Override
 	public String toString() {
 		// TODO Auto-generated method stub
-        return "Answer [id=" + id + ", userid=" + userid + ", sjid=" + sjid + ", answerTime=" + answerTime + ", score=" + score + ", submitTime=" + submitTime + ", answer=" + answerMap + "]";
+        return "AnswerDisp [id=" + id + ", userid=" + userid + ", sjid=" + sjid + ", answerTime=" + answerTime + ", score=" + score + ", submitTime=" + submitTime + ", answer=" + answerMap + "]";
 	}
 	
 }

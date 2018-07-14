@@ -56,7 +56,8 @@ public interface GenericService<Model, PK> {
      * 查询多个对象
      *
      * @return 对象集合
+     * @throws Exception 
      */
-    Map<String, Object> selectList(Map paramMap);
+    Map<String, Object> selectList(Map paramMap) throws Exception ;
 
 }

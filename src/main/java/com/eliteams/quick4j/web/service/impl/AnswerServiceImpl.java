@@ -1,6 +1,9 @@
 package com.eliteams.quick4j.web.service.impl;
 
 import java.lang.reflect.Type;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,18 +14,11 @@ import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
 import com.eliteams.quick4j.web.dao.AnswerMapper;
-import com.eliteams.quick4j.web.dao.ExamMapper;
 import com.eliteams.quick4j.web.dao.SubjectMapper;
-import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.Answer;
 import com.eliteams.quick4j.web.model.AnswerDisp;
-import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.model.Subject;
-import com.eliteams.quick4j.web.model.User;
-import com.eliteams.quick4j.web.model.UserExample;
 import com.eliteams.quick4j.web.service.AnswerService;
-import com.eliteams.quick4j.web.service.ExamService;
-import com.eliteams.quick4j.web.service.UserService;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -74,7 +70,19 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answer.setSjid(answerDisp.getSjid());
 		answer.setSubmitTime(answerDisp.getSubmitTime());
 		answer.setUserid(answerDisp.getUserid());
-		answerMapper.insert(answer);
+		//查询学员在一定时间内是否有提交过答题
+		Map paramMap=new HashMap();
+		paramMap.put("sjid", answerDisp.getSjid());
+		paramMap.put("userid", answerDisp.getUserid());
+		paramMap.put("m", "0");
+		paramMap.put("n", "1");
+		List<Answer> resultList= answerMapper.selectByOther(paramMap);
+		if(resultList==null||compareSubmitTime(resultList.get(0).getSubmitTime())) {
+			answerMapper.insert(answer);
+		}else {
+			answer.setId(resultList.get(0).getId());
+			answerMapper.updateScore(answer);
+		}		
 		return score;
 	}
 	
@@ -207,5 +215,23 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 			Map answerMap=new Gson().fromJson(answer2,mapType);
 			System.out.println("======="+answerMap);
 		}
-
+	    
+	    
+public boolean  compareSubmitTime(String submitTimeStr) {
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    try {
+		Date submitTime = df.parse(submitTimeStr);
+	    Date d=new Date();   
+	    Date lastHour = new Date(d.getTime() -  1* 60 * 60 * 1000);
+		 System.out.println("1个小时前的日期：" +df.format( lastHour));  
+		boolean after = submitTime.before(lastHour);
+		return after;
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		return false;
+	}
+	
+	
+}
 }

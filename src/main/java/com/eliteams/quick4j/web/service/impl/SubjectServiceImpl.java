@@ -9,6 +9,8 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
+import com.eliteams.quick4j.core.util.RedisUtil;
+import com.eliteams.quick4j.core.util.SerializeUtil;
 import com.eliteams.quick4j.web.dao.SubjectMapper;
 import com.eliteams.quick4j.web.dao.UserMapper;
 import com.eliteams.quick4j.web.model.Subject;
@@ -16,6 +18,8 @@ import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.model.UserExample;
 import com.eliteams.quick4j.web.service.SubjectService;
 import com.eliteams.quick4j.web.service.UserService;
+
+import redis.clients.jedis.Jedis;
 
 /**
  * 用户Service实现类
@@ -69,8 +73,29 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	  
 	  @Override
 	    public Subject selectByTmxh(Long sjid,String tmxh) {
-	        return subjectMapper.selectByTmxh(sjid,tmxh);
-	    } 
+		  //先从缓存中取
+		  Subject subject=null;
+		  try {
+			  RedisUtil redisUtil = new RedisUtil();
+		        Jedis jedis = redisUtil.getJedis();
+		        byte[] key=("TM_"+sjid+"_"+tmxh).getBytes();
+		        Boolean exists = jedis.exists(key);
+		        if(exists) {
+			        byte[] data = jedis.get(key);
+			        if(data!=null) {
+			        	 subject=(Subject)SerializeUtil.unserialize(data);
+			        }
+		        }
+		        if(subject==null) {
+		        	subject=subjectMapper.selectByTmxh(sjid,tmxh);
+			        jedis.setex(key, 180*60, SerializeUtil.serialize(subject));
+		        }
+		  }catch (Exception e) {
+			  e.printStackTrace();
+			  //"根据试卷和序号获取试题失败"
+		}
+	        return subject;
+	 } 
 	  
 	  @Override
 	    public int update(Subject model) {
@@ -92,4 +117,30 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	    	return subjectMapper.deleteBySjid(sjid);
 	    }
 
+	    public static void main(String[] args) {
+	    	RedisUtil redisUtil = new RedisUtil();
+	        Jedis jedis = redisUtil.getJedis();
+	        byte[] key=("TM_"+0+"_"+1).getBytes();
+	        Boolean exists = jedis.exists(key);
+			  Subject subject=null;
+	        if(exists) {
+		        byte[] data = jedis.get(key);
+		        if(data!=null) {
+		        	 subject=(Subject)SerializeUtil.unserialize(data);
+		        }
+	        }
+	        if(subject==null) {
+	        	subject=new Subject();
+	        	subject.setId(1L);
+	        	subject.setOptionA("2222");
+		        jedis.setex(key, 180*60, SerializeUtil.serialize(subject));
+	        }
+	        System.out.println(subject.getOptionA());
+	        
+	       jedis.setex("user_mch", 30*60, "user_"+"mch");
+	        System.out.println(jedis.get("user_mch"));
+	        Long del = jedis.del("user_mch");
+	        System.out.println("del==="+del);
+
+		}
 }

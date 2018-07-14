@@ -11,6 +11,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +32,9 @@ import com.eliteams.quick4j.web.service.SubjectService;
 @RequestMapping(value = "/subject")
 public class SubjectController {
 
+    public static Logger log=Logger.getLogger(SubjectController.class);
+
+	
 	@Resource
 	private SubjectService subjectService;
 	
@@ -51,47 +55,54 @@ public class SubjectController {
 	@RequestMapping(value = "/selectBySjid")
     @ResponseBody
 	public Page selectBySjid(HttpServletRequest request,Page<Subject> page,String sjid) {
-		
-		 Map<String , Object> map = new HashMap<String, Object>();      	 
-         Map<String, Object> paramMap = new HashMap<String, Object>();
-         List<Subject> examList=null;
-         int count =0;
-         if(sjid!=null&&!"".equals(sjid)) {
-         paramMap.put("sjid", Long.parseLong(sjid));
-         paramMap.put("m", (page.getPage() - 1) * page.getLimit());
-         paramMap.put("n", page.getLimit());        
-         map  = subjectService.selectBySjid(paramMap);     	
-          examList = (List<Subject>)map.get("list");
-    	 count = (int)map.get("total");   	 
-    }else {
-    	Map resultMap=examService.selectList(paramMap);
-        Long randomsjid=7L;
-    	if(resultMap!=null&&resultMap.get("list")!=null) {
-    		List<Exam> resultList=(List<Exam>) resultMap.get("list");
-//    		//随机数
-//    		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
-//     		if(randomNumber==-1) {
-//     			randomNumber=0;
-//     		}
-//    		Long randomsjid=resultList.get(randomNumber).getId();
-    		
-    		for (Exam exam : resultList) {
-				if("是".equals(exam.getSfky())) {
-					randomsjid=exam.getId();
-					break;
+		try {
+			
+			 Map<String , Object> map = new HashMap<String, Object>();      	 
+	         Map<String, Object> paramMap = new HashMap<String, Object>();
+	         List<Subject> examList=null;
+	         int count =0;
+	         if(sjid!=null&&!"".equals(sjid)) {
+	         paramMap.put("sjid", Long.parseLong(sjid));
+	         paramMap.put("m", (page.getPage() - 1) * page.getLimit());
+	         paramMap.put("n", page.getLimit());        
+	         map  = subjectService.selectBySjid(paramMap);     	
+	          examList = (List<Subject>)map.get("list");
+	    	 count = (int)map.get("total");   	 
+	    }else {
+	    	Map resultMap = examService.selectList(paramMap);
+
+	        Long randomsjid=7L;
+	    	if(resultMap!=null&&resultMap.get("list")!=null) {
+	    		List<Exam> resultList=(List<Exam>) resultMap.get("list");
+//	    		//随机数
+//	    		int randomNumber = (int) Math.round(Math.random()*resultList.size()-1);  
+//	     		if(randomNumber==-1) {
+//	     			randomNumber=0;
+//	     		}
+//	    		Long randomsjid=resultList.get(randomNumber).getId();
+	    		
+	    		for (Exam exam : resultList) {
+					if("是".equals(exam.getSfky())) {
+						randomsjid=exam.getId();
+						break;
+					}
 				}
-			}
-    		paramMap.put("sjid", randomsjid);
-            paramMap.put("m", (page.getPage() - 1) * page.getLimit());
-            paramMap.put("n", page.getLimit());        
-            map  = subjectService.selectBySjid(paramMap);     	
-             examList = (List<Subject>)map.get("list");
-             count = (int)map.get("total");  
-    	}
-    }
-    	page.setData(examList);
-    	page.setCount(count);
-    	page.setCode(0);       
+	    		paramMap.put("sjid", randomsjid);
+	            paramMap.put("m", (page.getPage() - 1) * page.getLimit());
+	            paramMap.put("n", page.getLimit());        
+	            map  = subjectService.selectBySjid(paramMap);     	
+	             examList = (List<Subject>)map.get("list");
+	             count = (int)map.get("total");  
+	    	}
+	    }
+	    	page.setData(examList);
+	    	page.setCount(count);
+	    	page.setCode(0);    
+	    	
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.error("根据试卷id查询试卷题异常 ",e);
+		}
         return page;
 }
 

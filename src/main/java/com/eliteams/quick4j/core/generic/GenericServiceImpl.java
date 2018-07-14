@@ -66,7 +66,7 @@ public abstract class GenericServiceImpl<Model, PK> implements GenericService<Mo
     }
 
     @Override
-    public Map<String, Object> selectList(Map map) {
+    public Map<String, Object> selectList(Map map) throws Exception {
         return null;
     }
 }

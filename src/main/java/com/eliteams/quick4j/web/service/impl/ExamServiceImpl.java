@@ -34,7 +34,7 @@ public class ExamServiceImpl extends GenericServiceImpl<Exam, Long> implements E
 	}
 
 	@Override
-	public Map selectList(Map paramMap) {
+	public Map selectList(Map paramMap) throws Exception{
 		Map<String, Object> retMap = new HashMap<String, Object>();
         List<Exam> result = examMapper.selectByExample(paramMap);
     	int rowCnts = examMapper.getRowCnts();

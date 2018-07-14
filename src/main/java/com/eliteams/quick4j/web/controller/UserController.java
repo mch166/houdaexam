@@ -1,7 +1,9 @@
 package com.eliteams.quick4j.web.controller;
 
 import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import org.apache.log4j.Logger;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -50,6 +54,8 @@ import redis.clients.jedis.Jedis;
 @RequestMapping(value = "/user")
 public class UserController {
 
+    public static Logger log=Logger.getLogger(UserController.class);
+
     @Resource
     private UserService userService;
     
@@ -82,14 +88,8 @@ public class UserController {
             	  map.put("code", "1");
                   map.put("msg", "退出后30分钟内不允许登录，请稍后再试！");
                   return map;
-            }
-            
-            Subject subject = SecurityUtils.getSubject();
-            
-            // 已登陆
-            map.put("code", "0");
-            map.put("msg", "登入成功");
-            map.put("access_token", "c262e61cd13ad99fc650e6908c7e5e65b63d2f32185ecfed6b801ee3fbdd5c0a");
+            }          
+            Subject subject = SecurityUtils.getSubject();                     
             if (subject.isAuthenticated()) {  
             }else {
             	 // 身份验证
@@ -117,19 +117,30 @@ public class UserController {
 				}
 
          	}
-         	userInfo.setSjid(randomsjid+"");
+         	// 已登陆
+            map.put("code", "0");
+            map.put("msg", "登入成功");
+         	userInfo.setSjid(randomsjid+"");       	
              request.getSession().setAttribute("userInfo", userInfo);
+             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+     	    Date d=new Date();   
+     	    log.info("用户登录user:"+user.getUsername()+";时间:"+df.format(d)); 
+             request.getSession().setAttribute("loginTime", df.format(d));
              map.put("userInfo", userInfo);
              return  map;
         } catch (AuthenticationException e) {
-        	e.printStackTrace();
             // 身份验证失败
         	  map.put("code", "1");
               map.put("msg", "用户名或密码错误 ！");
-            return map;
+              log.error("用户验证失败,username:"+user.getUsername()+"密码:"+user.getPassword(), e);
+        }catch (Exception e) {
+			e.printStackTrace();
+			  map.put("code", "1");
+              map.put("msg", "登录失败！");
+            log.error("用户登录失败,username:"+user.getUsername()+"密码:"+user.getPassword(), e);
+		}
+        return map;
         }
-        //return "student/showAnswer";
-    }
 
     /**
      * 用户登出
@@ -158,6 +169,30 @@ public class UserController {
         return map;
     }
 
+    
+    /**
+     * 重置用户登录状态
+     * 
+     * @param session
+     * @return
+     */
+    @RequestMapping(value = "/reLogin")
+    @ResponseBody
+    public AjaxJson reLogin(HttpSession session,String username) {
+    	 try {
+         	AjaxJson j = new AjaxJson();
+         	 	RedisUtil redisUtil = new RedisUtil();
+		        Jedis jedis = redisUtil.getJedis();
+		        jedis.del("user_"+username);
+         	j.setSuccess(true);
+         	j.setMsg("执行成功");
+             return j;
+         } catch (Exception e) {
+             e.printStackTrace();
+             return null;
+         }
+    }
+    
     /**
      *更新用户
      * 
@@ -258,10 +293,17 @@ public class UserController {
     @ResponseBody
     public AjaxJson ResetPassword(HttpServletRequest request,User userParam) {
     	AjaxJson j = new AjaxJson();
+    	try {
     	userParam.setPassword(ApplicationUtils.sha256Hex("123456"));
     	userService.update(userParam);
     	j.setSuccess(true);
     	j.setObj(userParam);
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		j.setSuccess(false);
+        	j.setObj("重置失败");
+    		log.error("重置密码失败，"+userParam.toString(), e);
+		}
     	return j;
     }
     
@@ -274,6 +316,7 @@ public class UserController {
     @ResponseBody
     public AjaxJson updatePwd4user(HttpServletRequest request,String username,String oldpwd,String newpwd) {
     	AjaxJson j = new AjaxJson();
+    	try {
     	if(username==null||"".equals(username)
     			||oldpwd==null||"".equals(oldpwd)
     			 	||newpwd==null||"".equals(newpwd)) {
@@ -294,6 +337,12 @@ public class UserController {
     	userService.updatePwd(user);
     	j.setSuccess(true);
     	j.setMsg("修改成功");
+    	}catch (Exception e) {
+    		e.printStackTrace();
+    		j.setSuccess(false);
+        	j.setMsg("修改失败");
+    		log.error("用户更新密码失败，username="+username+";oldpwd="+oldpwd+";newpwd="+newpwd, e);
+    	}
     	return j;
     }
     
@@ -304,6 +353,7 @@ public class UserController {
     @RequestMapping(value = "/getUserList")
     @ResponseBody
     public Page<User> getUserList(HttpServletRequest request,Page<User> page,User user) {      	
+        try {
         	 Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
@@ -311,12 +361,21 @@ public class UserController {
              if(null!=user && null != user.getName() && !"".equals(user.getName())){
             	 paramMap.put("name", user.getName());
              }
-             map  = userService.selectList(paramMap);        	
+
+				map  = userService.selectList(paramMap);
+       	
              List<User> userList = (List<User>)map.get("list");
         	int count = (int)map.get("total");             
         	page.setData(userList);
         	page.setCount(count);
-        	page.setCode(0);       
+        	page.setCode(0);    
+		} catch (Exception e) {
+			page.setData(null);
+        	page.setCount(0);
+        	page.setCode(1);    
+			e.printStackTrace();
+			log.error("查看用户列表失败", e);
+		} 
             return page; 
     }
     
@@ -327,7 +386,8 @@ public class UserController {
     @RequestMapping(value = "/getUserByOther")
     @ResponseBody
     public Page<User> getUserByOther(HttpServletRequest request,Page<User> page,String name,String username,String state,String type,String phone) {      	
-        	 Map<String , Object> map = new HashMap<String, Object>();      	 
+        try {	
+        	Map<String , Object> map = new HashMap<String, Object>();      	 
              Map<String, Object> paramMap = new HashMap<String, Object>();
              if(name!=null&&!"".equals(name.trim())) {
             	 paramMap.put("name", name);
@@ -346,12 +406,20 @@ public class UserController {
              }
              paramMap.put("m", (page.getPage() - 1) * page.getLimit());
              paramMap.put("n", page.getLimit());        
-             map  = userService.selectList(paramMap);        	
+				map  = userService.selectList(paramMap);
+  	
              List<User> userList = (List<User>)map.get("list");
         	int count = (int)map.get("total");             
         	page.setData(userList);
         	page.setCount(count);
-        	page.setCode(0);       
+        	page.setCode(0);   
+			} catch (Exception e) {
+				log.error("根据条件查用户列表失败", e);
+				e.printStackTrace();
+				page.setData(null);
+	        	page.setCount(0);
+	        	page.setCode(1);  
+			}      
             return page;
      
     }
