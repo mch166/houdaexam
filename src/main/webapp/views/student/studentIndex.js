@@ -217,7 +217,8 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				if(returnData.success){
 					clearTimeout(that.timer)
 					layer.msg("试卷提交成功");
-					that.studentExamTheEnd();
+					that.studentViewExam("end");
+//					that.studentExamTheEnd();
 				}
 			},
 			error:function(jqXHR,textStatus,errorThrown){
@@ -253,7 +254,8 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				if(returnData.success){
 					clearTimeout(that.timer)
 					layer.msg("试卷提交成功");
-					that.studentExamTheEnd();
+					that.studentViewExam("end");
+//					that.studentExamTheEnd();
 					
 				}
 			},
@@ -276,7 +278,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	/**
 	 * 交卷后查看卷子做题情况
 	 */
-	studentExam.prototype.studentViewExam = function(){
+	studentExam.prototype.studentViewExam = function(isEnd){
 		var that = this;
 		
 		var blTmxh = "";
@@ -310,6 +312,11 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 					}
 				});
 				$("#studentendviewanswer").html(endStrHtml);
+			}
+			,end:function(){
+				if(isEnd=="end"){
+	        		that.studentExamTheEnd();
+	        	}
 			}
 	      });
 	}
@@ -544,11 +551,9 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			        ,shade: 0.3 
 			        ,yes: function(index, layero){
 			        	layer.close(index);
-			        	studentExamObj.studentViewExam();
-			        	studentExamObj.studentExamTheEnd()
+			        	studentExamObj.endExam();
 			        }
 			      });
-				studentExamObj.endExam();
 			}
 			timeStartFlag = false;
 		});
