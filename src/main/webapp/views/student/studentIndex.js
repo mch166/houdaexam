@@ -34,7 +34,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		this.downTmBtn = "downTm";//下一题按钮
 		
 		this.timer = "";
-		this.answerMap = layui.sessionData("answerMap").answerMap;//保存学生最后做题情况，展示结果用
+		this.answerMap = layui.sessionData("answerMap"+loginUser.id).answerMap;//保存学生最后做题情况，展示结果用
 		if(this.answerMap == undefined || typeof(this.answerMap) == "undefined"){
 			this.answerMap = {};
 		}
@@ -203,7 +203,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 			answers[blTmxh] = blTmval;
 		});
 		paramdata.answerMap = answers;
-		layui.sessionData("answerMap",{
+		layui.sessionData("answerMap"+loginUser.id,{
 			key:'answerMap',
 			value:answers
 		});
@@ -269,10 +269,10 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 	 * 删除各个缓存、退出
 	 */
 	studentExam.prototype.studentExamTheEnd = function(){
-		layui.sessionData("answerMap",null);//答题结果
-		layui.sessionData("examisend",null);//试卷提交成功标志
-		layui.sessionData("startServerTime",null);//试卷开始时间
-		layui.sessionData("examendtime",null);//试卷结束时间
+		layui.sessionData("answerMap"+loginUser.id,null);//答题结果
+		layui.sessionData("examisend"+loginUser.id,null);//试卷提交成功标志
+		layui.sessionData("startServerTime"+loginUser.id,null);//试卷开始时间
+		layui.sessionData("examendtime"+loginUser.id,null);//试卷结束时间
 		$("#logoutBtnid").click();
 	}
 	/**
@@ -384,13 +384,13 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 				$("#"+that.nowTmxhBtnid).removeClass("layui-btn-normal");
 			}else{
 				//缓存学生做题记录
-				var answers = layui.sessionData("answerMap").answerMap;
+				var answers = layui.sessionData("answerMap"+loginUser.id).answerMap;
 				var xsDtTmxh = that.nowTmxhBtnid.split("_")[1];//学生答题题目序号
 				if(answers=="undefined" || typeof(answers)=="undefined"){
 					answers = {};
 				}
 				answers[xsDtTmxh] = nowTmAns;
-				layui.sessionData("answerMap",{
+				layui.sessionData("answerMap"+loginUser.id,{
 					key:'answerMap',
 					value:answers
 				});
@@ -514,18 +514,18 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 		var shi = serverTime.getHours();
 		var fen = serverTime.getMinutes();
 		var miao = serverTime.getSeconds();
-		var startTime = layui.sessionData("startServerTime").startServerTime;
+		var startTime = layui.sessionData("startServerTime"+loginUser.id).startServerTime;
 		if(startTime == undefined || startTime == ""){
-			layui.sessionData("startServerTime",{
+			layui.sessionData("startServerTime"+loginUser.id,{
 				key:'startServerTime',
 				value:serverTime
 			});
 		}
 		
-		var endTime = layui.sessionData("examendtime")['endtime'];
+		var endTime = layui.sessionData("examendtime"+loginUser.id)['endtime'];
 		if(endTime == undefined || endTime == ""){
 			endTime = new Date(year,yue,ri,parseInt(shi)+3,fen,miao); //结束日期
-			var loginUser = layui.sessionData("examendtime",{
+			layui.sessionData("examendtime"+loginUser.id,{
 				key:"endtime",
 				value:endTime
 			})
@@ -600,7 +600,7 @@ layui.define(['util','laydate','layer','element','form'], function(exports) {
 							'<input type="checkbox" id="duoxxzoptionC" name="duoxxzoption" lay-filter="duoxxzoption" value="C" title="C">'+
 							'<input type="checkbox" id="duoxxzoptionD" name="duoxxzoption" lay-filter="duoxxzoption" value="D" title="D">';
 	
-//	var examisend = layui.sessionData("examisend").examisend;
+//	var examisend = layui.sessionData("examisend"+loginUser.id).examisend;
 //	if(studentExamObj.examisend || studentExamObj.examisend == "true"){
 //		clearTimeout(studentExamObj.timer);
 //		$("#submitexam").hide();
