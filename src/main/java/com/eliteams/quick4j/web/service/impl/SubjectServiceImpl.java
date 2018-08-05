@@ -93,6 +93,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 		        	subject=subjectMapper.selectByTmxh(sjid,tmxh);
 			        jedis.setex(key, 180*60, SerializeUtil.serialize(subject));
 		        }
+		        jedis.close();
 		  }catch (Exception e) {
 			  e.printStackTrace();
 			 log.error("根据试卷和序号获取试题失败", e); 
@@ -143,6 +144,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	       jedis.setex("user_mch", 30*60, "user_"+"mch");
 	        System.out.println(jedis.get("user_mch"));
 	        Long del = jedis.del("user_mch");
+	        jedis.close();
 	        System.out.println("del==="+del);
 
 		}

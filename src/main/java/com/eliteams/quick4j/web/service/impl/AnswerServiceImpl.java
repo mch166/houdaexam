@@ -73,7 +73,13 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answer.setAnswerTime(answerDisp.getAnswerTime());
 		answer.setScore(score);
 		answer.setSjid(answerDisp.getSjid());
-		answer.setSubmitTime(answerDisp.getSubmitTime());
+		if(answerDisp.getSubmitTime()==null||"".equals(answerDisp.getSubmitTime())) {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			 Date d=new Date();   
+			answer.setSubmitTime( df.format(d));
+		}else {
+			answer.setSubmitTime(answerDisp.getSubmitTime());
+		}
 		answer.setUserid(answerDisp.getUserid());
 		//查询学员在一定时间内是否有提交过答题
 		Map<String,Object> paramMap=new HashMap<String,Object>();
@@ -82,7 +88,7 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		paramMap.put("m", "0");
 		paramMap.put("n", "1");
 		List<Answer> resultList= answerMapper.selectByOther(paramMap);
-		if(resultList==null||resultList.size()==0||compareSubmitTime(resultList.get(0).getSubmitTime())) {
+		if(resultList==null||resultList.size()==0||resultList.get(0).getSubmitTime()==null||compareSubmitTime(resultList.get(0).getSubmitTime())) {
 			log.info("用户首次交卷，时间："+answer.getSubmitTime());
 			answerMapper.insert(answer);
 		}else {
@@ -233,7 +239,7 @@ public boolean  compareSubmitTime(String submitTimeStr) {
 		 System.out.println("1个小时前的日期：" +df.format( lastHour));  
 		boolean after = submitTime.before(lastHour);
 		return after;
-	} catch (ParseException e) {
+	} catch (Exception e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
 		return false;

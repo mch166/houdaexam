@@ -127,6 +127,7 @@ public class UserController {
      	    log.info("用户登录user:"+user.getUsername()+";时间:"+df.format(d)); 
              request.getSession().setAttribute("loginTime", df.format(d));
              map.put("userInfo", userInfo);
+             jedis.close();
              return  map;
         } catch (AuthenticationException e) {
             // 身份验证失败
@@ -156,6 +157,7 @@ public class UserController {
 		     RedisUtil redisUtil = new RedisUtil();
 		        Jedis jedis = redisUtil.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
+		        jedis.close();
 		}
         session.removeAttribute("userInfo");
         // 登出操作
@@ -186,6 +188,7 @@ public class UserController {
 		        jedis.del("user_"+username);
          	j.setSuccess(true);
          	j.setMsg("执行成功");
+         	 jedis.close();
              return j;
          } catch (Exception e) {
              e.printStackTrace();

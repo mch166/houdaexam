@@ -22,6 +22,7 @@ public class SessionListener1 implements SessionListener {
 		     RedisUtil redisUtil = new RedisUtil();
 		        Jedis jedis = redisUtil.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
+		        jedis.close();
 		}
 	}
  
@@ -33,6 +34,7 @@ public class SessionListener1 implements SessionListener {
 		     RedisUtil redisUtil = new RedisUtil();
 		        Jedis jedis = redisUtil.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
+		        jedis.close();
 		}
 
 	}
