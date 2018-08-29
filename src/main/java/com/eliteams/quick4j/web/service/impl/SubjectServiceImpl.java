@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 import com.eliteams.quick4j.core.generic.GenericDao;
 import com.eliteams.quick4j.core.generic.GenericServiceImpl;
-import com.eliteams.quick4j.core.util.RedisUtil;
+import com.eliteams.quick4j.core.util.RedisUtils;
 import com.eliteams.quick4j.core.util.SerializeUtil;
 import com.eliteams.quick4j.web.controller.SubjectController;
 import com.eliteams.quick4j.web.dao.SubjectMapper;
@@ -77,10 +77,9 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	  @Override
 	    public Subject selectByTmxh(Long sjid,String tmxh)throws Exception {
 		  //先从缓存中取
-		  Subject subject=null;
+		  	Subject subject=null;
+	        Jedis jedis = RedisUtils.getJedis();
 		  try {
-			  RedisUtil redisUtil = new RedisUtil();
-		        Jedis jedis = redisUtil.getJedis();
 		        byte[] key=("TM_"+sjid+"_"+tmxh).getBytes();
 		        Boolean exists = jedis.exists(key);
 		        if(exists) {
@@ -92,11 +91,12 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 		        if(subject==null) {
 		        	subject=subjectMapper.selectByTmxh(sjid,tmxh);
 			        jedis.setex(key, 180*60, SerializeUtil.serialize(subject));
-		        }
-		        jedis.close();
+		        }		       
 		  }catch (Exception e) {
 			  e.printStackTrace();
 			 log.error("根据试卷和序号获取试题失败", e); 
+		}finally {
+			RedisUtils.returnResource(jedis);
 		}
 	        return subject;
 	 } 
@@ -122,8 +122,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	    }
 
 	    public static void main(String[] args) {
-	    	RedisUtil redisUtil = new RedisUtil();
-	        Jedis jedis = redisUtil.getJedis();
+	        Jedis jedis = RedisUtils.getJedis();
 	        byte[] key=("TM_"+0+"_"+1).getBytes();
 	        Boolean exists = jedis.exists(key);
 			  Subject subject=null;
@@ -144,7 +143,7 @@ public class SubjectServiceImpl extends GenericServiceImpl<Subject, Long> implem
 	       jedis.setex("user_mch", 30*60, "user_"+"mch");
 	        System.out.println(jedis.get("user_mch"));
 	        Long del = jedis.del("user_mch");
-	        jedis.close();
+	        RedisUtils.returnResource(jedis);
 	        System.out.println("del==="+del);
 
 		}

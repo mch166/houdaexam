@@ -2,7 +2,7 @@ package com.eliteams.quick4j.web.interceptors;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
 
-import com.eliteams.quick4j.core.util.RedisUtil;
+import com.eliteams.quick4j.core.util.RedisUtils;
 import com.eliteams.quick4j.web.model.User;
 
 import redis.clients.jedis.Jedis;
@@ -19,10 +19,9 @@ public class SessionListener1 implements SessionListener {
 	public void onStop(Session session) {//退出
 		User user = (User) session.getAttribute("userInfo");
 		if(user!=null&&user.getType()!=1) {
-		     RedisUtil redisUtil = new RedisUtil();
-		        Jedis jedis = redisUtil.getJedis();
+		        Jedis jedis = RedisUtils.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
-		        jedis.close();
+		        RedisUtils.returnResource(jedis);
 		}
 	}
  
@@ -31,10 +30,9 @@ public class SessionListener1 implements SessionListener {
 		User user = (User) session.getAttribute("userInfo");
 		System.out.println(user);
 		if(user!=null&&user.getType()!=1) {
-		     RedisUtil redisUtil = new RedisUtil();
-		        Jedis jedis = redisUtil.getJedis();
+		        Jedis jedis = RedisUtils.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
-		        jedis.close();
+		        RedisUtils.returnResource(jedis);
 		}
 
 	}

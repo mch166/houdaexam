@@ -34,7 +34,7 @@ import com.eliteams.quick4j.core.util.AjaxJson;
 import com.eliteams.quick4j.core.util.ApplicationUtils;
 import com.eliteams.quick4j.core.util.ImportExcelUtil;
 import com.eliteams.quick4j.core.util.Page;
-import com.eliteams.quick4j.core.util.RedisUtil;
+import com.eliteams.quick4j.core.util.RedisUtils;
 import com.eliteams.quick4j.web.model.Exam;
 import com.eliteams.quick4j.web.model.User;
 import com.eliteams.quick4j.web.security.PermissionSign;
@@ -75,15 +75,15 @@ public class UserController {
     @ResponseBody
     public Map login(@Valid User user, BindingResult result,HttpServletRequest request) {
         Map<String , Object> map = new HashMap<String, Object>();
+        Jedis jedis = RedisUtils.getJedis();
         try {       	          
             if (result.hasErrors()) {
                 map.put("code", "1");
                 map.put("msg", "参数错误");
                 return map;
             }
-		     RedisUtil redisUtil = new RedisUtil();
-            Jedis jedis = redisUtil.getJedis();
             Boolean exists = jedis.exists("user_"+user.getUsername());
+            RedisUtils.returnResource(jedis);
             if(exists){
             	  map.put("code", "1");
                   map.put("msg", "退出后30分钟内不允许登录，请稍后再试！");
@@ -127,7 +127,6 @@ public class UserController {
      	    log.info("用户登录user:"+user.getUsername()+";时间:"+df.format(d)); 
              request.getSession().setAttribute("loginTime", df.format(d));
              map.put("userInfo", userInfo);
-             jedis.close();
              return  map;
         } catch (AuthenticationException e) {
             // 身份验证失败
@@ -154,10 +153,9 @@ public class UserController {
     public Map logout(HttpSession session) {
     	User user = (User) session.getAttribute("userInfo");
 		if(user!=null&&user.getType()!=1) {
-		     RedisUtil redisUtil = new RedisUtil();
-		        Jedis jedis = redisUtil.getJedis();
+		        Jedis jedis = RedisUtils.getJedis();
 		        jedis.setex("user_"+user.getUsername(), 30*60, "user_"+user.getUsername());
-		        jedis.close();
+		        RedisUtils.returnResource(jedis);
 		}
         session.removeAttribute("userInfo");
         // 登出操作
@@ -183,12 +181,11 @@ public class UserController {
     public AjaxJson reLogin(HttpSession session,String username) {
     	 try {
          	AjaxJson j = new AjaxJson();
-         	 	RedisUtil redisUtil = new RedisUtil();
-		        Jedis jedis = redisUtil.getJedis();
+		        Jedis jedis = RedisUtils.getJedis();
 		        jedis.del("user_"+username);
          	j.setSuccess(true);
          	j.setMsg("执行成功");
-         	 jedis.close();
+         	RedisUtils.returnResource(jedis);
              return j;
          } catch (Exception e) {
              e.printStackTrace();
