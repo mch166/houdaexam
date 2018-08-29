@@ -73,13 +73,9 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answer.setAnswerTime(answerDisp.getAnswerTime());
 		answer.setScore(score);
 		answer.setSjid(answerDisp.getSjid());
-		if(answerDisp.getSubmitTime()==null||"".equals(answerDisp.getSubmitTime())) {
 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 			 Date d=new Date();   
 			answer.setSubmitTime( df.format(d));
-		}else {
-			answer.setSubmitTime(answerDisp.getSubmitTime());
-		}
 		answer.setUserid(answerDisp.getUserid());
 		//查询学员在一定时间内是否有提交过答题
 		Map<String,Object> paramMap=new HashMap<String,Object>();
@@ -199,6 +195,10 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
  }
 
 	    public static void main(String[] args) {
+	    	
+	    	AnswerServiceImpl answerServiceImpl=new AnswerServiceImpl();
+	    	boolean compareSubmitTime = answerServiceImpl.compareSubmitTime("2018-08-29 21:41:00");
+	    		System.out.println(compareSubmitTime);
 			Answer answer=new Answer();
 			Map map=new HashMap();
 			map.put("1", "A");
@@ -244,6 +244,7 @@ public boolean  compareSubmitTime(String submitTimeStr) {
 		e.printStackTrace();
 		return false;
 	}
+    
 	
 	
 }
