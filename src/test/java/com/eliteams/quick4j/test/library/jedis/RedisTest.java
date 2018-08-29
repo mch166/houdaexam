@@ -19,6 +19,8 @@ public class RedisTest {
     public void testStr() {
         Jedis jedis = RedisUtils.getJedis();
         jedis.setex("idTest", 60, "11111");
+        jedis.del("user_8001");
+        
         RedisUtils.returnResource(jedis);
     }
     

@@ -73,9 +73,9 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 		answer.setAnswerTime(answerDisp.getAnswerTime());
 		answer.setScore(score);
 		answer.setSjid(answerDisp.getSjid());
-			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			 Date d=new Date();   
-			answer.setSubmitTime( df.format(d));
+			answer.setSubmitTime( df.format(d.getTime()));
 		answer.setUserid(answerDisp.getUserid());
 		//查询学员在一定时间内是否有提交过答题
 		Map<String,Object> paramMap=new HashMap<String,Object>();
@@ -196,6 +196,12 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 
 	    public static void main(String[] args) {
 	    	
+	    	SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			 Date d=new Date();   
+			 System.out.println(df.format(d.getTime()));
+			 System.out.println(df.format(d));
+
+	    	
 	    	AnswerServiceImpl answerServiceImpl=new AnswerServiceImpl();
 	    	boolean compareSubmitTime = answerServiceImpl.compareSubmitTime("2018-08-29 21:41:00");
 	    		System.out.println(compareSubmitTime);
@@ -231,13 +237,13 @@ public class AnswerServiceImpl extends GenericServiceImpl<Answer, Long> implemen
 	    
 	    
 public boolean  compareSubmitTime(String submitTimeStr) {
-    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     try {
 		Date submitTime = df.parse(submitTimeStr);
 	    Date d=new Date();   
 	    Date lastHour = new Date(d.getTime() -  1* 60 * 60 * 1000);
 		 System.out.println("1个小时前的日期：" +df.format( lastHour));  
-		boolean after = submitTime.before(lastHour);
+		boolean after =lastHour.after(submitTime);
 		return after;
 	} catch (Exception e) {
 		// TODO Auto-generated catch block
